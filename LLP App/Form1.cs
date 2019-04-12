@@ -21,7 +21,14 @@ namespace LLP_App
         private void btnParseProposition_Click(object sender, EventArgs e)
         {
             string proposition = tbProposition.Text;
-            conHolder = new ConnectiveHolder(proposition);
+            try
+            {
+                conHolder = new ConnectiveHolder(proposition);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void btnViewTree_Click(object sender, EventArgs e)
@@ -35,8 +42,7 @@ namespace LLP_App
 
         private void btnCreateRandomProposition_Click(object sender, EventArgs e)
         {
-            int differentArguments = (int)nbDifferentArguments.Value;
-            string proposition = PropositionReader.CreateRandomPropositionString(differentArguments);
+            string proposition = PropositionReader.CreateRandomPropositionString();
             tbProposition.Text = proposition;
         }
     }

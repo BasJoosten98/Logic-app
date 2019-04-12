@@ -26,28 +26,40 @@ namespace LLP_App
         private static Connective readPropositionStringRec()
         {
             Connective Head = null;
-            int index = 0; 
+            int index = 0;
 
             while(PropositionList.Count != 0)
             {
                 switch (PropositionList[0])
                 {
                     case ',':
-                        if(Head.Con1 == null)
+                        if (Head != null)
                         {
-                            throw new Exception("First input is missing");
+                            if(Head is ConnectiveNot || Head is ConnectiveArgument)
+                            {
+                                throw new Exception("'" + Head.GetLocalString() + "' does not need 2 inputs, please remove ','");
+                            }
+                            if (Head.Con1 == null)
+                            {
+                                throw new Exception("'" + Head.GetLocalString() + "' is missing a left connective");
+                            }
+                            if (index == 2)
+                            {
+                                throw new Exception("No connective has more than 2 inputs, problem found by '" + Head.GetLocalString() + "'");
+                            }
                         }
-                        if(index == 2)
-                        {
-                            throw new Exception("Index larger than 2 is not possible");
-                        }
+                        else { throw new Exception("',' does not belong to any connective"); }
                         index = 2;
                         PropositionList.RemoveAt(0);
                         break;
                     case '(':
                         if (Head == null)
                         {
-                            throw new Exception("Head is missing");
+                            throw new Exception("'(' does not belong to any connective");
+                        }
+                        if (Head is ConnectiveArgument)
+                        {
+                            throw new Exception("'" + Head.GetLocalString() + "' has no inputs, please remove '('");
                         }
                         index = 1;
                         PropositionList.RemoveAt(0);
@@ -55,16 +67,24 @@ namespace LLP_App
                     case ')':
                         if(index == 1)
                         {
+                            if (Head is ConnectiveArgument)
+                            {
+                                throw new Exception("'" + Head.GetLocalString() + "' has no inputs, please remove ')'");
+                            }
                             if (Head.Con1 == null)
                             {
-                                throw new Exception("First input is missing");
+                                throw new Exception("'" + Head.GetLocalString() + "' is missing a left connective");
                             }
                         }
                         else if(index == 2)
                         {
+                            if (Head is ConnectiveNot || Head is ConnectiveArgument)
+                            {
+                                throw new Exception("'" + Head.GetLocalString() + "' does not need 2 inputs, please remove ')'");
+                            }
                             if (Head.Con2 == null)
                             {
-                                throw new Exception("Second input is missing");
+                                throw new Exception("'" + Head.GetLocalString() + "' is missing a right connective");
                             }
                         }                      
                         PropositionList.RemoveAt(0);
@@ -82,7 +102,7 @@ namespace LLP_App
                                         Head = con;
                                         PropositionList.RemoveAt(0);
                                     }
-                                    else { throw new Exception("Head was already specified"); }
+                                    else { throw new Exception("'" + PropositionList[0] + "' cannot be placed after another connective"); }
                                     break;
                                 case 1:
                                     if(Head != null)
@@ -90,7 +110,7 @@ namespace LLP_App
                                         con = readPropositionStringRec();
                                         Head.setLeftConnective(con);
                                     }
-                                    else { throw new Exception("Head was not specified and index is 1"); }
+                                    else { throw new Exception("Internal index problem occured (index = 1, Head = null)"); }
                                     break;
                                 case 2:
                                     if (Head != null)
@@ -98,10 +118,10 @@ namespace LLP_App
                                         con = readPropositionStringRec();
                                         Head.setRightConnective(con);
                                     }
-                                    else { throw new Exception("Head was not specified and index is 2"); }
+                                    else { throw new Exception("Internal index problem occured (index = 2, Head = null)"); }
                                     break;
                                 default:
-                                    throw new Exception("Index can not be greater than 2");
+                                    throw new Exception("Internal index problem occured (index > 2)");
                             }
                         }
                         else if (Arguments.Contains(PropositionList[0])) //argument found
@@ -111,14 +131,15 @@ namespace LLP_App
                             {
                                 case 0:
                                     PropositionList.RemoveAt(0);
-                                    return con;
+                                    Head = con;
+                                    break;
                                 case 1:
                                     if (Head != null)
                                     {
                                         Head.setLeftConnective(con);
                                         PropositionList.RemoveAt(0);
                                     }
-                                    else { throw new Exception("Head was not specified and index is 1"); }
+                                    else { throw new Exception("Internal index problem occured (index = 1, Head = null)"); }
                                     break;
                                 case 2:
                                     if (Head != null)
@@ -126,15 +147,15 @@ namespace LLP_App
                                         Head.setRightConnective(con);
                                         PropositionList.RemoveAt(0);
                                     }
-                                    else { throw new Exception("Head was not specified and index is 2"); }
+                                    else { throw new Exception("Internal index problem occured (index = 2, Head = null)"); }
                                     break;
                                 default:
-                                    throw new Exception("Index can not be greater than 2");
+                                    throw new Exception("Internal index problem occured (index > 2)");
                             }
                         }
                         else if(PropositionList[0] != ' ') //UNKNOWN (no space)
                         {
-                            throw new Exception("Unknown character found, char: '" + PropositionList[0] + "'.");
+                            throw new Exception("Unknown character found, char: '" + PropositionList[0] + "'. Please remove it!");
                         }
                         else
                         {
@@ -142,7 +163,22 @@ namespace LLP_App
                         }
                         break;
                 }
-
+            }
+            //Final check for main connective
+            if(Head != null)
+            {
+                if(!(Head is ConnectiveArgument))
+                {
+                    if (Head is ConnectiveNot)
+                    {
+                        if (Head.Con1 == null) { throw new Exception("'" + Head.GetLocalString() + "' is missing a left connective"); }
+                    }
+                    else
+                    {
+                        if (Head.Con1 == null) { throw new Exception("'" + Head.GetLocalString() + "' is missing a left connective"); }
+                        if (Head.Con2 == null) { throw new Exception("'" + Head.GetLocalString() + "' is missing a right connective"); }
+                    }
+                }
             }
             return Head;
         }
@@ -220,10 +256,10 @@ namespace LLP_App
             return "abc.png";
         }
 
-        public static string CreateRandomPropositionString(int maxDifferentArguments)
+        public static string CreateRandomPropositionString()
         {
-            if(maxDifferentArguments > Arguments.Length) { maxDifferentArguments = Arguments.Length; }
             int totalDives = rand.Next(0, 11);
+            int maxDifferentArguments = totalDives / 2;
             return createRandomPorpositionStringRec(totalDives, maxDifferentArguments);
         }
         private static string createRandomPorpositionStringRec(int totalDives, int maxDifferentArguments) 

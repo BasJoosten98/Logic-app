@@ -33,9 +33,6 @@
             this.btnParseProposition = new System.Windows.Forms.Button();
             this.btnViewTree = new System.Windows.Forms.Button();
             this.btnCreateRandomProposition = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.nbDifferentArguments = new System.Windows.Forms.NumericUpDown();
-            ((System.ComponentModel.ISupportInitialize)(this.nbDifferentArguments)).BeginInit();
             this.SuspendLayout();
             // 
             // tbProposition
@@ -76,7 +73,7 @@
             // 
             // btnCreateRandomProposition
             // 
-            this.btnCreateRandomProposition.Location = new System.Drawing.Point(226, 35);
+            this.btnCreateRandomProposition.Location = new System.Drawing.Point(583, 6);
             this.btnCreateRandomProposition.Name = "btnCreateRandomProposition";
             this.btnCreateRandomProposition.Size = new System.Drawing.Size(151, 23);
             this.btnCreateRandomProposition.TabIndex = 4;
@@ -84,44 +81,11 @@
             this.btnCreateRandomProposition.UseVisualStyleBackColor = true;
             this.btnCreateRandomProposition.Click += new System.EventHandler(this.btnCreateRandomProposition_Click);
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 40);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(139, 13);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Different Arguments Amount";
-            // 
-            // nbDifferentArguments
-            // 
-            this.nbDifferentArguments.Location = new System.Drawing.Point(159, 38);
-            this.nbDifferentArguments.Maximum = new decimal(new int[] {
-            24,
-            0,
-            0,
-            0});
-            this.nbDifferentArguments.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nbDifferentArguments.Name = "nbDifferentArguments";
-            this.nbDifferentArguments.Size = new System.Drawing.Size(61, 20);
-            this.nbDifferentArguments.TabIndex = 6;
-            this.nbDifferentArguments.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(684, 450);
-            this.Controls.Add(this.nbDifferentArguments);
-            this.Controls.Add(this.label2);
+            this.ClientSize = new System.Drawing.Size(740, 450);
             this.Controls.Add(this.btnCreateRandomProposition);
             this.Controls.Add(this.btnViewTree);
             this.Controls.Add(this.btnParseProposition);
@@ -129,7 +93,6 @@
             this.Controls.Add(this.tbProposition);
             this.Name = "Form1";
             this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.nbDifferentArguments)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -142,8 +105,6 @@
         private System.Windows.Forms.Button btnParseProposition;
         private System.Windows.Forms.Button btnViewTree;
         private System.Windows.Forms.Button btnCreateRandomProposition;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.NumericUpDown nbDifferentArguments;
     }
 }
 
