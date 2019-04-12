@@ -16,6 +16,10 @@ namespace LLP_App
         {
             argument = arg;
         }
+        public override char GetLocalString()
+        {
+            return Argument;
+        }
         public override void setLeftConnective(Connective con)
         {
             throw new Exception("Connective Argument does not have any input");

@@ -12,6 +12,12 @@ namespace LLP_App
         {
 
         }
+
+        public override char GetLocalString()
+        {
+            return '&';
+        }
+
         public override void setLeftConnective(Connective con)
         {
             if(con != null)

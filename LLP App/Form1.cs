@@ -23,5 +23,21 @@ namespace LLP_App
             string proposition = tbProposition.Text;
             conHolder = new ConnectiveHolder(proposition);
         }
+
+        private void btnViewTree_Click(object sender, EventArgs e)
+        {
+            if(conHolder != null)
+            {
+                conHolder.ShowTreeStructure();
+            }
+            else { throw new NullReferenceException(); }
+        }
+
+        private void btnCreateRandomProposition_Click(object sender, EventArgs e)
+        {
+            int differentArguments = (int)nbDifferentArguments.Value;
+            string proposition = PropositionReader.CreateRandomPropositionString(differentArguments);
+            tbProposition.Text = proposition;
+        }
     }
 }

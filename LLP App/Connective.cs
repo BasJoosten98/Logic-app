@@ -54,5 +54,6 @@ namespace LLP_App
             }
             return fullList;
         }
+        public abstract char GetLocalString();
     }
 }

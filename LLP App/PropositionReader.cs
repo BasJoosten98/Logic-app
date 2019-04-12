@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,8 +11,9 @@ namespace LLP_App
     static class PropositionReader
     {
         private static List<char> PropositionList;
-        private static char[] ConnectiveTypes = new char[] { '>', '=', '|', '~', '&' };
+        private static char[] ConnectiveTypes = new char[] { '~', '=', '|', '>', '&' };
         private static char[] Arguments = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
+        private static Random rand = new Random();
         public static Connective ReadPropositionString(string proposition)
         {
             Console.WriteLine("PropositionReader: Reading string '" + proposition + "'.");
@@ -163,6 +166,97 @@ namespace LLP_App
             }
 
         }
-        
+        public static string CreateStructurePicture(Connective startCon)
+        {
+            if(startCon == null) { throw new NullReferenceException(); }
+            Console.WriteLine("PropositionReader: creating structure picture");
+            List<Connective> allConnectives = startCon.GetAllConnectives();
+
+            FileStream fs;
+            StreamWriter sw;
+            string fileName = "abc.dot";
+            try
+            {
+                fs = new FileStream(fileName, FileMode.Create, FileAccess.Write);
+                sw = new StreamWriter(fs);
+                sw.WriteLine("graph calculus {");
+                sw.WriteLine("node [ fontname = \"Arial\" ]");
+
+                for (int i = 0; i < allConnectives.Count; i++)
+                {
+                    sw.WriteLine("node" + (allConnectives[i].ID) + " [ label = \"" + allConnectives[i].GetLocalString() + "\" ]");
+                    //if (allNodes[i].Parent != null)
+                    //{
+                    //    sw.WriteLine("node" + (allNodes[i].Parent.ID) + " -- node" + (allNodes[i].ID));
+                    //}
+                    if (allConnectives[i].Con1 != null)
+                    {
+                        sw.WriteLine("node" + (allConnectives[i].ID) + " -- node" + (allConnectives[i].Con1.ID));
+                    }
+                    if (allConnectives[i].Con2 != null)
+                    {
+                        sw.WriteLine("node" + (allConnectives[i].ID) + " -- node" + (allConnectives[i].Con2.ID));
+                    }
+
+                }
+                sw.WriteLine("}");
+                sw.Close();
+
+            }
+            catch (IOException)
+            {
+                throw new Exception("Structure picture failed");
+            }
+            return CreateDotPNG(fileName);
+        }
+        private static string CreateDotPNG(string filename)
+        {
+            Process dot = new Process();
+            dot.StartInfo.FileName = "dot.exe";
+            dot.StartInfo.Arguments = "-Tpng -oabc.png abc.dot";
+            dot.Start();
+            dot.WaitForExit();
+            Console.WriteLine("PropositionReader: structure picture created succesfully");
+            return "abc.png";
+        }
+
+        public static string CreateRandomPropositionString(int maxDifferentArguments)
+        {
+            if(maxDifferentArguments > Arguments.Length) { maxDifferentArguments = Arguments.Length; }
+            int totalDives = rand.Next(0, 11);
+            return createRandomPorpositionStringRec(totalDives, maxDifferentArguments);
+        }
+        private static string createRandomPorpositionStringRec(int totalDives, int maxDifferentArguments) 
+        {
+            //get random connective
+            if (totalDives == 0)
+            {
+                char randomArgument = Arguments[rand.Next(0, maxDifferentArguments)];
+                return randomArgument.ToString();
+            }
+            int ConnectiveTypeIndex = rand.Next(0, ConnectiveTypes.Length); 
+            string holder = ConnectiveTypes[ConnectiveTypeIndex].ToString();
+            totalDives--;
+
+            //divide dives over input(s)
+            if(holder == "~") //only 1 input possible
+            {
+                holder += "(";
+                holder += createRandomPorpositionStringRec(totalDives, maxDifferentArguments);
+                holder += ")";
+            }
+            else //2 inputs possible
+            {
+                int dives1 = rand.Next(0, totalDives + 1);
+                int dives2 = totalDives - dives1;
+                holder += "(";
+                holder += createRandomPorpositionStringRec(dives1, maxDifferentArguments);
+                holder += ",";
+                holder += createRandomPorpositionStringRec(dives2, maxDifferentArguments);
+                holder += ")";
+            }
+            return holder;
+        }
+
     }
 }

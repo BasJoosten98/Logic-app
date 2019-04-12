@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,6 +31,12 @@ namespace LLP_App
                 else { throw new NullReferenceException(); }
             }
             else { throw new NullReferenceException(); }
+        }
+
+        public void ShowTreeStructure()
+        {
+            string path = PropositionReader.CreateStructurePicture(startConnective);
+            Process.Start(@path);
         }
     }
 }
