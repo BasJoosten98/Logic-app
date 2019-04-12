@@ -45,5 +45,20 @@ namespace LLP_App
             string proposition = PropositionReader.CreateRandomPropositionString();
             tbProposition.Text = proposition;
         }
+
+        private void btnShowArguments_Click(object sender, EventArgs e)
+        {
+            if (conHolder != null)
+            {
+                List<char> fullList = conHolder.GetListOfAllArguments();
+                string holder = "";
+                foreach(char c in fullList)
+                {
+                    holder += c + ", ";
+                }
+                MessageBox.Show(holder);
+            }
+            else { throw new NullReferenceException(); }
+        }
     }
 }

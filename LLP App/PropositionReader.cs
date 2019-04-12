@@ -14,6 +14,7 @@ namespace LLP_App
         private static char[] ConnectiveTypes = new char[] { '~', '=', '|', '>', '&' };
         private static char[] Arguments = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
         private static Random rand = new Random();
+
         public static Connective ReadPropositionString(string proposition)
         {
             Console.WriteLine("PropositionReader: Reading string '" + proposition + "'.");
@@ -182,7 +183,6 @@ namespace LLP_App
             }
             return Head;
         }
-
         private static Connective getConnectiveByType(char Type)
         {
             switch (Type)
@@ -255,11 +255,10 @@ namespace LLP_App
             Console.WriteLine("PropositionReader: structure picture created succesfully");
             return "abc.png";
         }
-
         public static string CreateRandomPropositionString()
         {
             int totalDives = rand.Next(0, 11);
-            int maxDifferentArguments = totalDives / 2;
+            int maxDifferentArguments = (totalDives-1) / 2;
             return createRandomPorpositionStringRec(totalDives, maxDifferentArguments);
         }
         private static string createRandomPorpositionStringRec(int totalDives, int maxDifferentArguments) 
@@ -267,7 +266,7 @@ namespace LLP_App
             //get random connective
             if (totalDives == 0)
             {
-                char randomArgument = Arguments[rand.Next(0, maxDifferentArguments)];
+                char randomArgument = Arguments[rand.Next(0, maxDifferentArguments + 1)];
                 return randomArgument.ToString();
             }
             int ConnectiveTypeIndex = rand.Next(0, ConnectiveTypes.Length); 
@@ -293,6 +292,5 @@ namespace LLP_App
             }
             return holder;
         }
-
     }
 }

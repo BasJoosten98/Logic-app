@@ -28,5 +28,11 @@ namespace LLP_App
         {
             throw new Exception("Connective Argument does not have any input");
         }
+        public override List<char> GetAllArguments()
+        {
+            List<char> fullList = new List<char>();
+            fullList.Add(argument);
+            return fullList;
+        }
     }
 }

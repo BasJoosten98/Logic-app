@@ -55,5 +55,30 @@ namespace LLP_App
             return fullList;
         }
         public abstract char GetLocalString();
+        public virtual List<char> GetAllArguments()
+        {
+            List<char> fullList = new List<char>();
+            if (con1 != null)
+            {
+                foreach (char arg in con1.GetAllArguments())
+                {
+                    if (!fullList.Contains(arg))
+                    {
+                        fullList.Add(arg);
+                    }                   
+                }
+            }
+            if (con2 != null)
+            {
+                foreach (char arg in con2.GetAllArguments())
+                {
+                    if (!fullList.Contains(arg))
+                    {
+                        fullList.Add(arg);
+                    }
+                }
+            }
+            return fullList;
+        }
     }
 }

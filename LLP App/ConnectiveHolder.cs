@@ -38,5 +38,11 @@ namespace LLP_App
             string path = PropositionReader.CreateStructurePicture(startConnective);
             Process.Start(@path);
         }
+
+        public List<char> GetListOfAllArguments()
+        {
+            List<char> fullList = startConnective.GetAllArguments();
+            return fullList;
+        }
     }
 }

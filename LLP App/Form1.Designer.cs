@@ -33,6 +33,7 @@
             this.btnParseProposition = new System.Windows.Forms.Button();
             this.btnViewTree = new System.Windows.Forms.Button();
             this.btnCreateRandomProposition = new System.Windows.Forms.Button();
+            this.btnShowArguments = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // tbProposition
@@ -81,11 +82,22 @@
             this.btnCreateRandomProposition.UseVisualStyleBackColor = true;
             this.btnCreateRandomProposition.Click += new System.EventHandler(this.btnCreateRandomProposition_Click);
             // 
+            // btnShowArguments
+            // 
+            this.btnShowArguments.Location = new System.Drawing.Point(395, 35);
+            this.btnShowArguments.Name = "btnShowArguments";
+            this.btnShowArguments.Size = new System.Drawing.Size(101, 23);
+            this.btnShowArguments.TabIndex = 5;
+            this.btnShowArguments.Text = "Show Arguments";
+            this.btnShowArguments.UseVisualStyleBackColor = true;
+            this.btnShowArguments.Click += new System.EventHandler(this.btnShowArguments_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(740, 450);
+            this.Controls.Add(this.btnShowArguments);
             this.Controls.Add(this.btnCreateRandomProposition);
             this.Controls.Add(this.btnViewTree);
             this.Controls.Add(this.btnParseProposition);
@@ -105,6 +117,7 @@
         private System.Windows.Forms.Button btnParseProposition;
         private System.Windows.Forms.Button btnViewTree;
         private System.Windows.Forms.Button btnCreateRandomProposition;
+        private System.Windows.Forms.Button btnShowArguments;
     }
 }
 
