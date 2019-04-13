@@ -13,6 +13,7 @@ namespace LLP_App
     public partial class Form1 : Form
     {
         ConnectiveHolder conHolder;
+        Truthtable table;
         public Form1()
         {
             InitializeComponent();
@@ -59,6 +60,40 @@ namespace LLP_App
                 MessageBox.Show(holder);
             }
             else { throw new NullReferenceException(); }
+        }
+
+        private void btnGenerateTruthtable_Click(object sender, EventArgs e)
+        {
+            lbTruthTable.Items.Clear();
+
+            table = new Truthtable(conHolder);
+            List<char> arguments = conHolder.GetListOfAllArguments();
+            List<TruthtableRow> rows = table.Rows;          
+
+            string head = "";
+            foreach(char c in arguments)
+            {
+                head += c + "  ";
+            }
+            head += "V";
+            lbTruthTable.Items.Add(head);
+
+            string tile = "";
+            foreach(TruthtableRow r in rows)
+            {
+                foreach(char c in arguments)
+                {
+                    bool result = r.GetValueForArgument(c);
+                    if (result) { tile += "1  "; }
+                    else { tile += "0  "; }
+                }
+                bool endResult = r.RowValue;
+                if (endResult) { tile += "1"; }
+                else { tile += "0"; }
+
+                lbTruthTable.Items.Add(tile);
+                tile = "";
+            }
         }
     }
 }

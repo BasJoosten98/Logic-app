@@ -28,5 +28,14 @@ namespace LLP_App
         {
             throw new Exception("Connective NOT does not have a second input");
         }
+        public override bool GetAnswer(TruthtableRow row)
+        {
+            bool leftAnswer = con1.GetAnswer(row);
+            if (!leftAnswer)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

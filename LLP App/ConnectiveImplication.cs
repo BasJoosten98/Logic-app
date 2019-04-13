@@ -33,5 +33,19 @@ namespace LLP_App
             }
             else { throw new NullReferenceException(); }
         }
+        public override bool GetAnswer(TruthtableRow row)
+        {
+            bool leftAnswer = con1.GetAnswer(row);           
+            if (!leftAnswer)
+            {
+                return true;
+            }
+            else
+            {
+                bool rightAnswer = con2.GetAnswer(row);
+                if (rightAnswer) { return true; }
+                else { return false; }
+            }
+        }
     }
 }

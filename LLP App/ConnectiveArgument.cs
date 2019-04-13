@@ -34,5 +34,9 @@ namespace LLP_App
             fullList.Add(argument);
             return fullList;
         }
+        public override bool GetAnswer(TruthtableRow row)
+        {
+            return row.GetValueForArgument(argument);
+        }
     }
 }

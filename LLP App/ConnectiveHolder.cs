@@ -42,7 +42,35 @@ namespace LLP_App
         public List<char> GetListOfAllArguments()
         {
             List<char> fullList = startConnective.GetAllArguments();
-            return fullList;
+            List<char> orderedList = new List<char>();
+            int chosenIndex = 0;
+
+            //order alphabeticaly
+            for (int i = 0; i < fullList.Count; i++)
+            {
+                if (i != chosenIndex)
+                {
+                    int result = string.Compare(fullList[chosenIndex].ToString(), fullList[i].ToString());
+                    if (result > 0) // compare(B,A) 
+                    {
+                        chosenIndex = i;
+                        i = 0;
+                    }
+                }
+                if(i == fullList.Count - 1) //end reached
+                {
+                    orderedList.Add(fullList[chosenIndex]);
+                    fullList.RemoveAt(chosenIndex);
+                    chosenIndex = 0;
+                    i = -1;
+                }
+            }
+            return orderedList;
+        }
+
+        public bool GetTruthtableRowAnswer(TruthtableRow row)
+        {
+            return startConnective.GetAnswer(row);
         }
     }
 }

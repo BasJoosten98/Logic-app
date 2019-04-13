@@ -63,6 +63,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropositionReader.cs" />
+    <Compile Include="Truthtable.cs" />
+    <Compile Include="TruthtableRow.cs" />
+    <Compile Include="TruthtableRowArgument.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
