@@ -50,64 +50,57 @@ namespace LLP_App
             string proposition = PropositionReader.CreateRandomPropositionString();
             tbProposition.Text = proposition;
         }
-
-        private void btnShowArguments_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(getShowArgumentString());
-        }
-        private string getShowArgumentString()
-        {
-            if (conHolder != null)
-            {
-                List<char> fullList = conHolder.GetListOfAllArguments();
-                string holder = "";
-                foreach (char c in fullList)
-                {
-                    holder += c + ", ";
-                }
-                return holder;
-            }
-            else { MessageBox.Show("No proposition has been parsed yet"); return ""; }
-        }
-
+        
         private void btnGenerateTruthtable_Click(object sender, EventArgs e)
         {
-            lbTruthTable.Items.Clear();
             lbTruthTableInfo.Items.Clear();
+            dgvTruthTable.Columns.Clear();
+            dgvTruthTable.Rows.Clear();
 
-            if(conHolder == null) { MessageBox.Show("No proposition has been parsed yet"); return; }
+            if (conHolder == null) { MessageBox.Show("No proposition has been parsed yet"); return; }
 
             table = new Truthtable(conHolder);
             List<char> arguments = conHolder.GetListOfAllArguments();
             List<TruthtableRow> rows = table.Rows;
 
-            string head = "";
+            //create columns
+            int counter = 0;
             foreach(char c in arguments)
             {
-                head += c + "  ";
+                dgvTruthTable.Columns.Add(c.ToString(), c.ToString());
+                dgvTruthTable.Columns[counter].Width = 20;
+                counter++;
             }
-            head += "V";
-            lbTruthTable.Items.Add(head);
+            dgvTruthTable.Columns.Add("Result", "Result");
+            dgvTruthTable.Columns[counter].Width = 50;
 
-            string tile = "";
-            string hashCodeBinary = "";
-            foreach(TruthtableRow r in rows)
+            //create rows
+            DataGridViewRow row;
+            foreach (TruthtableRow r in rows)
             {
+                row = (DataGridViewRow)dgvTruthTable.Rows[0].Clone();
+                counter = 0;
                 foreach(char c in arguments)
                 {
                     bool result = r.GetValueForArgument(c);
-                    if (result) { tile += "1  "; }
-                    else { tile += "0  "; }
+                    if (result) { row.Cells[counter].Value = 1; }
+                    else { row.Cells[counter].Value = 0; }
+                    counter++;
                 }
                 bool endResult = r.RowValue;
-                if (endResult) { tile += "1"; hashCodeBinary = "1" + hashCodeBinary; }
-                else { tile += "0"; hashCodeBinary = "0" + hashCodeBinary; }
+                if (endResult) { row.Cells[counter].Value = 1; }
+                else { row.Cells[counter].Value = 0; }
+                dgvTruthTable.Rows.Add(row);
+            }
 
-                lbTruthTable.Items.Add(tile);
-                tile = "";
+            //Read hash code
+            string hashCodeBinary = "";
+            for(int r = 0; r < dgvTruthTable.Rows.Count; r++)
+            {
+                hashCodeBinary += dgvTruthTable.Rows[r].Cells[dgvTruthTable.Rows[r].Cells.Count - 1].Value;
             }
             string hashCodeHexa = BinaryReader.BinaryToHexadecimal(hashCodeBinary);
-            lbTruthTableInfo.Items.Add("Arguments: " + getShowArgumentString());
+            lbTruthTableInfo.Items.Add("Arguments: " + conHolder.getAllArgumentsString());
             lbTruthTableInfo.Items.Add("Hash (binary): " + hashCodeBinary);
             lbTruthTableInfo.Items.Add("Hash (hexadecimal): " + hashCodeHexa);
         }

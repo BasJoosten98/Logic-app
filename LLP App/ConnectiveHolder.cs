@@ -67,7 +67,17 @@ namespace LLP_App
             }
             return orderedList;
         }
-
+        public string getAllArgumentsString()
+        {
+            List<char> fullList = GetListOfAllArguments();
+            string holder = "";
+            for(int i = 0; i < fullList.Count - 1; i++)
+            {
+                holder += fullList[i] + ", ";
+            }
+            holder += fullList[fullList.Count - 1];
+            return holder;
+        }
         public bool GetTruthtableRowAnswer(TruthtableRow row)
         {
             return startConnective.GetAnswer(row);

@@ -33,8 +33,6 @@
             this.btnParseProposition = new System.Windows.Forms.Button();
             this.btnViewTree = new System.Windows.Forms.Button();
             this.btnCreateRandomProposition = new System.Windows.Forms.Button();
-            this.btnShowArguments = new System.Windows.Forms.Button();
-            this.lbTruthTable = new System.Windows.Forms.ListBox();
             this.btnGenerateTruthtable = new System.Windows.Forms.Button();
             this.gbBinaryReaderTester = new System.Windows.Forms.GroupBox();
             this.btnHexadecimal = new System.Windows.Forms.Button();
@@ -44,7 +42,9 @@
             this.tbNumber = new System.Windows.Forms.TextBox();
             this.tbBinary = new System.Windows.Forms.TextBox();
             this.lbTruthTableInfo = new System.Windows.Forms.ListBox();
+            this.dgvTruthTable = new System.Windows.Forms.DataGridView();
             this.gbBinaryReaderTester.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTruthTable)).BeginInit();
             this.SuspendLayout();
             // 
             // tbProposition
@@ -93,29 +93,11 @@
             this.btnCreateRandomProposition.UseVisualStyleBackColor = true;
             this.btnCreateRandomProposition.Click += new System.EventHandler(this.btnCreateRandomProposition_Click);
             // 
-            // btnShowArguments
-            // 
-            this.btnShowArguments.Location = new System.Drawing.Point(395, 35);
-            this.btnShowArguments.Name = "btnShowArguments";
-            this.btnShowArguments.Size = new System.Drawing.Size(101, 23);
-            this.btnShowArguments.TabIndex = 5;
-            this.btnShowArguments.Text = "Show Arguments";
-            this.btnShowArguments.UseVisualStyleBackColor = true;
-            this.btnShowArguments.Click += new System.EventHandler(this.btnShowArguments_Click);
-            // 
-            // lbTruthTable
-            // 
-            this.lbTruthTable.FormattingEnabled = true;
-            this.lbTruthTable.Location = new System.Drawing.Point(12, 169);
-            this.lbTruthTable.Name = "lbTruthTable";
-            this.lbTruthTable.Size = new System.Drawing.Size(183, 277);
-            this.lbTruthTable.TabIndex = 6;
-            // 
             // btnGenerateTruthtable
             // 
             this.btnGenerateTruthtable.Location = new System.Drawing.Point(12, 140);
             this.btnGenerateTruthtable.Name = "btnGenerateTruthtable";
-            this.btnGenerateTruthtable.Size = new System.Drawing.Size(183, 23);
+            this.btnGenerateTruthtable.Size = new System.Drawing.Size(239, 23);
             this.btnGenerateTruthtable.TabIndex = 7;
             this.btnGenerateTruthtable.Text = "Generate Truthtable";
             this.btnGenerateTruthtable.UseVisualStyleBackColor = true;
@@ -191,21 +173,29 @@
             // lbTruthTableInfo
             // 
             this.lbTruthTableInfo.FormattingEnabled = true;
-            this.lbTruthTableInfo.Location = new System.Drawing.Point(201, 169);
+            this.lbTruthTableInfo.Location = new System.Drawing.Point(257, 169);
             this.lbTruthTableInfo.Name = "lbTruthTableInfo";
-            this.lbTruthTableInfo.Size = new System.Drawing.Size(183, 277);
+            this.lbTruthTableInfo.Size = new System.Drawing.Size(171, 277);
             this.lbTruthTableInfo.TabIndex = 9;
+            // 
+            // dgvTruthTable
+            // 
+            this.dgvTruthTable.AllowUserToOrderColumns = true;
+            this.dgvTruthTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvTruthTable.Location = new System.Drawing.Point(12, 169);
+            this.dgvTruthTable.Name = "dgvTruthTable";
+            this.dgvTruthTable.Size = new System.Drawing.Size(239, 277);
+            this.dgvTruthTable.TabIndex = 10;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(740, 450);
+            this.Controls.Add(this.dgvTruthTable);
             this.Controls.Add(this.lbTruthTableInfo);
             this.Controls.Add(this.gbBinaryReaderTester);
             this.Controls.Add(this.btnGenerateTruthtable);
-            this.Controls.Add(this.lbTruthTable);
-            this.Controls.Add(this.btnShowArguments);
             this.Controls.Add(this.btnCreateRandomProposition);
             this.Controls.Add(this.btnViewTree);
             this.Controls.Add(this.btnParseProposition);
@@ -215,6 +205,7 @@
             this.Text = "Form1";
             this.gbBinaryReaderTester.ResumeLayout(false);
             this.gbBinaryReaderTester.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTruthTable)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -227,8 +218,6 @@
         private System.Windows.Forms.Button btnParseProposition;
         private System.Windows.Forms.Button btnViewTree;
         private System.Windows.Forms.Button btnCreateRandomProposition;
-        private System.Windows.Forms.Button btnShowArguments;
-        private System.Windows.Forms.ListBox lbTruthTable;
         private System.Windows.Forms.Button btnGenerateTruthtable;
         private System.Windows.Forms.GroupBox gbBinaryReaderTester;
         private System.Windows.Forms.Button btnHexadecimal;
@@ -238,6 +227,7 @@
         private System.Windows.Forms.TextBox tbNumber;
         private System.Windows.Forms.TextBox tbBinary;
         private System.Windows.Forms.ListBox lbTruthTableInfo;
+        private System.Windows.Forms.DataGridView dgvTruthTable;
     }
 }
 
