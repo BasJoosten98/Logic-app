@@ -26,9 +26,13 @@ namespace LLP_App
             {
                 conHolder = new ConnectiveHolder(proposition);
             }
+            catch(NullReferenceException ex)
+            {
+                MessageBox.Show("Parsing failed: please make sure that you wrote a proposition");
+            }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Parsing failed: " + ex.Message);
             }
         }
 
@@ -38,7 +42,7 @@ namespace LLP_App
             {
                 conHolder.ShowTreeStructure();
             }
-            else { throw new NullReferenceException(); }
+            else { MessageBox.Show("No proposition has been parsed yet"); }
         }
 
         private void btnCreateRandomProposition_Click(object sender, EventArgs e)
@@ -59,12 +63,14 @@ namespace LLP_App
                 }
                 MessageBox.Show(holder);
             }
-            else { throw new NullReferenceException(); }
+            else { MessageBox.Show("No proposition has been parsed yet"); }
         }
 
         private void btnGenerateTruthtable_Click(object sender, EventArgs e)
         {
             lbTruthTable.Items.Clear();
+
+            if(conHolder == null) { MessageBox.Show("No proposition has been parsed yet"); return; }
 
             table = new Truthtable(conHolder);
             List<char> arguments = conHolder.GetListOfAllArguments();
@@ -94,6 +100,20 @@ namespace LLP_App
                 lbTruthTable.Items.Add(tile);
                 tile = "";
             }
+        }
+
+        private void btnBinary_Click(object sender, EventArgs e)
+        {
+            string binary = tbBinary.Text;
+            int number = BinaryReader.BinaryToNumber(binary);
+            tbNumber.Text = number.ToString();
+        }
+
+        private void btnNumber_Click(object sender, EventArgs e)
+        {
+            int number = int.Parse(tbNumber.Text);
+            string binary = BinaryReader.NumberToBinary(number, true);
+            tbBinary.Text = binary;
         }
     }
 }

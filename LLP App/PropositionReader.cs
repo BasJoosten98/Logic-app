@@ -103,7 +103,7 @@ namespace LLP_App
                                         Head = con;
                                         PropositionList.RemoveAt(0);
                                     }
-                                    else { throw new Exception("'" + PropositionList[0] + "' cannot be placed after another connective"); }
+                                    else { throw new Exception("'" + PropositionList[0] + "' cannot be placed after another connective or argument"); }
                                     break;
                                 case 1:
                                     if(Head != null)
@@ -131,8 +131,12 @@ namespace LLP_App
                             switch (index)
                             {
                                 case 0:
-                                    PropositionList.RemoveAt(0);
-                                    Head = con;
+                                    if (Head == null)
+                                    {
+                                        PropositionList.RemoveAt(0);
+                                        Head = con;
+                                    }
+                                    else { throw new Exception("'" + PropositionList[0] + "' cannot be placed after another connective or argument"); }
                                     break;
                                 case 1:
                                     if (Head != null)

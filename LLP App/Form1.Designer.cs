@@ -36,6 +36,14 @@
             this.btnShowArguments = new System.Windows.Forms.Button();
             this.lbTruthTable = new System.Windows.Forms.ListBox();
             this.btnGenerateTruthtable = new System.Windows.Forms.Button();
+            this.gbBinaryReaderTester = new System.Windows.Forms.GroupBox();
+            this.tbBinary = new System.Windows.Forms.TextBox();
+            this.tbNumber = new System.Windows.Forms.TextBox();
+            this.tbHexadecimal = new System.Windows.Forms.TextBox();
+            this.btnBinary = new System.Windows.Forms.Button();
+            this.btnNumber = new System.Windows.Forms.Button();
+            this.btnHexadecimal = new System.Windows.Forms.Button();
+            this.gbBinaryReaderTester.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbProposition
@@ -112,11 +120,78 @@
             this.btnGenerateTruthtable.UseVisualStyleBackColor = true;
             this.btnGenerateTruthtable.Click += new System.EventHandler(this.btnGenerateTruthtable_Click);
             // 
+            // gbBinaryReaderTester
+            // 
+            this.gbBinaryReaderTester.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.gbBinaryReaderTester.Controls.Add(this.btnHexadecimal);
+            this.gbBinaryReaderTester.Controls.Add(this.btnNumber);
+            this.gbBinaryReaderTester.Controls.Add(this.btnBinary);
+            this.gbBinaryReaderTester.Controls.Add(this.tbHexadecimal);
+            this.gbBinaryReaderTester.Controls.Add(this.tbNumber);
+            this.gbBinaryReaderTester.Controls.Add(this.tbBinary);
+            this.gbBinaryReaderTester.Location = new System.Drawing.Point(434, 366);
+            this.gbBinaryReaderTester.Name = "gbBinaryReaderTester";
+            this.gbBinaryReaderTester.Size = new System.Drawing.Size(300, 80);
+            this.gbBinaryReaderTester.TabIndex = 8;
+            this.gbBinaryReaderTester.TabStop = false;
+            this.gbBinaryReaderTester.Text = "Binary Reader Tester";
+            // 
+            // tbBinary
+            // 
+            this.tbBinary.Location = new System.Drawing.Point(12, 19);
+            this.tbBinary.Name = "tbBinary";
+            this.tbBinary.Size = new System.Drawing.Size(88, 20);
+            this.tbBinary.TabIndex = 0;
+            // 
+            // tbNumber
+            // 
+            this.tbNumber.Location = new System.Drawing.Point(106, 19);
+            this.tbNumber.Name = "tbNumber";
+            this.tbNumber.Size = new System.Drawing.Size(88, 20);
+            this.tbNumber.TabIndex = 1;
+            // 
+            // tbHexadecimal
+            // 
+            this.tbHexadecimal.Location = new System.Drawing.Point(200, 19);
+            this.tbHexadecimal.Name = "tbHexadecimal";
+            this.tbHexadecimal.Size = new System.Drawing.Size(88, 20);
+            this.tbHexadecimal.TabIndex = 2;
+            // 
+            // btnBinary
+            // 
+            this.btnBinary.Location = new System.Drawing.Point(12, 47);
+            this.btnBinary.Name = "btnBinary";
+            this.btnBinary.Size = new System.Drawing.Size(88, 23);
+            this.btnBinary.TabIndex = 3;
+            this.btnBinary.Text = "Binary";
+            this.btnBinary.UseVisualStyleBackColor = true;
+            this.btnBinary.Click += new System.EventHandler(this.btnBinary_Click);
+            // 
+            // btnNumber
+            // 
+            this.btnNumber.Location = new System.Drawing.Point(106, 47);
+            this.btnNumber.Name = "btnNumber";
+            this.btnNumber.Size = new System.Drawing.Size(88, 23);
+            this.btnNumber.TabIndex = 4;
+            this.btnNumber.Text = "Number";
+            this.btnNumber.UseVisualStyleBackColor = true;
+            this.btnNumber.Click += new System.EventHandler(this.btnNumber_Click);
+            // 
+            // btnHexadecimal
+            // 
+            this.btnHexadecimal.Location = new System.Drawing.Point(200, 47);
+            this.btnHexadecimal.Name = "btnHexadecimal";
+            this.btnHexadecimal.Size = new System.Drawing.Size(88, 23);
+            this.btnHexadecimal.TabIndex = 5;
+            this.btnHexadecimal.Text = "Hexadecimal";
+            this.btnHexadecimal.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(740, 450);
+            this.Controls.Add(this.gbBinaryReaderTester);
             this.Controls.Add(this.btnGenerateTruthtable);
             this.Controls.Add(this.lbTruthTable);
             this.Controls.Add(this.btnShowArguments);
@@ -127,6 +202,8 @@
             this.Controls.Add(this.tbProposition);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.gbBinaryReaderTester.ResumeLayout(false);
+            this.gbBinaryReaderTester.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -142,6 +219,13 @@
         private System.Windows.Forms.Button btnShowArguments;
         private System.Windows.Forms.ListBox lbTruthTable;
         private System.Windows.Forms.Button btnGenerateTruthtable;
+        private System.Windows.Forms.GroupBox gbBinaryReaderTester;
+        private System.Windows.Forms.Button btnHexadecimal;
+        private System.Windows.Forms.Button btnNumber;
+        private System.Windows.Forms.Button btnBinary;
+        private System.Windows.Forms.TextBox tbHexadecimal;
+        private System.Windows.Forms.TextBox tbNumber;
+        private System.Windows.Forms.TextBox tbBinary;
     }
 }
 

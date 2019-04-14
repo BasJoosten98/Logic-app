@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BinaryReader.cs" />
     <Compile Include="Connective.cs" />
     <Compile Include="ConnectiveAnd.cs" />
     <Compile Include="ConnectiveArgument.cs" />
