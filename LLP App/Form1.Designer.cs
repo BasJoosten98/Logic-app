@@ -37,12 +37,12 @@
             this.lbTruthTable = new System.Windows.Forms.ListBox();
             this.btnGenerateTruthtable = new System.Windows.Forms.Button();
             this.gbBinaryReaderTester = new System.Windows.Forms.GroupBox();
-            this.tbBinary = new System.Windows.Forms.TextBox();
-            this.tbNumber = new System.Windows.Forms.TextBox();
-            this.tbHexadecimal = new System.Windows.Forms.TextBox();
-            this.btnBinary = new System.Windows.Forms.Button();
-            this.btnNumber = new System.Windows.Forms.Button();
             this.btnHexadecimal = new System.Windows.Forms.Button();
+            this.btnNumber = new System.Windows.Forms.Button();
+            this.btnBinary = new System.Windows.Forms.Button();
+            this.tbHexadecimal = new System.Windows.Forms.TextBox();
+            this.tbNumber = new System.Windows.Forms.TextBox();
+            this.tbBinary = new System.Windows.Forms.TextBox();
             this.gbBinaryReaderTester.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -136,36 +136,15 @@
             this.gbBinaryReaderTester.TabStop = false;
             this.gbBinaryReaderTester.Text = "Binary Reader Tester";
             // 
-            // tbBinary
+            // btnHexadecimal
             // 
-            this.tbBinary.Location = new System.Drawing.Point(12, 19);
-            this.tbBinary.Name = "tbBinary";
-            this.tbBinary.Size = new System.Drawing.Size(88, 20);
-            this.tbBinary.TabIndex = 0;
-            // 
-            // tbNumber
-            // 
-            this.tbNumber.Location = new System.Drawing.Point(106, 19);
-            this.tbNumber.Name = "tbNumber";
-            this.tbNumber.Size = new System.Drawing.Size(88, 20);
-            this.tbNumber.TabIndex = 1;
-            // 
-            // tbHexadecimal
-            // 
-            this.tbHexadecimal.Location = new System.Drawing.Point(200, 19);
-            this.tbHexadecimal.Name = "tbHexadecimal";
-            this.tbHexadecimal.Size = new System.Drawing.Size(88, 20);
-            this.tbHexadecimal.TabIndex = 2;
-            // 
-            // btnBinary
-            // 
-            this.btnBinary.Location = new System.Drawing.Point(12, 47);
-            this.btnBinary.Name = "btnBinary";
-            this.btnBinary.Size = new System.Drawing.Size(88, 23);
-            this.btnBinary.TabIndex = 3;
-            this.btnBinary.Text = "Binary";
-            this.btnBinary.UseVisualStyleBackColor = true;
-            this.btnBinary.Click += new System.EventHandler(this.btnBinary_Click);
+            this.btnHexadecimal.Location = new System.Drawing.Point(200, 47);
+            this.btnHexadecimal.Name = "btnHexadecimal";
+            this.btnHexadecimal.Size = new System.Drawing.Size(88, 23);
+            this.btnHexadecimal.TabIndex = 5;
+            this.btnHexadecimal.Text = "Hexadecimal";
+            this.btnHexadecimal.UseVisualStyleBackColor = true;
+            this.btnHexadecimal.Click += new System.EventHandler(this.btnHexadecimal_Click);
             // 
             // btnNumber
             // 
@@ -177,14 +156,36 @@
             this.btnNumber.UseVisualStyleBackColor = true;
             this.btnNumber.Click += new System.EventHandler(this.btnNumber_Click);
             // 
-            // btnHexadecimal
+            // btnBinary
             // 
-            this.btnHexadecimal.Location = new System.Drawing.Point(200, 47);
-            this.btnHexadecimal.Name = "btnHexadecimal";
-            this.btnHexadecimal.Size = new System.Drawing.Size(88, 23);
-            this.btnHexadecimal.TabIndex = 5;
-            this.btnHexadecimal.Text = "Hexadecimal";
-            this.btnHexadecimal.UseVisualStyleBackColor = true;
+            this.btnBinary.Location = new System.Drawing.Point(12, 47);
+            this.btnBinary.Name = "btnBinary";
+            this.btnBinary.Size = new System.Drawing.Size(88, 23);
+            this.btnBinary.TabIndex = 3;
+            this.btnBinary.Text = "Binary";
+            this.btnBinary.UseVisualStyleBackColor = true;
+            this.btnBinary.Click += new System.EventHandler(this.btnBinary_Click);
+            // 
+            // tbHexadecimal
+            // 
+            this.tbHexadecimal.Location = new System.Drawing.Point(200, 19);
+            this.tbHexadecimal.Name = "tbHexadecimal";
+            this.tbHexadecimal.Size = new System.Drawing.Size(88, 20);
+            this.tbHexadecimal.TabIndex = 2;
+            // 
+            // tbNumber
+            // 
+            this.tbNumber.Location = new System.Drawing.Point(106, 19);
+            this.tbNumber.Name = "tbNumber";
+            this.tbNumber.Size = new System.Drawing.Size(88, 20);
+            this.tbNumber.TabIndex = 1;
+            // 
+            // tbBinary
+            // 
+            this.tbBinary.Location = new System.Drawing.Point(12, 19);
+            this.tbBinary.Name = "tbBinary";
+            this.tbBinary.Size = new System.Drawing.Size(88, 20);
+            this.tbBinary.TabIndex = 0;
             // 
             // Form1
             // 

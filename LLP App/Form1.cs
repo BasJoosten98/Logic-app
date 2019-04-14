@@ -106,13 +106,26 @@ namespace LLP_App
         {
             string binary = tbBinary.Text;
             int number = BinaryReader.BinaryToNumber(binary);
+            string hexadecimal = BinaryReader.BinaryToHexadecimal(binary);
             tbNumber.Text = number.ToString();
+            tbHexadecimal.Text = hexadecimal;
         }
 
         private void btnNumber_Click(object sender, EventArgs e)
         {
             int number = int.Parse(tbNumber.Text);
             string binary = BinaryReader.NumberToBinary(number, true);
+            string hexadecimal = BinaryReader.BinaryToHexadecimal(binary);
+            tbBinary.Text = binary;
+            tbHexadecimal.Text = hexadecimal;
+        }
+
+        private void btnHexadecimal_Click(object sender, EventArgs e)
+        {
+            string hexadecimal = tbHexadecimal.Text;
+            string binary = BinaryReader.HexadecimalToBinary(hexadecimal);
+            int number = BinaryReader.BinaryToNumber(binary);
+            tbNumber.Text = number.ToString();
             tbBinary.Text = binary;
         }
     }
