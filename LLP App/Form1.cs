@@ -53,28 +53,33 @@ namespace LLP_App
 
         private void btnShowArguments_Click(object sender, EventArgs e)
         {
+            MessageBox.Show(getShowArgumentString());
+        }
+        private string getShowArgumentString()
+        {
             if (conHolder != null)
             {
                 List<char> fullList = conHolder.GetListOfAllArguments();
                 string holder = "";
-                foreach(char c in fullList)
+                foreach (char c in fullList)
                 {
                     holder += c + ", ";
                 }
-                MessageBox.Show(holder);
+                return holder;
             }
-            else { MessageBox.Show("No proposition has been parsed yet"); }
+            else { MessageBox.Show("No proposition has been parsed yet"); return ""; }
         }
 
         private void btnGenerateTruthtable_Click(object sender, EventArgs e)
         {
             lbTruthTable.Items.Clear();
+            lbTruthTableInfo.Items.Clear();
 
             if(conHolder == null) { MessageBox.Show("No proposition has been parsed yet"); return; }
 
             table = new Truthtable(conHolder);
             List<char> arguments = conHolder.GetListOfAllArguments();
-            List<TruthtableRow> rows = table.Rows;          
+            List<TruthtableRow> rows = table.Rows;
 
             string head = "";
             foreach(char c in arguments)
@@ -85,6 +90,7 @@ namespace LLP_App
             lbTruthTable.Items.Add(head);
 
             string tile = "";
+            string hashCodeBinary = "";
             foreach(TruthtableRow r in rows)
             {
                 foreach(char c in arguments)
@@ -94,12 +100,16 @@ namespace LLP_App
                     else { tile += "0  "; }
                 }
                 bool endResult = r.RowValue;
-                if (endResult) { tile += "1"; }
-                else { tile += "0"; }
+                if (endResult) { tile += "1"; hashCodeBinary = "1" + hashCodeBinary; }
+                else { tile += "0"; hashCodeBinary = "0" + hashCodeBinary; }
 
                 lbTruthTable.Items.Add(tile);
                 tile = "";
             }
+            string hashCodeHexa = BinaryReader.BinaryToHexadecimal(hashCodeBinary);
+            lbTruthTableInfo.Items.Add("Arguments: " + getShowArgumentString());
+            lbTruthTableInfo.Items.Add("Hash (binary): " + hashCodeBinary);
+            lbTruthTableInfo.Items.Add("Hash (hexadecimal): " + hashCodeHexa);
         }
 
         private void btnBinary_Click(object sender, EventArgs e)

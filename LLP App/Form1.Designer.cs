@@ -43,6 +43,7 @@
             this.tbHexadecimal = new System.Windows.Forms.TextBox();
             this.tbNumber = new System.Windows.Forms.TextBox();
             this.tbBinary = new System.Windows.Forms.TextBox();
+            this.lbTruthTableInfo = new System.Windows.Forms.ListBox();
             this.gbBinaryReaderTester.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -187,11 +188,20 @@
             this.tbBinary.Size = new System.Drawing.Size(88, 20);
             this.tbBinary.TabIndex = 0;
             // 
+            // lbTruthTableInfo
+            // 
+            this.lbTruthTableInfo.FormattingEnabled = true;
+            this.lbTruthTableInfo.Location = new System.Drawing.Point(201, 169);
+            this.lbTruthTableInfo.Name = "lbTruthTableInfo";
+            this.lbTruthTableInfo.Size = new System.Drawing.Size(183, 277);
+            this.lbTruthTableInfo.TabIndex = 9;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(740, 450);
+            this.Controls.Add(this.lbTruthTableInfo);
             this.Controls.Add(this.gbBinaryReaderTester);
             this.Controls.Add(this.btnGenerateTruthtable);
             this.Controls.Add(this.lbTruthTable);
@@ -227,6 +237,7 @@
         private System.Windows.Forms.TextBox tbHexadecimal;
         private System.Windows.Forms.TextBox tbNumber;
         private System.Windows.Forms.TextBox tbBinary;
+        private System.Windows.Forms.ListBox lbTruthTableInfo;
     }
 }
 
