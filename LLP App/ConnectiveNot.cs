@@ -16,6 +16,10 @@ namespace LLP_App
         {
             return '~';
         }
+        public override string GetInfix()
+        {
+            return "~(" + con1.GetInfix() + ")";
+        }
         public override void setLeftConnective(Connective con)
         {
             if (con != null)

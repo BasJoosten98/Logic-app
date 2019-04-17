@@ -24,6 +24,11 @@ namespace LLP_App
             return false;
         }
 
+        public override string GetInfix()
+        {
+            return "(" + con1.GetInfix() + " & " + con2.GetInfix() + ")";
+        }
+
         public override char GetLocalString()
         {
             return '&';

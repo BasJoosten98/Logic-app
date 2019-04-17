@@ -16,6 +16,10 @@ namespace LLP_App
         {
             argument = arg;
         }
+        public override string GetInfix()
+        {
+            return argument.ToString();
+        }
         public override char GetLocalString()
         {
             return Argument;

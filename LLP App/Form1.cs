@@ -25,6 +25,8 @@ namespace LLP_App
             try
             {
                 conHolder = new ConnectiveHolder(proposition);
+                tbInfix.Text = conHolder.GetInfixString();
+
             }
             catch(NullReferenceException ex)
             {

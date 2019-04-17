@@ -81,5 +81,6 @@ namespace LLP_App
             return fullList;
         }
         public abstract bool GetAnswer(TruthtableRow row);
+        public abstract string GetInfix();
     }
 }

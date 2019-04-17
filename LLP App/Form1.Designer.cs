@@ -43,6 +43,8 @@
             this.tbBinary = new System.Windows.Forms.TextBox();
             this.lbTruthTableInfo = new System.Windows.Forms.ListBox();
             this.dgvTruthTable = new System.Windows.Forms.DataGridView();
+            this.label2 = new System.Windows.Forms.Label();
+            this.tbInfix = new System.Windows.Forms.TextBox();
             this.gbBinaryReaderTester.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTruthTable)).BeginInit();
             this.SuspendLayout();
@@ -187,11 +189,29 @@
             this.dgvTruthTable.Size = new System.Drawing.Size(239, 277);
             this.dgvTruthTable.TabIndex = 10;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(16, 40);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(26, 13);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "Infix";
+            // 
+            // tbInfix
+            // 
+            this.tbInfix.Location = new System.Drawing.Point(48, 37);
+            this.tbInfix.Name = "tbInfix";
+            this.tbInfix.Size = new System.Drawing.Size(341, 20);
+            this.tbInfix.TabIndex = 12;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(740, 450);
+            this.Controls.Add(this.tbInfix);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.dgvTruthTable);
             this.Controls.Add(this.lbTruthTableInfo);
             this.Controls.Add(this.gbBinaryReaderTester);
@@ -228,6 +248,8 @@
         private System.Windows.Forms.TextBox tbBinary;
         private System.Windows.Forms.ListBox lbTruthTableInfo;
         private System.Windows.Forms.DataGridView dgvTruthTable;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox tbInfix;
     }
 }
 

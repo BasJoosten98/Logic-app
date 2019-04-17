@@ -82,5 +82,9 @@ namespace LLP_App
         {
             return startConnective.GetAnswer(row);
         }
+        public string GetInfixString()
+        {
+            return startConnective.GetInfix();
+        }
     }
 }
