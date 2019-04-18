@@ -40,7 +40,17 @@ namespace LLP_App
         }
         public override bool GetAnswer(TruthtableRow row)
         {
-            return row.GetValueForArgument(argument);
+            if(row.GetValueForArgument(argument) == '1'){
+                return true;
+            }
+            else if (row.GetValueForArgument(argument) == '0')
+            {
+                return false;
+            }
+            else
+            {
+                throw new Exception("Encountered invalid symbol value for argument " + argument);
+            }
         }
     }
 }

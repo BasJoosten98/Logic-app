@@ -45,8 +45,10 @@
             this.dgvTruthTable = new System.Windows.Forms.DataGridView();
             this.label2 = new System.Windows.Forms.Label();
             this.tbInfix = new System.Windows.Forms.TextBox();
+            this.dgvSimpleTable = new System.Windows.Forms.DataGridView();
             this.gbBinaryReaderTester.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTruthTable)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSimpleTable)).BeginInit();
             this.SuspendLayout();
             // 
             // tbProposition
@@ -205,11 +207,21 @@
             this.tbInfix.Size = new System.Drawing.Size(341, 20);
             this.tbInfix.TabIndex = 12;
             // 
+            // dgvSimpleTable
+            // 
+            this.dgvSimpleTable.AllowUserToOrderColumns = true;
+            this.dgvSimpleTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvSimpleTable.Location = new System.Drawing.Point(434, 169);
+            this.dgvSimpleTable.Name = "dgvSimpleTable";
+            this.dgvSimpleTable.Size = new System.Drawing.Size(239, 191);
+            this.dgvSimpleTable.TabIndex = 13;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(740, 450);
+            this.Controls.Add(this.dgvSimpleTable);
             this.Controls.Add(this.tbInfix);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.dgvTruthTable);
@@ -226,6 +238,7 @@
             this.gbBinaryReaderTester.ResumeLayout(false);
             this.gbBinaryReaderTester.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTruthTable)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSimpleTable)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -250,6 +263,7 @@
         private System.Windows.Forms.DataGridView dgvTruthTable;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tbInfix;
+        private System.Windows.Forms.DataGridView dgvSimpleTable;
     }
 }
 

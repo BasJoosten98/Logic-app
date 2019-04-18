@@ -58,12 +58,15 @@ namespace LLP_App
             lbTruthTableInfo.Items.Clear();
             dgvTruthTable.Columns.Clear();
             dgvTruthTable.Rows.Clear();
+            dgvSimpleTable.Columns.Clear();
+            dgvSimpleTable.Rows.Clear();
 
             if (conHolder == null) { MessageBox.Show("No proposition has been parsed yet"); return; }
 
             table = new Truthtable(conHolder);
             List<char> arguments = conHolder.GetListOfAllArguments();
             List<TruthtableRow> rows = table.Rows;
+            List<TruthtableRow> simpleRows = table.GetSimpleTable();
 
             //create columns
             int counter = 0;
@@ -71,10 +74,14 @@ namespace LLP_App
             {
                 dgvTruthTable.Columns.Add(c.ToString(), c.ToString());
                 dgvTruthTable.Columns[counter].Width = 20;
+                dgvSimpleTable.Columns.Add(c.ToString(), c.ToString());
+                dgvSimpleTable.Columns[counter].Width = 20;
                 counter++;
             }
             dgvTruthTable.Columns.Add("Result", "Result");
             dgvTruthTable.Columns[counter].Width = 50;
+            dgvSimpleTable.Columns.Add("Result", "Result");
+            dgvSimpleTable.Columns[counter].Width = 50;
 
             //create rows
             DataGridViewRow row;
@@ -84,15 +91,23 @@ namespace LLP_App
                 counter = 0;
                 foreach(char c in arguments)
                 {
-                    bool result = r.GetValueForArgument(c);
-                    if (result) { row.Cells[counter].Value = 1; }
-                    else { row.Cells[counter].Value = 0; }
+                    row.Cells[counter].Value = r.GetValueForArgument(c); 
                     counter++;
                 }
-                bool endResult = r.RowValue;
-                if (endResult) { row.Cells[counter].Value = 1; }
-                else { row.Cells[counter].Value = 0; }
+                row.Cells[counter].Value = r.RowValue;
                 dgvTruthTable.Rows.Add(row);
+            }
+            foreach (TruthtableRow r in simpleRows)
+            {
+                row = (DataGridViewRow)dgvSimpleTable.Rows[0].Clone();
+                counter = 0;
+                foreach (char c in arguments)
+                {
+                    row.Cells[counter].Value = r.GetValueForArgument(c);
+                    counter++;
+                }
+                row.Cells[counter].Value = r.RowValue;
+                dgvSimpleTable.Rows.Add(row);
             }
 
             //Read hash code

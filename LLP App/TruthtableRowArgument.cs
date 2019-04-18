@@ -9,12 +9,12 @@ namespace LLP_App
     class TruthtableRowArgument
     {
         private char argument;
-        private bool argumentValue;
+        private char argumentValue;
 
         public char Argument { get { return argument; } }
-        public bool Value { get { return argumentValue; } }
+        public char Value { get { return argumentValue; } }
 
-        public TruthtableRowArgument(char arg, bool value)
+        public TruthtableRowArgument(char arg, char value)
         {
             argument = arg;
             argumentValue = value;

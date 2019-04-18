@@ -9,25 +9,21 @@ namespace LLP_App
     class TruthtableRow
     {
         private List<TruthtableRowArgument> arguments;
-        private bool rowValue;
-        private bool valueHasBeenSet;
+        public char RowValue;
 
         public List<TruthtableRowArgument> Arguments { get { return arguments; } }
-        public bool RowValue { get { if (valueHasBeenSet) { return rowValue; } else { throw new Exception("RowValue has not been set yet"); } } }
-        public bool RowValueHasBeenSet { get { return valueHasBeenSet; } }
 
         public TruthtableRow(List<TruthtableRowArgument> args)
         {
             arguments = args;
         }
-
-        public void SetRowValue(bool value)
+        public TruthtableRow(List<TruthtableRowArgument> args, char rowValue)
         {
-            valueHasBeenSet = true;
-            rowValue = value;
+            arguments = args;
+            RowValue = rowValue;
         }
 
-        public bool GetValueForArgument(char arg)
+        public char GetValueForArgument(char arg)
         {
             foreach(TruthtableRowArgument a in arguments)
             {
