@@ -70,6 +70,7 @@ namespace LLP_App
         public string getAllArgumentsString()
         {
             List<char> fullList = GetListOfAllArguments();
+            if(fullList.Count == 0) { return ""; }
             string holder = "";
             for(int i = 0; i < fullList.Count - 1; i++)
             {

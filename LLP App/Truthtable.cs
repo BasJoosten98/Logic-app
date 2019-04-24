@@ -26,28 +26,35 @@ namespace LLP_App
         {
             if(argumentsChar != null)
             {
-                //calculting row true/false swap time (when to print true and when to print false)
-                List<int> rowLenght = new List<int>();
-                for(int i = argumentsChar.Count -1; i >= 0; i--)
+                if (argumentsChar.Count > 0)
                 {
-                    rowLenght.Add((int)Math.Pow(2, i));
-                }
-
-                //creating all rows
-                TruthtableRow tempRow;
-                TruthtableRowArgument tempArg;
-                TruthtableRowArgument[] args = new TruthtableRowArgument[argumentsChar.Count];
-                for(int i = rowLenght[0]*2 - 1; i >= 0; i--) //going to next row
-                {
-                    for(int j = 0; j < argumentsChar.Count; j++) //creating one row
+                    //calculting row true/false swap time (when to print true and when to print false)
+                    List<int> rowLenght = new List<int>();
+                    for (int i = argumentsChar.Count - 1; i >= 0; i--)
                     {
-                        int cal = i / rowLenght[j];
-                        if(cal%2 == 0) { tempArg = new TruthtableRowArgument(argumentsChar[j], '1'); }
-                        else { tempArg = new TruthtableRowArgument(argumentsChar[j], '0'); }
-                        args[j] = tempArg;
+                        rowLenght.Add((int)Math.Pow(2, i));
                     }
-                    tempRow = new TruthtableRow(args.ToList());
-                    rows.Add(tempRow);
+
+                    //creating all rows
+                    TruthtableRow tempRow;
+                    TruthtableRowArgument tempArg;
+                    TruthtableRowArgument[] args = new TruthtableRowArgument[argumentsChar.Count];
+                    for (int i = rowLenght[0] * 2 - 1; i >= 0; i--) //going to next row
+                    {
+                        for (int j = 0; j < argumentsChar.Count; j++) //creating one row
+                        {
+                            int cal = i / rowLenght[j];
+                            if (cal % 2 == 0) { tempArg = new TruthtableRowArgument(argumentsChar[j], '1'); }
+                            else { tempArg = new TruthtableRowArgument(argumentsChar[j], '0'); }
+                            args[j] = tempArg;
+                        }
+                        tempRow = new TruthtableRow(args.ToList());
+                        rows.Add(tempRow);
+                    }
+                }
+                else //Only 1 and/or 0 arguments
+                {
+                    rows.Add(new TruthtableRow(new List<TruthtableRowArgument>()));
                 }
             }
             else { throw new NullReferenceException(); }
@@ -64,6 +71,16 @@ namespace LLP_App
 
         public List<TruthtableRow> GetSimpleTable()
         {
+            if(argumentsChar.Count == 0) //only 0 and/or 1
+            {
+                List<TruthtableRow> tempList = new List<TruthtableRow>();
+                TruthtableRow tempRow = new TruthtableRow(new List<TruthtableRowArgument>());
+                bool rowValue = conHolder.GetTruthtableRowAnswer(tempRow);
+                if (rowValue) { tempRow.RowValue = '1'; }
+                else { tempRow.RowValue = '0'; }
+                tempList.Add(tempRow);
+                return tempList;
+            }
             return getSimpleTableRec(new List<TruthtableRowArgument>(), 0);
         }
         private List<TruthtableRow> getSimpleTableRec(List<TruthtableRowArgument> argList, int argIndex)

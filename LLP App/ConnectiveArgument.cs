@@ -34,13 +34,16 @@ namespace LLP_App
         }
         public override List<char> GetAllArguments()
         {
+            if(argument == '0' || argument == '1') { return new List<char>(); }
             List<char> fullList = new List<char>();
             fullList.Add(argument);
             return fullList;
         }
         public override bool GetAnswer(TruthtableRow row)
         {
-            if(row.GetValueForArgument(argument) == '1'){
+            if(argument == '1') { return true; }
+            else if(argument == '0') { return false; }
+            else if(row.GetValueForArgument(argument) == '1'){
                 return true;
             }
             else if (row.GetValueForArgument(argument) == '0')

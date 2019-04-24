@@ -12,7 +12,7 @@ namespace LLP_App
     {
         private static List<char> PropositionList;
         private static char[] ConnectiveTypes = new char[] { '~', '=', '|', '>', '&' };
-        private static char[] Arguments = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
+        private static char[] Arguments = "ABCDEFGHIJKLMNOPQRSTUVWXYZ10".ToCharArray();
         private static Random rand = new Random();
 
         public static Connective ReadPropositionString(string proposition)
@@ -271,6 +271,11 @@ namespace LLP_App
             if (totalDives == 0)
             {
                 char randomArgument = Arguments[rand.Next(0, maxDifferentArguments + 1)];
+                if (rand.Next(1, 11) <= 2) //chance of getting 1 or 0
+                {
+                    if (rand.Next(0, 2) == 0) { randomArgument = '0'; }
+                    else { randomArgument = '1'; }
+                }               
                 return randomArgument.ToString();
             }
             int ConnectiveTypeIndex = rand.Next(0, ConnectiveTypes.Length); 
@@ -295,6 +300,67 @@ namespace LLP_App
                 holder += ")";
             }
             return holder;
+        }
+        public static List<TruthtableRow> GetSubrowsOfMainRow(TruthtableRow main)
+        {
+            return getSubrowsOfMainRowRec(main, 0);
+        }
+        private static List<TruthtableRow> getSubrowsOfMainRowRec(TruthtableRow main, int argIndex)
+        {
+            if(argIndex == main.Arguments.Count) { return new List<TruthtableRow>() { main }; }
+            List<TruthtableRow> subsets = new List<TruthtableRow>();
+            if(main.Arguments[argIndex].Value == '*')
+            {
+                //copy Main and adjust it
+                List<TruthtableRowArgument> newMainArguments = new List<TruthtableRowArgument>();
+                for(int i = 0; i < main.Arguments.Count; i++) //copy arguments, but change current argument (on index)
+                {
+                    if(i == argIndex)
+                    {
+                        newMainArguments.Add(new TruthtableRowArgument(main.Arguments[i].Argument, '1'));
+                    }
+                    else
+                    {
+                        newMainArguments.Add(main.Arguments[i]);
+                    }
+                }
+                TruthtableRow newMain = new TruthtableRow(newMainArguments);
+                newMain.RowValue = main.RowValue;
+                //get subRows if current arg == '1'
+                foreach(TruthtableRow r in getSubrowsOfMainRowRec(newMain, argIndex + 1))
+                {
+                    subsets.Add(r);
+                }
+                TruthtableRowArgument[] newMainArguments2 = new TruthtableRowArgument[newMainArguments.Count];
+                newMainArguments.CopyTo(newMainArguments2);
+                newMainArguments2[argIndex] = new TruthtableRowArgument(main.Arguments[argIndex].Argument, '0');
+                TruthtableRow newMain2 = new TruthtableRow(newMainArguments2.ToList());
+                newMain2.RowValue = main.RowValue;
+                //get subRows if current arg == '0'
+                foreach (TruthtableRow r in getSubrowsOfMainRowRec(newMain2, argIndex + 1))
+                {
+                    subsets.Add(r);
+                }
+            }
+            else if (main.Arguments[argIndex].Value == '1')
+            {
+                foreach (TruthtableRow r in getSubrowsOfMainRowRec(main, argIndex + 1))
+                {
+                    subsets.Add(r);
+                }
+            }
+            else if (main.Arguments[argIndex].Value == '0')
+            {
+                foreach (TruthtableRow r in getSubrowsOfMainRowRec(main, argIndex + 1))
+                {
+                    subsets.Add(r);
+                }
+            }
+            else
+            {
+                throw new Exception("Unknown char");
+            }
+            return subsets;
         }
 
     }

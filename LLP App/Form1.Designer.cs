@@ -46,6 +46,14 @@
             this.label2 = new System.Windows.Forms.Label();
             this.tbInfix = new System.Windows.Forms.TextBox();
             this.dgvSimpleTable = new System.Windows.Forms.DataGridView();
+            this.label3 = new System.Windows.Forms.Label();
+            this.tbDisjunctive = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.tbDisjunctiveSimple = new System.Windows.Forms.TextBox();
+            this.tbDisjunctiveParse = new System.Windows.Forms.TextBox();
+            this.tbDisjunctiveSimpleParse = new System.Windows.Forms.TextBox();
+            this.btnParseDisjunctive = new System.Windows.Forms.Button();
+            this.btnDisjunctiveSimpleParse = new System.Windows.Forms.Button();
             this.gbBinaryReaderTester.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTruthTable)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSimpleTable)).BeginInit();
@@ -194,7 +202,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(16, 40);
+            this.label2.Location = new System.Drawing.Point(13, 38);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(26, 13);
             this.label2.TabIndex = 11;
@@ -202,7 +210,7 @@
             // 
             // tbInfix
             // 
-            this.tbInfix.Location = new System.Drawing.Point(48, 37);
+            this.tbInfix.Location = new System.Drawing.Point(48, 35);
             this.tbInfix.Name = "tbInfix";
             this.tbInfix.Size = new System.Drawing.Size(341, 20);
             this.tbInfix.TabIndex = 12;
@@ -216,11 +224,85 @@
             this.dgvSimpleTable.Size = new System.Drawing.Size(239, 191);
             this.dgvSimpleTable.TabIndex = 13;
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(13, 64);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(121, 13);
+            this.label3.TabIndex = 14;
+            this.label3.Text = "Disjunctive Normal Form";
+            // 
+            // tbDisjunctive
+            // 
+            this.tbDisjunctive.Location = new System.Drawing.Point(140, 61);
+            this.tbDisjunctive.Name = "tbDisjunctive";
+            this.tbDisjunctive.Size = new System.Drawing.Size(249, 20);
+            this.tbDisjunctive.TabIndex = 15;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(13, 90);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(155, 13);
+            this.label4.TabIndex = 16;
+            this.label4.Text = "Disjunctive Normal Form Simple";
+            // 
+            // tbDisjunctiveSimple
+            // 
+            this.tbDisjunctiveSimple.Location = new System.Drawing.Point(174, 87);
+            this.tbDisjunctiveSimple.Name = "tbDisjunctiveSimple";
+            this.tbDisjunctiveSimple.Size = new System.Drawing.Size(215, 20);
+            this.tbDisjunctiveSimple.TabIndex = 17;
+            // 
+            // tbDisjunctiveParse
+            // 
+            this.tbDisjunctiveParse.Location = new System.Drawing.Point(395, 61);
+            this.tbDisjunctiveParse.Name = "tbDisjunctiveParse";
+            this.tbDisjunctiveParse.Size = new System.Drawing.Size(249, 20);
+            this.tbDisjunctiveParse.TabIndex = 18;
+            // 
+            // tbDisjunctiveSimpleParse
+            // 
+            this.tbDisjunctiveSimpleParse.Location = new System.Drawing.Point(395, 87);
+            this.tbDisjunctiveSimpleParse.Name = "tbDisjunctiveSimpleParse";
+            this.tbDisjunctiveSimpleParse.Size = new System.Drawing.Size(249, 20);
+            this.tbDisjunctiveSimpleParse.TabIndex = 19;
+            // 
+            // btnParseDisjunctive
+            // 
+            this.btnParseDisjunctive.Location = new System.Drawing.Point(650, 59);
+            this.btnParseDisjunctive.Name = "btnParseDisjunctive";
+            this.btnParseDisjunctive.Size = new System.Drawing.Size(84, 23);
+            this.btnParseDisjunctive.TabIndex = 20;
+            this.btnParseDisjunctive.Text = "Parse";
+            this.btnParseDisjunctive.UseVisualStyleBackColor = true;
+            this.btnParseDisjunctive.Click += new System.EventHandler(this.btnParseDisjunctive_Click);
+            // 
+            // btnDisjunctiveSimpleParse
+            // 
+            this.btnDisjunctiveSimpleParse.Location = new System.Drawing.Point(650, 85);
+            this.btnDisjunctiveSimpleParse.Name = "btnDisjunctiveSimpleParse";
+            this.btnDisjunctiveSimpleParse.Size = new System.Drawing.Size(84, 23);
+            this.btnDisjunctiveSimpleParse.TabIndex = 21;
+            this.btnDisjunctiveSimpleParse.Text = "Parse";
+            this.btnDisjunctiveSimpleParse.UseVisualStyleBackColor = true;
+            this.btnDisjunctiveSimpleParse.Click += new System.EventHandler(this.btnDisjunctiveSimpleParse_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(740, 450);
+            this.Controls.Add(this.btnDisjunctiveSimpleParse);
+            this.Controls.Add(this.btnParseDisjunctive);
+            this.Controls.Add(this.tbDisjunctiveSimpleParse);
+            this.Controls.Add(this.tbDisjunctiveParse);
+            this.Controls.Add(this.tbDisjunctiveSimple);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.tbDisjunctive);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.dgvSimpleTable);
             this.Controls.Add(this.tbInfix);
             this.Controls.Add(this.label2);
@@ -264,6 +346,14 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tbInfix;
         private System.Windows.Forms.DataGridView dgvSimpleTable;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox tbDisjunctive;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox tbDisjunctiveSimple;
+        private System.Windows.Forms.TextBox tbDisjunctiveParse;
+        private System.Windows.Forms.TextBox tbDisjunctiveSimpleParse;
+        private System.Windows.Forms.Button btnParseDisjunctive;
+        private System.Windows.Forms.Button btnDisjunctiveSimpleParse;
     }
 }
 
