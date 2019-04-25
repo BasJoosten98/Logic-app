@@ -24,6 +24,7 @@ namespace LLP_App
         {
             string proposition = tbProposition.Text;
             createConnectiveHolder(proposition);
+            generateTruthtablesAndInformation();
         }
         private void createConnectiveHolder(string proposition)
         {
@@ -58,7 +59,7 @@ namespace LLP_App
             tbProposition.Text = proposition;
         }
         
-        private void btnGenerateTruthtable_Click(object sender, EventArgs e)
+        private void generateTruthtablesAndInformation()
         {
             //clear tables
             lbTruthTableInfo.Items.Clear();
@@ -76,7 +77,7 @@ namespace LLP_App
 
             //create form table's columns
             int counter = 0;
-            foreach(char c in arguments)
+            foreach (char c in arguments)
             {
                 dgvTruthTable.Columns.Add(c.ToString(), c.ToString());
                 dgvTruthTable.Columns[counter].Width = 20;
@@ -95,9 +96,9 @@ namespace LLP_App
             {
                 row = (DataGridViewRow)dgvTruthTable.Rows[0].Clone();
                 counter = 0;
-                foreach(char c in arguments)
+                foreach (char c in arguments)
                 {
-                    row.Cells[counter].Value = r.GetValueForArgument(c); 
+                    row.Cells[counter].Value = r.GetValueForArgument(c);
                     counter++;
                 }
                 row.Cells[counter].Value = r.RowValue;
@@ -115,130 +116,19 @@ namespace LLP_App
                 row.Cells[counter].Value = r.RowValue;
                 dgvSimpleTable.Rows.Add(row);
             }
+
+            //GETTING HASH CODE
             lbTruthTableInfo.Items.Add("Arguments: " + table.ConHolder.getAllArgumentsString());
             lbTruthTableInfo.Items.Add("Hash (binary): " + table.GetHashCodeBinary());
             lbTruthTableInfo.Items.Add("Hash (hexadecimal): " + table.GetHashCodeHexadecimal());
-            readDisjunctiveForm(rows, false);
-            readDisjunctiveForm(simpleRows, true);
-            
-        }
-        //private void readHashCodeFromTable()
-        //{
-        //    //Read hash code
-        //    string hashCodeBinary = "";
-        //    for (int r = 0; r < dgvTruthTable.Rows.Count; r++)
-        //    {
-        //        hashCodeBinary += dgvTruthTable.Rows[r].Cells[dgvTruthTable.Rows[r].Cells.Count - 1].Value;
-        //    }
-        //    string hashCodeHexa = BinaryReader.BinaryToHexadecimal(hashCodeBinary);
-        //    lbTruthTableInfo.Items.Add("Arguments: " + conHolder.getAllArgumentsString());
-        //    lbTruthTableInfo.Items.Add("Hash (binary): " + hashCodeBinary);
-        //    lbTruthTableInfo.Items.Add("Hash (hexadecimal): " + hashCodeHexa);
-        //}
-        private void readDisjunctiveForm(List<TruthtableRow> rows, bool fromSimple)
-        {
-            List<TruthtableRow> filteredRows = new List<TruthtableRow>(); //filter out rows that containt arguments == '*'
-            //if (fromSimple)
-            //{
-            //    foreach (TruthtableRow r in rows)
-            //    {
-            //        foreach (TruthtableRow fr in PropositionReader.GetSubrowsOfMainRow(r))
-            //        {
-            //            filteredRows.Add(fr);
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    filteredRows = rows;
-            //}
-            filteredRows = rows;
-            string disHolder = ""; 
-            List<string> parseRowsOr = new List<string>();
-            List<string> parseRowsAnd = new List<string>();
 
-            foreach (TruthtableRow r in filteredRows)
-            {
-                if(r.RowValue == '1')
-                {
-                    string disHolder2 = "";
-
-                    //OBTAIN INFORMATION
-                    foreach(TruthtableRowArgument arg in r.Arguments)
-                    {
-                        if (arg.Value != '*')
-                        {
-                            if (disHolder2 != "")
-                            {
-                                disHolder2 += " & ";
-                            }
-                            if (arg.Value == '1') { disHolder2 += arg.Argument; parseRowsAnd.Add(arg.Argument.ToString()); }
-                            else { disHolder2 += "~" + arg.Argument; parseRowsAnd.Add("~(" + arg.Argument.ToString() + ")" ); }
-                        }
-                    }
-                    //READER PART
-                    if (disHolder2 != "")
-                    {
-                        if (disHolder != "")
-                        {
-                            disHolder += " | ";
-                        }
-                        disHolder += "(";
-                        disHolder += disHolder2 + ")";
-                    }
-                    //PARSE PART (Count == 0 will be skipped)
-                    if (parseRowsAnd.Count != 0)
-                    {
-                        if (parseRowsAnd.Count == 1) { parseRowsOr.Add(parseRowsAnd[0]); }
-                        else
-                        {
-                            string parseHolder2 = "";
-                            for (int i = parseRowsAnd.Count - 1; i >= 0; i--)
-                            {
-                                if (i >= 2)
-                                {
-                                    parseHolder2 += "&(" + parseRowsAnd[parseRowsAnd.Count - i - 1] + ",";
-                                }
-                                else
-                                {
-                                    parseHolder2 += "&(" + parseRowsAnd[parseRowsAnd.Count - i - 1] + "," + parseRowsAnd[parseRowsAnd.Count - i];
-                                    break;
-                                }
-                            }
-                            for (int i = 1; i <= parseRowsAnd.Count - 1; i++)
-                            {
-                                parseHolder2 += ")";
-                            }
-                            parseRowsOr.Add(parseHolder2);
-                        }
-                    }
-                    parseRowsAnd = new List<string>();
-                }
-            }
-            string parseHolder = "";
-            if(parseRowsOr.Count == 0) { parseHolder = filteredRows[0].RowValue.ToString(); }
-            else if (parseRowsOr.Count == 1) { parseHolder = parseRowsOr[0]; }
-            else
-            {               
-                for (int i = parseRowsOr.Count - 1; i >= 0; i--)
-                {
-                    if (i >= 2)
-                    {
-                        parseHolder += "|(" + parseRowsOr[parseRowsOr.Count - i - 1] + ",";
-                    }
-                    else
-                    {
-                        parseHolder += "|(" + parseRowsOr[parseRowsOr.Count - i - 1] + "," + parseRowsOr[parseRowsOr.Count - i];
-                        break;
-                    }
-                }
-                for (int i = 1; i <= parseRowsOr.Count - 1; i++)
-                {
-                    parseHolder += ")";
-                }
-            }
-            if (fromSimple) { tbDisjunctiveSimple.Text = disHolder; tbDisjunctiveSimpleParse.Text = parseHolder; }
-            else { tbDisjunctive.Text = disHolder; tbDisjunctiveParse.Text = parseHolder; }
+            //GETTING DISJUNCTIVE AND IT'S PARSE
+            string[] disjunctAndParse = PropositionReader.readDisjunctiveForm(rows);
+            tbDisjunctive.Text = disjunctAndParse[0];
+            tbDisjunctiveParse.Text = disjunctAndParse[1];
+            disjunctAndParse = PropositionReader.readDisjunctiveForm(simpleRows);
+            tbDisjunctiveSimple.Text = disjunctAndParse[0];
+            tbDisjunctiveSimpleParse.Text = disjunctAndParse[1];
         }
 
         private void btnBinary_Click(object sender, EventArgs e)
@@ -272,12 +162,49 @@ namespace LLP_App
         {
             string proposition = tbDisjunctiveParse.Text;
             createConnectiveHolder(proposition);
+            generateTruthtablesAndInformation();
         }
 
         private void btnDisjunctiveSimpleParse_Click(object sender, EventArgs e)
         {
             string proposition = tbDisjunctiveSimpleParse.Text;
             createConnectiveHolder(proposition);
+            generateTruthtablesAndInformation();
+        }
+
+        private void btnStartTimer_Click(object sender, EventArgs e)
+        {
+            timer1.Enabled = true;
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            string hashCode;
+
+            tbProposition.Text = PropositionReader.CreateRandomPropositionString();
+            createConnectiveHolder(tbProposition.Text);
+            generateTruthtablesAndInformation();
+            hashCode = table.GetHashCodeHexadecimal();
+
+            createConnectiveHolder(tbDisjunctiveParse.Text);
+            generateTruthtablesAndInformation();
+            if(hashCode != table.GetHashCodeHexadecimal()) { timer1.Enabled = false; MessageBox.Show("hashCode test failed, please have a look, timer disabled"); }
+
+            createConnectiveHolder(tbDisjunctiveSimpleParse.Text);
+            generateTruthtablesAndInformation();
+            if (hashCode != table.GetHashCodeHexadecimal()) { timer1.Enabled = false; MessageBox.Show("hashCode test failed, please have a look, timer disabled"); }
+        }
+
+        private void btnPauseTimer_Click(object sender, EventArgs e)
+        {
+            if (timer1.Enabled)
+            {
+                timer1.Enabled = false;
+            }
+            else
+            {
+                timer1.Enabled = true;
+            }
         }
     }
 }

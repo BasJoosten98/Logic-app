@@ -17,11 +17,11 @@ namespace LLP_App
 
         public static Connective ReadPropositionString(string proposition)
         {
-            Console.WriteLine("PropositionReader: Reading string '" + proposition + "'.");
+            //Console.WriteLine("PropositionReader: Reading string '" + proposition + "'.");
             PropositionList = proposition.ToList<char>();
             Connective result = null;
             result = readPropositionStringRec();
-            Console.WriteLine("PropositionReader: Read string '" + proposition + "' succesfully.");
+            //Console.WriteLine("PropositionReader: Read string '" + proposition + "' succesfully.");
             return result;
         }
         private static Connective readPropositionStringRec()
@@ -237,7 +237,7 @@ namespace LLP_App
         public static string CreateStructurePicture(Connective startCon)
         {
             if(startCon == null) { throw new NullReferenceException(); }
-            Console.WriteLine("PropositionReader: creating structure picture");
+            //Console.WriteLine("PropositionReader: creating structure picture");
             List<Connective> allConnectives = startCon.GetAllConnectives();
 
             FileStream fs;
@@ -292,7 +292,7 @@ namespace LLP_App
             dot.StartInfo.Arguments = "-Tpng -oabc.png abc.dot";
             dot.Start();
             dot.WaitForExit();
-            Console.WriteLine("PropositionReader: structure picture created succesfully");
+            //Console.WriteLine("PropositionReader: structure picture created succesfully");
             return "abc.png";
         }
         public static string CreateRandomPropositionString()
@@ -397,6 +397,142 @@ namespace LLP_App
                 throw new Exception("Unknown char");
             }
             return subsets;
+        }
+        public static string[] readDisjunctiveForm(List<TruthtableRow> rows)
+        {
+            string disHolder = "";
+            List<string> parseRowsOr = new List<string>();
+            List<string> parseRowsAnd = new List<string>();
+            List<char> arguments = new List<char>();
+            bool[] argumentUsed;
+            string[] disjunctiveFormAndParse = new string[2];
+
+            //GET ARGUMENTS
+            foreach (TruthtableRowArgument arg in rows[0].Arguments)
+            {
+                arguments.Add(arg.Argument);
+            }
+            argumentUsed = new bool[arguments.Count];
+
+            //GO THROUGH EVERY ROW AND SAVE INFORMATION FOR PARSE AND DISJUNCTIVE
+            foreach (TruthtableRow r in rows)
+            {
+                if (r.RowValue == '1')
+                {
+                    string disHolder2 = "";
+
+                    //OBTAIN INFORMATION ABOUT CURRENT ROW
+                    foreach (TruthtableRowArgument arg in r.Arguments)
+                    {
+                        if (arg.Value != '*') //NOT ALLOWED (can only be 1 or 0)
+                        {
+                            if (disHolder2 != "")
+                            {
+                                disHolder2 += " & ";
+                            }
+                            if (arg.Value == '1')
+                            {
+                                disHolder2 += arg.Argument;
+                                parseRowsAnd.Add(arg.Argument.ToString());
+                            }
+                            else
+                            {
+                                disHolder2 += "~" + arg.Argument;
+                                parseRowsAnd.Add("~(" + arg.Argument.ToString() + ")");
+                            }
+                            int index = arguments.IndexOf(arg.Argument);
+                            argumentUsed[index] = true;
+                        }
+                    }
+                    //SAVE INFORMATION AS DISJUNCTIVE PART
+                    if (disHolder2 != "")
+                    {
+                        if (disHolder != "")
+                        {
+                            disHolder += " | ";
+                        }
+                        disHolder += "(";
+                        disHolder += disHolder2 + ")";
+                    }
+                    //SAVE INFORMATION AS PARSE PART
+                    if (parseRowsAnd.Count != 0)
+                    {
+                        if (parseRowsAnd.Count == 1) { parseRowsOr.Add(parseRowsAnd[0]); }
+                        else
+                        {
+                            string parseHolder2 = "";
+                            for (int i = parseRowsAnd.Count - 1; i >= 0; i--)
+                            {
+                                if (i >= 2)
+                                {
+                                    parseHolder2 += "&(" + parseRowsAnd[parseRowsAnd.Count - i - 1] + ",";
+                                }
+                                else
+                                {
+                                    parseHolder2 += "&(" + parseRowsAnd[parseRowsAnd.Count - i - 1] + "," + parseRowsAnd[parseRowsAnd.Count - i];
+                                    break;
+                                }
+                            }
+                            for (int i = 1; i <= parseRowsAnd.Count - 1; i++)
+                            {
+                                parseHolder2 += ")";
+                            }
+                            parseRowsOr.Add(parseHolder2);
+                        }
+                    }
+                    parseRowsAnd = new List<string>();
+                }
+            }
+
+            //FINALIZE PARSE PART BY ADDING ALL AND-STRINGS WITH OR-STRINGS TO EACH OTHER
+            string parseHolder = "";
+            if (parseRowsOr.Count == 0) { parseHolder = rows[0].RowValue.ToString(); }
+            else if (parseRowsOr.Count == 1) { parseHolder = parseRowsOr[0]; }
+            else
+            {
+                for (int i = parseRowsOr.Count - 1; i >= 0; i--)
+                {
+                    if (i >= 2)
+                    {
+                        parseHolder += "|(" + parseRowsOr[parseRowsOr.Count - i - 1] + ",";
+                    }
+                    else
+                    {
+                        parseHolder += "|(" + parseRowsOr[parseRowsOr.Count - i - 1] + "," + parseRowsOr[parseRowsOr.Count - i];
+                        break;
+                    }
+                }
+                for (int i = 1; i <= parseRowsOr.Count - 1; i++)
+                {
+                    parseHolder += ")";
+                }
+            }
+
+            //ADD MISSING ARGUMENTS TO GAIN THE SAME HASH CODE - JORIS
+            string tempHolder = "";
+            int counter = 0;
+            for (int i = 0; i < argumentUsed.Length; i++)
+            {
+                if (argumentUsed[i] == false)
+                {
+                    tempHolder += "&(" + arguments[i] + ",";
+                    counter++;
+                }
+            }
+            if (counter > 0)
+            {
+                tempHolder += "0";
+                for (int i = 0; i < counter; i++)
+                {
+                    tempHolder += ')';
+                }
+                parseHolder = "|(" + tempHolder + "," + parseHolder + ")";
+            }
+
+            //RETURN RESULTING INFORMATION
+            disjunctiveFormAndParse[0] = disHolder;
+            disjunctiveFormAndParse[1] = parseHolder;
+            return disjunctiveFormAndParse;
         }
 
     }

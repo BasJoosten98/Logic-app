@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tbProposition = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnParseProposition = new System.Windows.Forms.Button();
             this.btnViewTree = new System.Windows.Forms.Button();
             this.btnCreateRandomProposition = new System.Windows.Forms.Button();
-            this.btnGenerateTruthtable = new System.Windows.Forms.Button();
             this.gbBinaryReaderTester = new System.Windows.Forms.GroupBox();
             this.btnHexadecimal = new System.Windows.Forms.Button();
             this.btnNumber = new System.Windows.Forms.Button();
@@ -54,6 +54,9 @@
             this.tbDisjunctiveSimpleParse = new System.Windows.Forms.TextBox();
             this.btnParseDisjunctive = new System.Windows.Forms.Button();
             this.btnDisjunctiveSimpleParse = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.btnStartTimer = new System.Windows.Forms.Button();
+            this.btnPauseTimer = new System.Windows.Forms.Button();
             this.gbBinaryReaderTester.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTruthTable)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSimpleTable)).BeginInit();
@@ -104,16 +107,6 @@
             this.btnCreateRandomProposition.Text = "Create Random Proposition";
             this.btnCreateRandomProposition.UseVisualStyleBackColor = true;
             this.btnCreateRandomProposition.Click += new System.EventHandler(this.btnCreateRandomProposition_Click);
-            // 
-            // btnGenerateTruthtable
-            // 
-            this.btnGenerateTruthtable.Location = new System.Drawing.Point(12, 140);
-            this.btnGenerateTruthtable.Name = "btnGenerateTruthtable";
-            this.btnGenerateTruthtable.Size = new System.Drawing.Size(239, 23);
-            this.btnGenerateTruthtable.TabIndex = 7;
-            this.btnGenerateTruthtable.Text = "Generate Truthtable";
-            this.btnGenerateTruthtable.UseVisualStyleBackColor = true;
-            this.btnGenerateTruthtable.Click += new System.EventHandler(this.btnGenerateTruthtable_Click);
             // 
             // gbBinaryReaderTester
             // 
@@ -290,11 +283,37 @@
             this.btnDisjunctiveSimpleParse.UseVisualStyleBackColor = true;
             this.btnDisjunctiveSimpleParse.Click += new System.EventHandler(this.btnDisjunctiveSimpleParse_Click);
             // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // btnStartTimer
+            // 
+            this.btnStartTimer.Location = new System.Drawing.Point(679, 308);
+            this.btnStartTimer.Name = "btnStartTimer";
+            this.btnStartTimer.Size = new System.Drawing.Size(54, 23);
+            this.btnStartTimer.TabIndex = 22;
+            this.btnStartTimer.Text = "Start";
+            this.btnStartTimer.UseVisualStyleBackColor = true;
+            this.btnStartTimer.Click += new System.EventHandler(this.btnStartTimer_Click);
+            // 
+            // btnPauseTimer
+            // 
+            this.btnPauseTimer.Location = new System.Drawing.Point(679, 337);
+            this.btnPauseTimer.Name = "btnPauseTimer";
+            this.btnPauseTimer.Size = new System.Drawing.Size(54, 23);
+            this.btnPauseTimer.TabIndex = 23;
+            this.btnPauseTimer.Text = "Pause";
+            this.btnPauseTimer.UseVisualStyleBackColor = true;
+            this.btnPauseTimer.Click += new System.EventHandler(this.btnPauseTimer_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(740, 450);
+            this.Controls.Add(this.btnPauseTimer);
+            this.Controls.Add(this.btnStartTimer);
             this.Controls.Add(this.btnDisjunctiveSimpleParse);
             this.Controls.Add(this.btnParseDisjunctive);
             this.Controls.Add(this.tbDisjunctiveSimpleParse);
@@ -309,7 +328,6 @@
             this.Controls.Add(this.dgvTruthTable);
             this.Controls.Add(this.lbTruthTableInfo);
             this.Controls.Add(this.gbBinaryReaderTester);
-            this.Controls.Add(this.btnGenerateTruthtable);
             this.Controls.Add(this.btnCreateRandomProposition);
             this.Controls.Add(this.btnViewTree);
             this.Controls.Add(this.btnParseProposition);
@@ -333,7 +351,6 @@
         private System.Windows.Forms.Button btnParseProposition;
         private System.Windows.Forms.Button btnViewTree;
         private System.Windows.Forms.Button btnCreateRandomProposition;
-        private System.Windows.Forms.Button btnGenerateTruthtable;
         private System.Windows.Forms.GroupBox gbBinaryReaderTester;
         private System.Windows.Forms.Button btnHexadecimal;
         private System.Windows.Forms.Button btnNumber;
@@ -354,6 +371,9 @@
         private System.Windows.Forms.TextBox tbDisjunctiveSimpleParse;
         private System.Windows.Forms.Button btnParseDisjunctive;
         private System.Windows.Forms.Button btnDisjunctiveSimpleParse;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button btnStartTimer;
+        private System.Windows.Forms.Button btnPauseTimer;
     }
 }
 
