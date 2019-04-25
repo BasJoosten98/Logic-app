@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LLP_App
 {
-    class ConnectiveNot : Connective
+    class ConnectiveNot : ConnectiveOne
     {
         public ConnectiveNot()
         {
@@ -27,10 +27,6 @@ namespace LLP_App
                 con1 = con;
             }
             else { throw new NullReferenceException(); }
-        }
-        public override void setRightConnective(Connective con)
-        {
-            throw new Exception("Connective NOT does not have a second input");
         }
         public override bool GetAnswer(TruthtableRow row)
         {

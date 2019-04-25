@@ -40,7 +40,7 @@ namespace LLP_App
                             {
                                 throw new Exception("'" + Head.GetLocalString() + "' does not need 2 inputs, please remove ','");
                             }
-                            if (Head.Con1 == null)
+                            if (((ConnectiveOne)Head).Con1 == null)
                             {
                                 throw new Exception("'" + Head.GetLocalString() + "' is missing a left connective");
                             }
@@ -72,7 +72,7 @@ namespace LLP_App
                             {
                                 throw new Exception("'" + Head.GetLocalString() + "' has no inputs, please remove ')'");
                             }
-                            if (Head.Con1 == null)
+                            if (((ConnectiveOne)Head).Con1 == null)
                             {
                                 throw new Exception("'" + Head.GetLocalString() + "' is missing a left connective");
                             }
@@ -83,7 +83,7 @@ namespace LLP_App
                             {
                                 throw new Exception("'" + Head.GetLocalString() + "' does not need 2 inputs, please remove ')'");
                             }
-                            if (Head.Con2 == null)
+                            if (((ConnectiveTwo)Head).Con2 == null)
                             {
                                 throw new Exception("'" + Head.GetLocalString() + "' is missing a right connective");
                             }
@@ -108,16 +108,30 @@ namespace LLP_App
                                 case 1:
                                     if(Head != null)
                                     {
-                                        con = readPropositionStringRec();
-                                        Head.setLeftConnective(con);
+                                        if (!(Head is ConnectiveArgument))
+                                        {
+                                            con = readPropositionStringRec();
+                                            ((ConnectiveOne)Head).setLeftConnective(con);
+                                        }
+                                        else
+                                        {
+                                            throw new Exception("Argument does not need any input");
+                                        }
                                     }
                                     else { throw new Exception("Internal index problem occured (index = 1, Head = null)"); }
                                     break;
                                 case 2:
                                     if (Head != null)
                                     {
-                                        con = readPropositionStringRec();
-                                        Head.setRightConnective(con);
+                                        if (Head is ConnectiveTwo)
+                                        {
+                                            con = readPropositionStringRec();
+                                            ((ConnectiveTwo)Head).setRightConnective(con);
+                                        }
+                                        else
+                                        {
+                                            throw new Exception("Argument and/or negation does not need second input");
+                                        }
                                     }
                                     else { throw new Exception("Internal index problem occured (index = 2, Head = null)"); }
                                     break;
@@ -141,16 +155,30 @@ namespace LLP_App
                                 case 1:
                                     if (Head != null)
                                     {
-                                        Head.setLeftConnective(con);
-                                        PropositionList.RemoveAt(0);
+                                        if (!(Head is ConnectiveArgument))
+                                        {
+                                            ((ConnectiveOne)Head).setLeftConnective(con);
+                                            PropositionList.RemoveAt(0);
+                                        }
+                                        else
+                                        {
+                                            throw new Exception("Argument does not need any input");
+                                        }                                        
                                     }
                                     else { throw new Exception("Internal index problem occured (index = 1, Head = null)"); }
                                     break;
                                 case 2:
                                     if (Head != null)
                                     {
-                                        Head.setRightConnective(con);
-                                        PropositionList.RemoveAt(0);
+                                        if (!(Head is ConnectiveArgument))
+                                        {
+                                            ((ConnectiveTwo)Head).setRightConnective(con);
+                                            PropositionList.RemoveAt(0);
+                                        }
+                                        else
+                                        {
+                                            throw new Exception("Argument does not need any input");
+                                        }
                                     }
                                     else { throw new Exception("Internal index problem occured (index = 2, Head = null)"); }
                                     break;
@@ -176,12 +204,12 @@ namespace LLP_App
                 {
                     if (Head is ConnectiveNot)
                     {
-                        if (Head.Con1 == null) { throw new Exception("'" + Head.GetLocalString() + "' is missing a left connective"); }
+                        if (((ConnectiveOne)Head).Con1 == null) { throw new Exception("'" + Head.GetLocalString() + "' is missing a left connective"); }
                     }
                     else
                     {
-                        if (Head.Con1 == null) { throw new Exception("'" + Head.GetLocalString() + "' is missing a left connective"); }
-                        if (Head.Con2 == null) { throw new Exception("'" + Head.GetLocalString() + "' is missing a right connective"); }
+                        if (((ConnectiveTwo)Head).Con1 == null) { throw new Exception("'" + Head.GetLocalString() + "' is missing a left connective"); }
+                        if (((ConnectiveTwo)Head).Con2 == null) { throw new Exception("'" + Head.GetLocalString() + "' is missing a right connective"); }
                     }
                 }
             }
@@ -229,13 +257,21 @@ namespace LLP_App
                     //{
                     //    sw.WriteLine("node" + (allNodes[i].Parent.ID) + " -- node" + (allNodes[i].ID));
                     //}
-                    if (allConnectives[i].Con1 != null)
+                    //if (allConnectives[i].Con1 != null)
+                    //{
+                    //    sw.WriteLine("node" + (allConnectives[i].ID) + " -- node" + (allConnectives[i].Con1.ID));
+                    //}
+                    //if (allConnectives[i].Con2 != null)
+                    //{
+                    //    sw.WriteLine("node" + (allConnectives[i].ID) + " -- node" + (allConnectives[i].Con2.ID));
+                    //}
+                    if (allConnectives[i] is ConnectiveOne)
                     {
-                        sw.WriteLine("node" + (allConnectives[i].ID) + " -- node" + (allConnectives[i].Con1.ID));
+                        sw.WriteLine("node" + (allConnectives[i].ID) + " -- node" + ((ConnectiveOne)allConnectives[i]).Con1.ID);
                     }
-                    if (allConnectives[i].Con2 != null)
+                    if (allConnectives[i] is ConnectiveTwo)
                     {
-                        sw.WriteLine("node" + (allConnectives[i].ID) + " -- node" + (allConnectives[i].Con2.ID));
+                        sw.WriteLine("node" + (allConnectives[i].ID) + " -- node" + ((ConnectiveTwo)allConnectives[i]).Con2.ID);
                     }
 
                 }

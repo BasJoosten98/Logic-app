@@ -13,6 +13,7 @@ namespace LLP_App
         private ConnectiveHolder conHolder;
 
         public List<TruthtableRow> Rows { get { return rows; } }
+        public ConnectiveHolder ConHolder { get { return conHolder; } }
         public Truthtable(ConnectiveHolder ConHolder)
         {
             conHolder = ConHolder;
@@ -71,7 +72,7 @@ namespace LLP_App
 
         public List<TruthtableRow> GetSimpleTable()
         {
-            if(argumentsChar.Count == 0) //only 0 and/or 1
+            if(argumentsChar.Count == 0) //only 0 and/or 1 arguments
             {
                 List<TruthtableRow> tempList = new List<TruthtableRow>();
                 TruthtableRow tempRow = new TruthtableRow(new List<TruthtableRowArgument>());
@@ -136,9 +137,8 @@ namespace LLP_App
                 List<TruthtableRow> trueAndFalseRows = new List<TruthtableRow>(); 
                 List<char> trueAndFalse = new List<char>() { '0', '1' };
 
-                foreach(char value in trueAndFalse)
+                foreach(char value in trueAndFalse) //will check for argument = 0 and argument = 1
                 {
-                    //check argument == false/true
                     temporaryRowArg = new TruthtableRowArgument(argumentsChar[argIndex], value);
                     argList.Add(temporaryRowArg);
                     result = getSimpleCharResult(argList);
@@ -150,27 +150,32 @@ namespace LLP_App
                             bool addIt = true;
                             foreach(TruthtableRow ar in acceptedRows)
                             {
-                                if (ar.RowValue == rr.RowValue)
+                                if (rr.isPartOfRow(ar))
                                 {
-                                    bool foundDifference = false;
-                                    for (int i = argIndex + 1; i < argumentsChar.Count; i++)
-                                    {
-                                        if (ar.GetValueForArgument(argumentsChar[i]) != '*')
-                                        {
-                                            if (rr.GetValueForArgument(argumentsChar[i]) != ar.GetValueForArgument(argumentsChar[i]))
-                                            {
-                                                //Difference found! Check next AR with RR
-                                                foundDifference = true;
-                                                break;
-                                            }
-                                        }
-                                    }
-                                    if (!foundDifference) //it is the same or part of AR, thus do not add it!
-                                    {
-                                        addIt = false;
-                                        break;
-                                    }
+                                    addIt = false;
+                                    break;
                                 }
+                                //if (ar.RowValue == rr.RowValue)
+                                //{
+                                //    bool foundDifference = false;
+                                //    for (int i = argIndex + 1; i < argumentsChar.Count; i++)
+                                //    {
+                                //        if (ar.GetValueForArgument(argumentsChar[i]) != '*')
+                                //        {
+                                //            if (rr.GetValueForArgument(argumentsChar[i]) != ar.GetValueForArgument(argumentsChar[i]))
+                                //            {
+                                //                //Difference found! Check next AR with RR
+                                //                foundDifference = true;
+                                //                break;
+                                //            }
+                                //        }
+                                //    }
+                                //    if (!foundDifference) //it is the same or part of AR, thus do not add it!
+                                //    {
+                                //        addIt = false;
+                                //        break;
+                                //    }
+                                //}
                             }
                             if (addIt)
                             {
@@ -252,6 +257,21 @@ namespace LLP_App
                 }
             }
             return result;
+        }
+        public string GetHashCodeBinary()
+        {
+            string holder = "";
+            for(int i = rows.Count - 1; i >= 0; i--)
+            {
+                holder += rows[i].RowValue;
+            }
+            return holder;
+        }
+        public string GetHashCodeHexadecimal()
+        {
+            string binaryCode = GetHashCodeBinary();
+            string hexadecimalCode = BinaryReader.BinaryToHexadecimal(binaryCode);
+            return hexadecimalCode;
         }
     }
 }

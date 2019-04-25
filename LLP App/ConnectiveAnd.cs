@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LLP_App
 {
-    class ConnectiveAnd : Connective
+    class ConnectiveAnd : ConnectiveTwo
     {
         public ConnectiveAnd()
         {

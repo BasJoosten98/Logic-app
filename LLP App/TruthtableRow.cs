@@ -34,5 +34,31 @@ namespace LLP_App
             }
             throw new Exception("No value found for '" + arg + "'");
         }
+        public bool isPartOfRow(TruthtableRow main)
+        {
+            if (main.arguments.Count != this.arguments.Count) { throw new Exception("Rows cannot be compared!"); }
+            bool isPart = true;
+            if(main.RowValue != this.RowValue) { return false; }
+
+            for(int i = 0; i < main.Arguments.Count; i++)
+            {
+                if(main.Arguments[i].Argument == this.arguments[i].Argument) //same argument 
+                {
+                    if(main.Arguments[i].Value != '*') //main arg is 1 or 0, thus this arg should be the same as main arg
+                    {
+                        if(main.Arguments[i].Value != this.arguments[i].Value)
+                        {
+                            isPart = false;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    throw new Exception("Rows cannot be compared!");
+                }
+            }
+            return isPart;
+        }
     }
 }

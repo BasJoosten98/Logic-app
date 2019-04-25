@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LLP_App
 {
-    class ConnectiveBiImplication : Connective
+    class ConnectiveBiImplication : ConnectiveTwo
     {
         public ConnectiveBiImplication()
         {

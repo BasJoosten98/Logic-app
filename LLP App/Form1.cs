@@ -33,7 +33,7 @@ namespace LLP_App
                 tbInfix.Text = conHolder.GetInfixString();
 
             }
-            catch (NullReferenceException ex)
+            catch (NullReferenceException)
             {
                 MessageBox.Show("Parsing failed: please make sure that you wrote a proposition");
             }
@@ -60,6 +60,7 @@ namespace LLP_App
         
         private void btnGenerateTruthtable_Click(object sender, EventArgs e)
         {
+            //clear tables
             lbTruthTableInfo.Items.Clear();
             dgvTruthTable.Columns.Clear();
             dgvTruthTable.Rows.Clear();
@@ -70,10 +71,10 @@ namespace LLP_App
 
             table = new Truthtable(conHolder);
             List<char> arguments = conHolder.GetListOfAllArguments();
-            List<TruthtableRow> rows = table.Rows;
-            List<TruthtableRow> simpleRows = table.GetSimpleTable();
+            List<TruthtableRow> rows = table.Rows; //normal truthtable rows
+            List<TruthtableRow> simpleRows = table.GetSimpleTable(); //simple truthtable rows
 
-            //create columns
+            //create form table's columns
             int counter = 0;
             foreach(char c in arguments)
             {
@@ -88,9 +89,9 @@ namespace LLP_App
             dgvSimpleTable.Columns.Add("Result", "Result");
             dgvSimpleTable.Columns[counter].Width = 50;
 
-            //create rows
+            //provide form table's with rows
             DataGridViewRow row;
-            foreach (TruthtableRow r in rows) //print table
+            foreach (TruthtableRow r in rows) //print normal table
             {
                 row = (DataGridViewRow)dgvTruthTable.Rows[0].Clone();
                 counter = 0;
@@ -114,24 +115,26 @@ namespace LLP_App
                 row.Cells[counter].Value = r.RowValue;
                 dgvSimpleTable.Rows.Add(row);
             }
-            readHashCodeFromTable();
+            lbTruthTableInfo.Items.Add("Arguments: " + table.ConHolder.getAllArgumentsString());
+            lbTruthTableInfo.Items.Add("Hash (binary): " + table.GetHashCodeBinary());
+            lbTruthTableInfo.Items.Add("Hash (hexadecimal): " + table.GetHashCodeHexadecimal());
             readDisjunctiveForm(rows, false);
             readDisjunctiveForm(simpleRows, true);
             
         }
-        private void readHashCodeFromTable()
-        {
-            //Read hash code
-            string hashCodeBinary = "";
-            for (int r = 0; r < dgvTruthTable.Rows.Count; r++)
-            {
-                hashCodeBinary += dgvTruthTable.Rows[r].Cells[dgvTruthTable.Rows[r].Cells.Count - 1].Value;
-            }
-            string hashCodeHexa = BinaryReader.BinaryToHexadecimal(hashCodeBinary);
-            lbTruthTableInfo.Items.Add("Arguments: " + conHolder.getAllArgumentsString());
-            lbTruthTableInfo.Items.Add("Hash (binary): " + hashCodeBinary);
-            lbTruthTableInfo.Items.Add("Hash (hexadecimal): " + hashCodeHexa);
-        }
+        //private void readHashCodeFromTable()
+        //{
+        //    //Read hash code
+        //    string hashCodeBinary = "";
+        //    for (int r = 0; r < dgvTruthTable.Rows.Count; r++)
+        //    {
+        //        hashCodeBinary += dgvTruthTable.Rows[r].Cells[dgvTruthTable.Rows[r].Cells.Count - 1].Value;
+        //    }
+        //    string hashCodeHexa = BinaryReader.BinaryToHexadecimal(hashCodeBinary);
+        //    lbTruthTableInfo.Items.Add("Arguments: " + conHolder.getAllArgumentsString());
+        //    lbTruthTableInfo.Items.Add("Hash (binary): " + hashCodeBinary);
+        //    lbTruthTableInfo.Items.Add("Hash (hexadecimal): " + hashCodeHexa);
+        //}
         private void readDisjunctiveForm(List<TruthtableRow> rows, bool fromSimple)
         {
             List<TruthtableRow> filteredRows = new List<TruthtableRow>(); //filter out rows that containt arguments == '*'

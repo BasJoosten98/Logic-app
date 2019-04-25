@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LLP_App
 {
-    class ConnectiveOr : Connective
+    class ConnectiveOr : ConnectiveTwo
     {
         public ConnectiveOr()
         {

@@ -54,7 +54,9 @@
     <Compile Include="ConnectiveHolder.cs" />
     <Compile Include="ConnectiveImplication.cs" />
     <Compile Include="ConnectiveNot.cs" />
+    <Compile Include="ConnectiveOne.cs" />
     <Compile Include="ConnectiveOr.cs" />
+    <Compile Include="ConnectiveTwo.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

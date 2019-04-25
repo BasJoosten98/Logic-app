@@ -260,21 +260,21 @@
             // 
             this.tbDisjunctiveParse.Location = new System.Drawing.Point(395, 61);
             this.tbDisjunctiveParse.Name = "tbDisjunctiveParse";
-            this.tbDisjunctiveParse.Size = new System.Drawing.Size(249, 20);
+            this.tbDisjunctiveParse.Size = new System.Drawing.Size(289, 20);
             this.tbDisjunctiveParse.TabIndex = 18;
             // 
             // tbDisjunctiveSimpleParse
             // 
             this.tbDisjunctiveSimpleParse.Location = new System.Drawing.Point(395, 87);
             this.tbDisjunctiveSimpleParse.Name = "tbDisjunctiveSimpleParse";
-            this.tbDisjunctiveSimpleParse.Size = new System.Drawing.Size(249, 20);
+            this.tbDisjunctiveSimpleParse.Size = new System.Drawing.Size(289, 20);
             this.tbDisjunctiveSimpleParse.TabIndex = 19;
             // 
             // btnParseDisjunctive
             // 
-            this.btnParseDisjunctive.Location = new System.Drawing.Point(650, 59);
+            this.btnParseDisjunctive.Location = new System.Drawing.Point(690, 59);
             this.btnParseDisjunctive.Name = "btnParseDisjunctive";
-            this.btnParseDisjunctive.Size = new System.Drawing.Size(84, 23);
+            this.btnParseDisjunctive.Size = new System.Drawing.Size(44, 23);
             this.btnParseDisjunctive.TabIndex = 20;
             this.btnParseDisjunctive.Text = "Parse";
             this.btnParseDisjunctive.UseVisualStyleBackColor = true;
@@ -282,9 +282,9 @@
             // 
             // btnDisjunctiveSimpleParse
             // 
-            this.btnDisjunctiveSimpleParse.Location = new System.Drawing.Point(650, 85);
+            this.btnDisjunctiveSimpleParse.Location = new System.Drawing.Point(690, 85);
             this.btnDisjunctiveSimpleParse.Name = "btnDisjunctiveSimpleParse";
-            this.btnDisjunctiveSimpleParse.Size = new System.Drawing.Size(84, 23);
+            this.btnDisjunctiveSimpleParse.Size = new System.Drawing.Size(44, 23);
             this.btnDisjunctiveSimpleParse.TabIndex = 21;
             this.btnDisjunctiveSimpleParse.Text = "Parse";
             this.btnDisjunctiveSimpleParse.UseVisualStyleBackColor = true;
@@ -316,7 +316,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tbProposition);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = " ";
             this.gbBinaryReaderTester.ResumeLayout(false);
             this.gbBinaryReaderTester.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTruthTable)).EndInit();

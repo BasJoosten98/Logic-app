@@ -24,14 +24,6 @@ namespace LLP_App
         {
             return Argument;
         }
-        public override void setLeftConnective(Connective con)
-        {
-            throw new Exception("Connective Argument does not have any input");
-        }
-        public override void setRightConnective(Connective con)
-        {
-            throw new Exception("Connective Argument does not have any input");
-        }
         public override List<char> GetAllArguments()
         {
             if(argument == '0' || argument == '1') { return new List<char>(); }
@@ -54,6 +46,11 @@ namespace LLP_App
             {
                 throw new Exception("Encountered invalid symbol value for argument " + argument);
             }
+        }
+
+        public override List<Connective> GetAllConnectives()
+        {
+            return new List<Connective>() { this };
         }
     }
 }
