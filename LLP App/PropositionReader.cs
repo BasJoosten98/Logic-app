@@ -11,7 +11,7 @@ namespace LLP_App
     static class PropositionReader
     {
         private static List<char> PropositionList;
-        private static char[] ConnectiveTypes = new char[] { '~', '=', '|', '>', '&' };
+        private static char[] ConnectiveTypes = new char[] { '~', '=', '|', '>', '&', '%' };
         private static char[] Arguments = "ABCDEFGHIJKLMNOPQRSTUVWXYZ10".ToCharArray();
         private static Random rand = new Random();
 
@@ -229,6 +229,8 @@ namespace LLP_App
                     return new ConnectiveNot();
                 case '&':
                     return new ConnectiveAnd();
+                case '%':
+                    return new ConnectiveNand();
                 default:
                     throw new Exception("No type found for char: '" + Type + "'.");
             }

@@ -37,5 +37,17 @@ namespace LLP_App
             }
             return false;
         }
+
+        public override Connective GetNandProposition()
+        {
+            ConnectiveNand nand = new ConnectiveNand();
+            nand.setLeftConnective(con1.GetNandProposition());
+            nand.setRightConnective(con1.GetNandProposition());
+            return nand;
+        }
+        public override string GetParseString()
+        {
+            return "~(" + con1.GetParseString() + ")";
+        }
     }
 }

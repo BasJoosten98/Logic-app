@@ -56,7 +56,9 @@
             this.btnDisjunctiveSimpleParse = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.btnStartTimer = new System.Windows.Forms.Button();
-            this.btnPauseTimer = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tbNand = new System.Windows.Forms.TextBox();
+            this.btnNandParse = new System.Windows.Forms.Button();
             this.gbBinaryReaderTester.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTruthTable)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSimpleTable)).BeginInit();
@@ -64,15 +66,15 @@
             // 
             // tbProposition
             // 
-            this.tbProposition.Location = new System.Drawing.Point(78, 9);
+            this.tbProposition.Location = new System.Drawing.Point(74, 9);
             this.tbProposition.Name = "tbProposition";
-            this.tbProposition.Size = new System.Drawing.Size(311, 20);
+            this.tbProposition.Size = new System.Drawing.Size(315, 20);
             this.tbProposition.TabIndex = 0;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 12);
+            this.label1.Location = new System.Drawing.Point(9, 12);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(59, 13);
             this.label1.TabIndex = 1;
@@ -195,7 +197,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 38);
+            this.label2.Location = new System.Drawing.Point(9, 38);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(26, 13);
             this.label2.TabIndex = 11;
@@ -203,9 +205,9 @@
             // 
             // tbInfix
             // 
-            this.tbInfix.Location = new System.Drawing.Point(48, 35);
+            this.tbInfix.Location = new System.Drawing.Point(41, 35);
             this.tbInfix.Name = "tbInfix";
-            this.tbInfix.Size = new System.Drawing.Size(341, 20);
+            this.tbInfix.Size = new System.Drawing.Size(348, 20);
             this.tbInfix.TabIndex = 12;
             // 
             // dgvSimpleTable
@@ -220,7 +222,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(13, 64);
+            this.label3.Location = new System.Drawing.Point(9, 64);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(121, 13);
             this.label3.TabIndex = 14;
@@ -228,15 +230,15 @@
             // 
             // tbDisjunctive
             // 
-            this.tbDisjunctive.Location = new System.Drawing.Point(140, 61);
+            this.tbDisjunctive.Location = new System.Drawing.Point(136, 61);
             this.tbDisjunctive.Name = "tbDisjunctive";
-            this.tbDisjunctive.Size = new System.Drawing.Size(249, 20);
+            this.tbDisjunctive.Size = new System.Drawing.Size(253, 20);
             this.tbDisjunctive.TabIndex = 15;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(13, 90);
+            this.label4.Location = new System.Drawing.Point(9, 90);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(155, 13);
             this.label4.TabIndex = 16;
@@ -244,9 +246,9 @@
             // 
             // tbDisjunctiveSimple
             // 
-            this.tbDisjunctiveSimple.Location = new System.Drawing.Point(174, 87);
+            this.tbDisjunctiveSimple.Location = new System.Drawing.Point(166, 87);
             this.tbDisjunctiveSimple.Name = "tbDisjunctiveSimple";
-            this.tbDisjunctiveSimple.Size = new System.Drawing.Size(215, 20);
+            this.tbDisjunctiveSimple.Size = new System.Drawing.Size(223, 20);
             this.tbDisjunctiveSimple.TabIndex = 17;
             // 
             // tbDisjunctiveParse
@@ -289,7 +291,7 @@
             // 
             // btnStartTimer
             // 
-            this.btnStartTimer.Location = new System.Drawing.Point(679, 308);
+            this.btnStartTimer.Location = new System.Drawing.Point(679, 337);
             this.btnStartTimer.Name = "btnStartTimer";
             this.btnStartTimer.Size = new System.Drawing.Size(54, 23);
             this.btnStartTimer.TabIndex = 22;
@@ -297,22 +299,40 @@
             this.btnStartTimer.UseVisualStyleBackColor = true;
             this.btnStartTimer.Click += new System.EventHandler(this.btnStartTimer_Click);
             // 
-            // btnPauseTimer
+            // label5
             // 
-            this.btnPauseTimer.Location = new System.Drawing.Point(679, 337);
-            this.btnPauseTimer.Name = "btnPauseTimer";
-            this.btnPauseTimer.Size = new System.Drawing.Size(54, 23);
-            this.btnPauseTimer.TabIndex = 23;
-            this.btnPauseTimer.Text = "Pause";
-            this.btnPauseTimer.UseVisualStyleBackColor = true;
-            this.btnPauseTimer.Click += new System.EventHandler(this.btnPauseTimer_Click);
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(9, 116);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(33, 13);
+            this.label5.TabIndex = 24;
+            this.label5.Text = "Nand";
+            // 
+            // tbNand
+            // 
+            this.tbNand.Location = new System.Drawing.Point(48, 113);
+            this.tbNand.Name = "tbNand";
+            this.tbNand.Size = new System.Drawing.Size(636, 20);
+            this.tbNand.TabIndex = 25;
+            // 
+            // btnNandParse
+            // 
+            this.btnNandParse.Location = new System.Drawing.Point(690, 111);
+            this.btnNandParse.Name = "btnNandParse";
+            this.btnNandParse.Size = new System.Drawing.Size(44, 23);
+            this.btnNandParse.TabIndex = 26;
+            this.btnNandParse.Text = "Parse";
+            this.btnNandParse.UseVisualStyleBackColor = true;
+            this.btnNandParse.Click += new System.EventHandler(this.btnNandParse_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(740, 450);
-            this.Controls.Add(this.btnPauseTimer);
+            this.Controls.Add(this.btnNandParse);
+            this.Controls.Add(this.tbNand);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.btnStartTimer);
             this.Controls.Add(this.btnDisjunctiveSimpleParse);
             this.Controls.Add(this.btnParseDisjunctive);
@@ -373,7 +393,9 @@
         private System.Windows.Forms.Button btnDisjunctiveSimpleParse;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button btnStartTimer;
-        private System.Windows.Forms.Button btnPauseTimer;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox tbNand;
+        private System.Windows.Forms.Button btnNandParse;
     }
 }
 

@@ -52,5 +52,14 @@ namespace LLP_App
         {
             return new List<Connective>() { this };
         }
+
+        public override Connective GetNandProposition()
+        {
+            return this;
+        }
+        public override string GetParseString()
+        {
+            return argument.ToString();
+        }
     }
 }

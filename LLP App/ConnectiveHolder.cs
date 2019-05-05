@@ -87,5 +87,16 @@ namespace LLP_App
         {
             return startConnective.GetInfix();
         }
+        public string GetParseString()
+        {
+            return startConnective.GetParseString();
+        }
+
+        public ConnectiveHolder GetNandHolder()
+        {
+            Connective startCon = startConnective.GetNandProposition();
+            ConnectiveHolder temp = new ConnectiveHolder(startCon);
+            return temp;
+        }
     }
 }

@@ -47,5 +47,22 @@ namespace LLP_App
             }
             return false;
         }
+
+        public override Connective GetNandProposition()
+        {
+            ConnectiveNand mainNand = new ConnectiveNand();
+            ConnectiveNot not1 = new ConnectiveNot();
+            ConnectiveNot not2 = new ConnectiveNot();
+
+            not1.setLeftConnective(con1);
+            not2.setLeftConnective(con2);
+            mainNand.setLeftConnective(not1.GetNandProposition());
+            mainNand.setRightConnective(not2.GetNandProposition());
+            return mainNand;
+        }
+        public override string GetParseString()
+        {
+            return "|(" + con1.GetParseString() + "," + con2.GetParseString() + ")";
+        }
     }
 }

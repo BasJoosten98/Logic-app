@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace LLP_App
 {
-    class ConnectiveAnd : ConnectiveTwo
+    class ConnectiveNand : ConnectiveTwo
     {
-        public ConnectiveAnd()
+        public ConnectiveNand()
         {
 
         }
@@ -17,7 +17,7 @@ namespace LLP_App
         {
             bool leftAnswer = con1.GetAnswer(row);
             bool rightAnswer = con2.GetAnswer(row);
-            if(leftAnswer && rightAnswer)
+            if (!(leftAnswer && rightAnswer))
             {
                 return true;
             }
@@ -26,32 +26,22 @@ namespace LLP_App
 
         public override string GetInfix()
         {
-            return "(" + con1.GetInfix() + " & " + con2.GetInfix() + ")";
+            return "~(" + con1.GetInfix() + " & " + con2.GetInfix() + ")";
         }
 
         public override char GetLocalString()
         {
-            return '&';
+            return '%';
         }
 
         public override Connective GetNandProposition()
         {
-            ConnectiveNand nand = new ConnectiveNand();
-            ConnectiveNot not = new ConnectiveNot();
-            not.setLeftConnective(nand);
-            nand.setLeftConnective(con1.GetNandProposition());
-            nand.setRightConnective(con2.GetNandProposition());
-            return not.GetNandProposition();
-        }
-
-        public override string GetParseString()
-        {
-            return "&(" + con1.GetParseString() + "," + con2.GetParseString() + ")";
+            return this;
         }
 
         public override void setLeftConnective(Connective con)
         {
-            if(con != null)
+            if (con != null)
             {
                 con1 = con;
             }
@@ -65,6 +55,10 @@ namespace LLP_App
                 con2 = con;
             }
             else { throw new NullReferenceException(); }
+        }
+        public override string GetParseString()
+        {
+            return "%(" + con1.GetParseString() + "," + con2.GetParseString() + ")";
         }
     }
 }

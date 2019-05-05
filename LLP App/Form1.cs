@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,9 @@ namespace LLP_App
     public partial class Form1 : Form
     {
         ConnectiveHolder conHolder;
+        ConnectiveHolder conHolderNand;
         Truthtable table;
+        Truthtable tableNand;
 
         public Form1()
         {
@@ -24,7 +27,10 @@ namespace LLP_App
         {
             string proposition = tbProposition.Text;
             createConnectiveHolder(proposition);
-            generateTruthtablesAndInformation();
+            table = new Truthtable(conHolder);
+            generateTruthtablesAndInformation(table);
+            conHolderNand = conHolder.GetNandHolder();
+            tbNand.Text = conHolderNand.GetParseString();
         }
         private void createConnectiveHolder(string proposition)
         {
@@ -32,7 +38,6 @@ namespace LLP_App
             {
                 conHolder = new ConnectiveHolder(proposition);
                 tbInfix.Text = conHolder.GetInfixString();
-
             }
             catch (NullReferenceException)
             {
@@ -59,7 +64,7 @@ namespace LLP_App
             tbProposition.Text = proposition;
         }
         
-        private void generateTruthtablesAndInformation()
+        private void generateTruthtablesAndInformation(Truthtable chosenTable)
         {
             //clear tables
             lbTruthTableInfo.Items.Clear();
@@ -70,10 +75,10 @@ namespace LLP_App
 
             if (conHolder == null) { MessageBox.Show("No proposition has been parsed yet"); return; }
 
-            table = new Truthtable(conHolder);
+            //table = new Truthtable(conHolder);
             List<char> arguments = conHolder.GetListOfAllArguments();
-            List<TruthtableRow> rows = table.Rows; //normal truthtable rows
-            List<TruthtableRow> simpleRows = table.GetSimpleTable(); //simple truthtable rows
+            List<TruthtableRow> rows = chosenTable.Rows; //normal truthtable rows
+            List<TruthtableRow> simpleRows = chosenTable.GetSimpleTable(); //simple truthtable rows
 
             //create form table's columns
             int counter = 0;
@@ -118,9 +123,9 @@ namespace LLP_App
             }
 
             //GETTING HASH CODE
-            lbTruthTableInfo.Items.Add("Arguments: " + table.ConHolder.getAllArgumentsString());
-            lbTruthTableInfo.Items.Add("Hash (binary): " + table.GetHashCodeBinary());
-            lbTruthTableInfo.Items.Add("Hash (hexadecimal): " + table.GetHashCodeHexadecimal());
+            lbTruthTableInfo.Items.Add("Arguments: " + chosenTable.ConHolder.getAllArgumentsString());
+            lbTruthTableInfo.Items.Add("Hash (binary): " + chosenTable.GetHashCodeBinary());
+            lbTruthTableInfo.Items.Add("Hash (hexadecimal): " + chosenTable.GetHashCodeHexadecimal());
 
             //GETTING DISJUNCTIVE AND IT'S PARSE
             string[] disjunctAndParse = PropositionReader.readDisjunctiveForm(rows);
@@ -162,19 +167,34 @@ namespace LLP_App
         {
             string proposition = tbDisjunctiveParse.Text;
             createConnectiveHolder(proposition);
-            generateTruthtablesAndInformation();
+            table = new Truthtable(conHolder);
+            generateTruthtablesAndInformation(table);
+            conHolderNand = conHolder.GetNandHolder();
+            tbNand.Text = conHolderNand.GetParseString();
         }
 
         private void btnDisjunctiveSimpleParse_Click(object sender, EventArgs e)
         {
             string proposition = tbDisjunctiveSimpleParse.Text;
             createConnectiveHolder(proposition);
-            generateTruthtablesAndInformation();
+            table = new Truthtable(conHolder);
+            generateTruthtablesAndInformation(table);
+            conHolderNand = conHolder.GetNandHolder();
+            tbNand.Text = conHolderNand.GetParseString();
         }
 
         private void btnStartTimer_Click(object sender, EventArgs e)
         {
-            timer1.Enabled = true;
+            if (timer1.Enabled)
+            {
+                timer1.Enabled = false;
+                btnStartTimer.Text = "Start";
+            }
+            else
+            {
+                timer1.Enabled = true;
+                btnStartTimer.Text = "Stop";
+            }
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -183,28 +203,34 @@ namespace LLP_App
 
             tbProposition.Text = PropositionReader.CreateRandomPropositionString();
             createConnectiveHolder(tbProposition.Text);
-            generateTruthtablesAndInformation();
+            table = new Truthtable(conHolder);
+            generateTruthtablesAndInformation(table);
             hashCode = table.GetHashCodeHexadecimal();
 
+            conHolderNand = conHolder.GetNandHolder();
+            tbNand.Text = conHolderNand.GetParseString();
+            tableNand = new Truthtable(conHolderNand);
+            if (hashCode != tableNand.GetHashCodeHexadecimal()) { timer1.Enabled = false; MessageBox.Show("hashCode test failed, please have a look, timer disabled"); return; }
+
             createConnectiveHolder(tbDisjunctiveParse.Text);
-            generateTruthtablesAndInformation();
-            if(hashCode != table.GetHashCodeHexadecimal()) { timer1.Enabled = false; MessageBox.Show("hashCode test failed, please have a look, timer disabled"); }
+            table = new Truthtable(conHolder);
+            generateTruthtablesAndInformation(table);
+            if (hashCode != table.GetHashCodeHexadecimal()) { timer1.Enabled = false; MessageBox.Show("hashCode test failed, please have a look, timer disabled"); return; }
 
             createConnectiveHolder(tbDisjunctiveSimpleParse.Text);
-            generateTruthtablesAndInformation();
-            if (hashCode != table.GetHashCodeHexadecimal()) { timer1.Enabled = false; MessageBox.Show("hashCode test failed, please have a look, timer disabled"); }
+            table = new Truthtable(conHolder);
+            generateTruthtablesAndInformation(table);
+            if (hashCode != table.GetHashCodeHexadecimal()) { timer1.Enabled = false; MessageBox.Show("hashCode test failed, please have a look, timer disabled"); return; }
         }
 
-        private void btnPauseTimer_Click(object sender, EventArgs e)
+        private void btnNandParse_Click(object sender, EventArgs e)
         {
-            if (timer1.Enabled)
-            {
-                timer1.Enabled = false;
-            }
-            else
-            {
-                timer1.Enabled = true;
-            }
+            string proposition = tbNand.Text;
+            createConnectiveHolder(proposition);
+            table = new Truthtable(conHolder);
+            generateTruthtablesAndInformation(table);
+            conHolderNand = conHolder.GetNandHolder();
+            tbNand.Text = conHolderNand.GetParseString();
         }
     }
 }
