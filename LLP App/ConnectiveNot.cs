@@ -49,5 +49,11 @@ namespace LLP_App
         {
             return "~(" + con1.GetParseString() + ")";
         }
+        public override Connective Copy()
+        {
+            ConnectiveNot temp = new ConnectiveNot();
+            temp.setLeftConnective(con1.Copy());
+            return temp;
+        }
     }
 }

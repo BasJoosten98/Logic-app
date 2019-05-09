@@ -13,6 +13,14 @@ namespace LLP_App
 
         }
 
+        public override Connective Copy()
+        {
+            ConnectiveAnd temp = new ConnectiveAnd();
+            temp.setLeftConnective(con1.Copy());
+            temp.setRightConnective(con2.Copy());
+            return temp;
+        }
+
         public override bool GetAnswer(TruthtableRow row)
         {
             bool leftAnswer = con1.GetAnswer(row);

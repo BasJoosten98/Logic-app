@@ -55,11 +55,16 @@ namespace LLP_App
 
         public override Connective GetNandProposition()
         {
-            return this;
+            return this.Copy();
         }
         public override string GetParseString()
         {
             return argument.ToString();
+        }
+        public override Connective Copy()
+        {
+            ConnectiveArgument temp = new ConnectiveArgument(argument);
+            return temp;
         }
     }
 }

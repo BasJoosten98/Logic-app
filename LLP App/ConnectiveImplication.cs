@@ -58,13 +58,20 @@ namespace LLP_App
             ConnectiveNot not = new ConnectiveNot();
 
             mainNand.setLeftConnective(con1.GetNandProposition());
-            not.setLeftConnective(con2);
+            not.setLeftConnective(con2.Copy());
             mainNand.setRightConnective(not.GetNandProposition());
             return mainNand;
         }
         public override string GetParseString()
         {
             return ">(" + con1.GetParseString() + "," + con2.GetParseString() + ")";
+        }
+        public override Connective Copy()
+        {
+            ConnectiveImplication temp = new ConnectiveImplication();
+            temp.setLeftConnective(con1.Copy());
+            temp.setRightConnective(con2.Copy());
+            return temp;
         }
     }
 }

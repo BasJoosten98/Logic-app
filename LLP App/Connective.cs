@@ -26,5 +26,7 @@ namespace LLP_App
         public abstract string GetInfix();
         public abstract string GetParseString();
         public abstract Connective GetNandProposition();
+        public abstract Connective Copy();
+    
     }
 }

@@ -36,7 +36,10 @@ namespace LLP_App
 
         public override Connective GetNandProposition()
         {
-            return this;
+            ConnectiveNand thistemp = new ConnectiveNand();
+            thistemp.setLeftConnective(con1.GetNandProposition());
+            thistemp.setRightConnective(con2.GetNandProposition());
+            return thistemp;
         }
 
         public override void setLeftConnective(Connective con)
@@ -59,6 +62,13 @@ namespace LLP_App
         public override string GetParseString()
         {
             return "%(" + con1.GetParseString() + "," + con2.GetParseString() + ")";
+        }
+        public override Connective Copy()
+        {
+            ConnectiveNand temp = new ConnectiveNand();
+            temp.setLeftConnective(con1.Copy());
+            temp.setRightConnective(con2.Copy());
+            return temp;
         }
     }
 }

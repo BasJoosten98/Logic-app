@@ -56,8 +56,8 @@ namespace LLP_App
             ConnectiveNot not1 = new ConnectiveNot();
             ConnectiveNot not2 = new ConnectiveNot();
 
-            not1.setLeftConnective(con1);
-            not2.setLeftConnective(con2);
+            not1.setLeftConnective(con1.Copy());
+            not2.setLeftConnective(con2.Copy());
             nand2.setLeftConnective(not1.GetNandProposition());
             nand2.setRightConnective(not2.GetNandProposition());
             nand1.setLeftConnective(con1.GetNandProposition());
@@ -69,6 +69,13 @@ namespace LLP_App
         public override string GetParseString()
         {
             return "=(" + con1.GetParseString() + "," + con2.GetParseString() + ")";
+        }
+        public override Connective Copy()
+        {
+            ConnectiveBiImplication temp = new ConnectiveBiImplication();
+            temp.setLeftConnective(con1.Copy());
+            temp.setRightConnective(con2.Copy());
+            return temp;
         }
     }
 }
