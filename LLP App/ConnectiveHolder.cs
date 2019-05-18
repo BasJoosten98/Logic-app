@@ -33,12 +33,14 @@ namespace LLP_App
             else { throw new NullReferenceException(); }
         }
 
+        //DISPLAY CONNECTIVE TREE STRUCTURE
         public void ShowTreeStructure()
         {
             string path = PropositionReader.CreateStructurePicture(startConnective);
             Process.Start(@path);
         }
 
+        //GET ARGUMENTS IN STRING OR LIST
         public List<char> GetListOfAllArguments()
         {
             List<char> fullList = startConnective.GetAllArguments();
@@ -79,10 +81,14 @@ namespace LLP_App
             holder += fullList[fullList.Count - 1];
             return holder;
         }
+
+        //GET TRUTHTABLE ROW VALUE
         public bool GetTruthtableRowAnswer(TruthtableRow row)
         {
             return startConnective.GetAnswer(row);
         }
+
+        //GET INFIX OR PARSE STRING
         public string GetInfixString()
         {
             return startConnective.GetInfix();
@@ -92,6 +98,7 @@ namespace LLP_App
             return startConnective.GetParseString();
         }
 
+        //GET NAND CONNECTIVE HOLDER
         public ConnectiveHolder GetNandHolder()
         {
             Connective startCon = startConnective.GetNandProposition();

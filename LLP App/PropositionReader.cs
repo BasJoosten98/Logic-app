@@ -15,13 +15,12 @@ namespace LLP_App
         private static char[] Arguments = "ABCDEFGHIJKLMNOPQRSTUVWXYZ10".ToCharArray();
         private static Random rand = new Random();
 
+        //READING PROPOSITIONS AND GENERATING CONNECTIVE TREE
         public static Connective ReadPropositionString(string proposition)
         {
-            //Console.WriteLine("PropositionReader: Reading string '" + proposition + "'.");
             PropositionList = proposition.ToList<char>();
             Connective result = null;
             result = readPropositionStringRec();
-            //Console.WriteLine("PropositionReader: Read string '" + proposition + "' succesfully.");
             return result;
         }
         private static Connective readPropositionStringRec()
@@ -236,6 +235,8 @@ namespace LLP_App
             }
 
         }
+
+        //CREATING CONNECTIVE TREE PICTURE
         public static string CreateStructurePicture(Connective startCon)
         {
             if(startCon == null) { throw new NullReferenceException(); }
@@ -297,6 +298,8 @@ namespace LLP_App
             //Console.WriteLine("PropositionReader: structure picture created succesfully");
             return "abc.png";
         }
+
+        //CREATE RANDOM PROPOSITION STRING
         public static string CreateRandomPropositionString()
         {
             int totalDives = rand.Next(0, 11);
@@ -339,6 +342,8 @@ namespace LLP_App
             }
             return holder;
         }
+
+        //GIVE SIMPLE TRUTHTABLEROW (WITH * ARGUMENT VALUES) AND GET ALL NON SIMPLE TRUTHTABLE ROWS RETURNED (NO * ARGUMENT VALUES)
         public static List<TruthtableRow> GetSubrowsOfMainRow(TruthtableRow main)
         {
             return getSubrowsOfMainRowRec(main, 0);
@@ -400,6 +405,8 @@ namespace LLP_App
             }
             return subsets;
         }
+
+        //READ TABLE AND RETURN DISJUNCTIVE NORMAL FORM AND IT'S PARSE STRING
         public static string[] readDisjunctiveForm(List<TruthtableRow> rows)
         {
             string disHolder = "";

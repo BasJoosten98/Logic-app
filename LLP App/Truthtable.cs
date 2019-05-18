@@ -14,6 +14,7 @@ namespace LLP_App
 
         public List<TruthtableRow> Rows { get { return rows; } }
         public ConnectiveHolder ConHolder { get { return conHolder; } }
+
         public Truthtable(ConnectiveHolder ConHolder)
         {
             conHolder = ConHolder;
@@ -23,6 +24,7 @@ namespace LLP_App
             fillTruthtableRowsWithAnswers();
         }
 
+        //CREATE TRUTHTABLE ROWS WITH ROW VALUES
         private void createTruthtableRows()
         {
             if(argumentsChar != null)
@@ -70,6 +72,7 @@ namespace LLP_App
             }
         }
 
+        //CREATE SIMPLE TABLE WITH ROW VALUES
         public List<TruthtableRow> GetSimpleTable()
         {
             if(argumentsChar.Count == 0) //only 0 and/or 1 arguments
@@ -258,6 +261,8 @@ namespace LLP_App
             }
             return result;
         }
+
+        //GET HASH CODE
         public string GetHashCodeBinary()
         {
             string holder = "";

@@ -34,6 +34,8 @@ namespace LLP_App
             }
             throw new Exception("No value found for '" + arg + "'");
         }
+
+        //CHECKS IF THIS ROW IS A SUBSET OF THE GIVEN MAIN
         public bool isPartOfRow(TruthtableRow main)
         {
             if (main.arguments.Count != this.arguments.Count) { throw new Exception("Rows cannot be compared!"); }
