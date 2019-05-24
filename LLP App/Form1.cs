@@ -21,6 +21,7 @@ namespace LLP_App
         Truthtable tableNand;
         Truthtable tableDisjunctive;
         Truthtable tableDisjunctiveSimple;
+        TableauxHolder tabHolder;
 
         public Form1()
         {
@@ -51,6 +52,7 @@ namespace LLP_App
                 tableNand = new Truthtable(conHolderNand);
                 tbInfix.Text = conHolder.GetInfixString();
                 tbNand.Text = conHolderNand.GetParseString();
+                showTableauxTree = false;
             }
             catch (NullReferenceException)
             {
@@ -67,11 +69,22 @@ namespace LLP_App
 
         private void btnViewTree_Click(object sender, EventArgs e)
         {
-            if(conHolder != null)
+            if (showTableauxTree)
             {
-                conHolder.ShowTreeStructure();
+                if (tabHolder != null)
+                {
+                    tabHolder.ShowTreeStructure();
+                }
+                else { MessageBox.Show("No proposition has been parsed yet"); }
             }
-            else { MessageBox.Show("No proposition has been parsed yet"); }
+            else
+            {
+                if (conHolder != null)
+                {
+                    conHolder.ShowTreeStructure();
+                }
+                else { MessageBox.Show("No proposition has been parsed yet"); }
+            }
         }
 
         private void btnCreateRandomProposition_Click(object sender, EventArgs e)
@@ -233,21 +246,42 @@ namespace LLP_App
         {
             string hashCode;
 
-            //GENEARTE ALL TABLES AND CONHOLDERS
+            //GENEARTE ALL TABLES AND CONHOLDERS AND TABLEAUX
             tbProposition.Text = PropositionReader.CreateRandomPropositionString();
             if (createAllConHoldersAndTruthtables(tbProposition.Text))
             {
                 printVisualTruthtables(table);
                 printTablesInformation();
             }
+            CreateTableaux();
 
             //GET HASH CODE OF MAIN TABLE
             hashCode = table.GetHashCodeHexadecimal();
 
             //COMPARE HASH CODE WITH OTHER TABLES
-            if (hashCode != tableDisjunctive.GetHashCodeHexadecimal()) { timer1.Enabled = false; MessageBox.Show("hashCode test failed, please have a look at Disjunctive, timer disabled"); return; }
-            if (hashCode != tableDisjunctiveSimple.GetHashCodeHexadecimal()) { timer1.Enabled = false; MessageBox.Show("hashCode test failed, please have a look at DisjunctiveSimple, timer disabled"); return; }
-            if (hashCode != tableNand.GetHashCodeHexadecimal()) { timer1.Enabled = false; MessageBox.Show("hashCode test failed, please have a look at Nand, timer disabled"); return; }
+            if (hashCode != tableDisjunctive.GetHashCodeHexadecimal()) { timer1.Enabled = false; MessageBox.Show("hashCode test failed, please have a look at Disjunctive, timer disabled"); btnStartTimer.Text = "Start"; return; }
+            if (hashCode != tableDisjunctiveSimple.GetHashCodeHexadecimal()) { timer1.Enabled = false; MessageBox.Show("hashCode test failed, please have a look at DisjunctiveSimple, timer disabled"); btnStartTimer.Text = "Start"; return; }
+            if (hashCode != tableNand.GetHashCodeHexadecimal()) { timer1.Enabled = false; MessageBox.Show("hashCode test failed, please have a look at Nand, timer disabled"); btnStartTimer.Text = "Start"; return; }
+
+            //COMPARE TABLEAUX WITH SIMPLE TRUTHTABLE
+            bool simpleTableResult;
+            if(dgvSimpleTable.Rows.Count > 2) { simpleTableResult = false; } //contains 1 empty row at the bottom, should ignore!
+            else
+            {
+                if (dgvSimpleTable.Rows.Count == 2)
+                {
+                    string rowResult = dgvSimpleTable.Rows[0].Cells[dgvSimpleTable.Columns.Count - 1].Value.ToString();
+                    if(rowResult == "1") { simpleTableResult = true; }
+                    else if(rowResult == "0") { simpleTableResult = false; }
+                    else { throw new Exception("Unknown character"); }
+                }
+                else
+                {
+                     throw new Exception("Not possible scenario"); 
+                }
+            }
+            if(simpleTableResult != tabHolder.IsTautology) { timer1.Enabled = false; MessageBox.Show("tableaux test failed, please have a look at tableaux, timer disabled"); btnStartTimer.Text = "Start"; return; }
+
         }
 
         private void btnNandParse_Click(object sender, EventArgs e)
@@ -258,6 +292,21 @@ namespace LLP_App
                 printVisualTruthtables(table);
                 printTablesInformation();
             }
+        }
+
+        private bool showTableauxTree = false;
+        private void btnTableaux_Click(object sender, EventArgs e)
+        {
+            CreateTableaux();
+        }
+        private void CreateTableaux()
+        {
+            string proposition = tbProposition.Text;
+            tabHolder = new TableauxHolder(proposition);
+            if (tabHolder.IsTautology) { btnTableaux.BackColor = Color.Green; }
+            else { btnTableaux.BackColor = Color.Red; }
+
+            showTableauxTree = true;
         }
     }
 }

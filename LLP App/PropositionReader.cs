@@ -236,7 +236,7 @@ namespace LLP_App
 
         }
 
-        //CREATING CONNECTIVE TREE PICTURE
+        //CREATING CONNECTIVE/TABLEAUX TREE PICTURE
         public static string CreateStructurePicture(Connective startCon)
         {
             if(startCon == null) { throw new NullReferenceException(); }
@@ -277,6 +277,42 @@ namespace LLP_App
                         sw.WriteLine("node" + (allConnectives[i].ID) + " -- node" + ((ConnectiveTwo)allConnectives[i]).Con2.ID);
                     }
 
+                }
+                sw.WriteLine("}");
+                sw.Close();
+
+            }
+            catch (IOException)
+            {
+                throw new Exception("Structure picture failed");
+            }
+            return CreateDotPNG(fileName);
+        }
+        public static string CreateStructurePicture(TableauxSet startSet)
+        {
+            if (startSet == null) { throw new NullReferenceException(); }
+            //Console.WriteLine("PropositionReader: creating structure picture");
+            List<TableauxSet> allSets = startSet.GetAllSets();
+
+            FileStream fs;
+            StreamWriter sw;
+            string fileName = "abc.dot";
+            try
+            {
+                fs = new FileStream(fileName, FileMode.Create, FileAccess.Write);
+                sw = new StreamWriter(fs);
+                sw.WriteLine("graph calculus {");
+                sw.WriteLine("node [ fontname = \"Arial\" ]");
+
+                for (int i = 0; i < allSets.Count; i++)
+                {               
+                    if (allSets[i].IsTautology) { sw.WriteLine("node" + (allSets[i].ID) + " [shape=box,color=red,label = \"" + allSets[i].GetElementsAsString() + "\"];"); }
+                    else { sw.WriteLine("node" + (allSets[i].ID) + " [shape=box,label = \"" + allSets[i].GetElementsAsString() + "\"];"); }
+
+                    foreach(TableauxSet ts in allSets[i].Sets)
+                    {
+                        sw.WriteLine("node" + (allSets[i].ID) + " -- node" + ts.ID);
+                    }
                 }
                 sw.WriteLine("}");
                 sw.Close();

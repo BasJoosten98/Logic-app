@@ -73,5 +73,15 @@ namespace LLP_App
             temp.setRightConnective(con2.Copy());
             return temp;
         }
+        public override bool IsTheSameAs(Connective con)
+        {
+            if (con is ConnectiveImplication)
+            {
+                ConnectiveTwo c = (ConnectiveTwo)con;
+
+                if (con1.IsTheSameAs(c.Con1) && con2.IsTheSameAs(c.Con2)) { return true; }
+            }
+            return false;
+        }
     }
 }

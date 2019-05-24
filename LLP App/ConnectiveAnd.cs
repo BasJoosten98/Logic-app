@@ -57,6 +57,17 @@ namespace LLP_App
             return "&(" + con1.GetParseString() + "," + con2.GetParseString() + ")";
         }
 
+        public override bool IsTheSameAs(Connective con)
+        {
+            if(con is ConnectiveAnd)
+            {
+                ConnectiveTwo c = (ConnectiveTwo)con;
+
+                if(con1.IsTheSameAs(c.Con1) && con2.IsTheSameAs(c.Con2)) { return true; }
+            }
+            return false;
+        }
+
         public override void setLeftConnective(Connective con)
         {
             if(con != null)
@@ -74,5 +85,6 @@ namespace LLP_App
             }
             else { throw new NullReferenceException(); }
         }
+
     }
 }

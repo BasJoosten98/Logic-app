@@ -59,6 +59,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.tbNand = new System.Windows.Forms.TextBox();
             this.btnNandParse = new System.Windows.Forms.Button();
+            this.btnTableaux = new System.Windows.Forms.Button();
             this.gbBinaryReaderTester.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTruthTable)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSimpleTable)).BeginInit();
@@ -84,17 +85,17 @@
             // 
             this.btnParseProposition.Location = new System.Drawing.Point(395, 6);
             this.btnParseProposition.Name = "btnParseProposition";
-            this.btnParseProposition.Size = new System.Drawing.Size(101, 23);
+            this.btnParseProposition.Size = new System.Drawing.Size(44, 23);
             this.btnParseProposition.TabIndex = 2;
-            this.btnParseProposition.Text = "Parse Proposition";
+            this.btnParseProposition.Text = "Parse";
             this.btnParseProposition.UseVisualStyleBackColor = true;
             this.btnParseProposition.Click += new System.EventHandler(this.btnParseProposition_Click);
             // 
             // btnViewTree
             // 
-            this.btnViewTree.Location = new System.Drawing.Point(502, 6);
+            this.btnViewTree.Location = new System.Drawing.Point(512, 6);
             this.btnViewTree.Name = "btnViewTree";
-            this.btnViewTree.Size = new System.Drawing.Size(75, 23);
+            this.btnViewTree.Size = new System.Drawing.Size(65, 23);
             this.btnViewTree.TabIndex = 3;
             this.btnViewTree.Text = "View Tree";
             this.btnViewTree.UseVisualStyleBackColor = true;
@@ -326,11 +327,24 @@
             this.btnNandParse.UseVisualStyleBackColor = true;
             this.btnNandParse.Click += new System.EventHandler(this.btnNandParse_Click);
             // 
+            // btnTableaux
+            // 
+            this.btnTableaux.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnTableaux.Location = new System.Drawing.Point(445, 6);
+            this.btnTableaux.Name = "btnTableaux";
+            this.btnTableaux.Size = new System.Drawing.Size(61, 23);
+            this.btnTableaux.TabIndex = 27;
+            this.btnTableaux.Text = "Tableaux";
+            this.btnTableaux.UseVisualStyleBackColor = false;
+            this.btnTableaux.Click += new System.EventHandler(this.btnTableaux_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(740, 450);
+            this.Controls.Add(this.btnTableaux);
             this.Controls.Add(this.btnNandParse);
             this.Controls.Add(this.tbNand);
             this.Controls.Add(this.label5);
@@ -397,6 +411,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox tbNand;
         private System.Windows.Forms.Button btnNandParse;
+        private System.Windows.Forms.Button btnTableaux;
     }
 }
 

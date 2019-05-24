@@ -67,6 +67,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropositionReader.cs" />
+    <Compile Include="TableauxHolder.cs" />
+    <Compile Include="TableauxSetElement.cs" />
+    <Compile Include="TableauxSet.cs" />
     <Compile Include="Truthtable.cs" />
     <Compile Include="TruthtableRow.cs" />
     <Compile Include="TruthtableRowArgument.cs" />

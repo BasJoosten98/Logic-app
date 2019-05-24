@@ -66,5 +66,15 @@ namespace LLP_App
             ConnectiveArgument temp = new ConnectiveArgument(argument);
             return temp;
         }
+        public override bool IsTheSameAs(Connective con)
+        {
+            if (con is ConnectiveArgument)
+            {
+                ConnectiveArgument c = (ConnectiveArgument)con;
+
+                if (c.Argument == this.argument) { return true; }
+            }
+            return false;
+        }
     }
 }
