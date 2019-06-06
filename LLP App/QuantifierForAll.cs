@@ -11,7 +11,7 @@ namespace LLP_App
         public override Connective Copy()
         {
             QuantifierForAll qe = new QuantifierForAll();
-            qe.setArgument(base.argument);
+            qe.SetArgument(base.argument);
             qe.setLeftConnective(con1.Copy());
             return qe;
         }

@@ -31,6 +31,9 @@ namespace LLP_App
         private void btnParseProposition_Click(object sender, EventArgs e)
         {
             string proposition = tbProposition.Text;
+            PropositionReader.ReadPropositionString(proposition);
+            MessageBox.Show("done");
+            return;
             if (createAllConHoldersAndTruthtables(proposition))
             {
                 printVisualTruthtables(table);

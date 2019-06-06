@@ -11,7 +11,7 @@ namespace LLP_App
         protected char argument;
         public char Argument { get { return argument; } }
 
-        public void setArgument(char c)
+        public void SetArgument(char c)
         {
             argument = c;
         }
