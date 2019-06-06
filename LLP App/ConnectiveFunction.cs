@@ -104,5 +104,9 @@ namespace LLP_App
             }
             return false;
         }
+        public override bool IsNormalProposition()
+        {
+            return false;
+        }
     }
 }

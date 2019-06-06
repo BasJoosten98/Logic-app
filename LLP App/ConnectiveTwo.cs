@@ -60,5 +60,9 @@ namespace LLP_App
             }
             return fullList;
         }
+        public override bool IsNormalProposition()
+        {
+            return (con1.IsNormalProposition() && con2.IsNormalProposition());
+        }
     }
 }

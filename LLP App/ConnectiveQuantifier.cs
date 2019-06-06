@@ -61,5 +61,9 @@ namespace LLP_App
             }
             else { throw new NullReferenceException(); }
         }
+        public override bool IsNormalProposition()
+        {
+            return false;
+        }
     }
 }

@@ -434,7 +434,7 @@ namespace LLP_App
                 }               
                 return randomArgument.ToString();
             }
-            int ConnectiveTypeIndex = rand.Next(0, ConnectiveTypes.Length); 
+            int ConnectiveTypeIndex = rand.Next(0, ConnectiveTypes.Length - 2); 
             string holder = ConnectiveTypes[ConnectiveTypeIndex].ToString();
             totalDives--;
 

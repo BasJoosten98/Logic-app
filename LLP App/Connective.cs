@@ -28,6 +28,7 @@ namespace LLP_App
         public abstract Connective GetNandProposition();
         public abstract Connective Copy();
         public abstract bool IsTheSameAs(Connective con);
+        public abstract bool IsNormalProposition();
     
     }
 }
