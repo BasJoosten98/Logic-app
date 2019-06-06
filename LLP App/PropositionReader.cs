@@ -274,9 +274,9 @@ namespace LLP_App
             //Final check for main connective
             if(Head != null)
             {
-                if(!(Head is ConnectiveArgument))
+                if(!(Head is ConnectiveArgument || Head is ConnectiveFunction))
                 {
-                    if (Head is ConnectiveNot)
+                    if (Head is ConnectiveNot || Head is ConnectiveQuantifier)
                     {
                         if (((ConnectiveOne)Head).Con1 == null) { throw new Exception("'" + Head.GetLocalString() + "' is missing a left connective"); }
                     }
