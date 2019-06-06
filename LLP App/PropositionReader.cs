@@ -11,8 +11,9 @@ namespace LLP_App
     static class PropositionReader
     {
         private static List<char> PropositionList;
-        private static char[] ConnectiveTypes = new char[] { '~', '=', '|', '>', '&', '%' };
+        private static char[] ConnectiveTypes = new char[] { '~', '=', '|', '>', '&', '%', '@', '!' };
         private static char[] Arguments = "ABCDEFGHIJKLMNOPQRSTUVWXYZ10".ToCharArray();
+        private static char[] SmallArguments = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
         private static Random rand = new Random();
 
         //READING PROPOSITIONS AND GENERATING CONNECTIVE TREE
@@ -230,6 +231,10 @@ namespace LLP_App
                     return new ConnectiveAnd();
                 case '%':
                     return new ConnectiveNand();
+                case '@':
+                    return new QuantifierForAll();
+                case '!':
+                    return new QuantifierExists();
                 default:
                     throw new Exception("No type found for char: '" + Type + "'.");
             }

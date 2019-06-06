@@ -51,12 +51,14 @@
     <Compile Include="ConnectiveAnd.cs" />
     <Compile Include="ConnectiveArgument.cs" />
     <Compile Include="ConnectiveBiImplication.cs" />
+    <Compile Include="ConnectiveFunction.cs" />
     <Compile Include="ConnectiveHolder.cs" />
     <Compile Include="ConnectiveImplication.cs" />
     <Compile Include="ConnectiveNand.cs" />
     <Compile Include="ConnectiveNot.cs" />
     <Compile Include="ConnectiveOne.cs" />
     <Compile Include="ConnectiveOr.cs" />
+    <Compile Include="ConnectiveQuantifier.cs" />
     <Compile Include="ConnectiveTwo.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -67,6 +69,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropositionReader.cs" />
+    <Compile Include="QuantifierExists.cs" />
+    <Compile Include="QuantifierForAll.cs" />
     <Compile Include="TableauxHolder.cs" />
     <Compile Include="TableauxSetElement.cs" />
     <Compile Include="TableauxSet.cs" />
