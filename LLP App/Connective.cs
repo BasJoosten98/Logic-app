@@ -29,6 +29,6 @@ namespace LLP_App
         public abstract Connective Copy();
         public abstract bool IsTheSameAs(Connective con);
         public abstract bool IsNormalProposition();
-    
+        public abstract void ChangeLocalArgument(char a, char b);
     }
 }

@@ -65,5 +65,10 @@ namespace LLP_App
         {
             return false;
         }
+        public override void ChangeLocalArgument(char a, char b)
+        {
+            if(argument == a) { argument = b; }
+            con1.ChangeLocalArgument(a, b);
+        }
     }
 }

@@ -108,5 +108,15 @@ namespace LLP_App
         {
             return false;
         }
+        public override void ChangeLocalArgument(char a, char b)
+        {
+            for(int i = 0; i < this.localArguments.Count; i++)
+            {
+                if(localArguments[i] == a)
+                {
+                    localArguments[i] = b;
+                }
+            }
+        }
     }
 }

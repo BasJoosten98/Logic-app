@@ -28,7 +28,7 @@ namespace LLP_App
 
         public override string GetParseString()
         {
-            return "@" + argument + ".(" + con1.GetInfix() + ")";
+            return "@" + argument + ".(" + con1.GetParseString() + ")";
         }
 
         public override bool IsTheSameAs(Connective con)

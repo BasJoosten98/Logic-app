@@ -80,5 +80,8 @@ namespace LLP_App
         {
             return true;
         }
+        public override void ChangeLocalArgument(char a, char b)
+        {
+        }
     }
 }

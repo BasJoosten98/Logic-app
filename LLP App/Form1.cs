@@ -33,7 +33,8 @@ namespace LLP_App
             string proposition = tbProposition.Text;
             Connective con = PropositionReader.ReadPropositionString(proposition);
             ConnectiveHolder ch = new ConnectiveHolder(con);
-            MessageBox.Show("done, isNormal: " + con.IsNormalProposition());
+            con.ChangeLocalArgument('p', 'g');
+            MessageBox.Show("done, isNormal: " + con.IsNormalProposition() + " Change p into g: " + con.GetParseString());
             return;
             if (createAllConHoldersAndTruthtables(proposition))
             {
