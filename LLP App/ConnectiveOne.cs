@@ -52,6 +52,10 @@ namespace LLP_App
         {
             con1.ChangeLocalArgument(a, b);
         }
+        public override List<char> GetAllLocalArguments()
+        {
+            return con1.GetAllLocalArguments();
+        }
 
     }
 }

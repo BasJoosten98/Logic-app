@@ -9,16 +9,13 @@ namespace LLP_App
 {
     class TableauxHolder
     {
+        private static char[] SmallArguments = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
+        private List<char> usedArguments;
+        private List<char> availableArguments;
         private TableauxSet startTableaux;
 
         public bool IsTautology { get { return startTableaux.IsTautology; } }
 
-        public TableauxHolder(TableauxSet StartSet)
-        {
-            this.startTableaux = StartSet;
-            this.startTableaux.CreateNextSets();
-            this.startTableaux.CalculateIsTautology();
-        }
         public  TableauxHolder(string Proposition)
         {
             Connective proposition = PropositionReader.ReadPropositionString(Proposition);
@@ -28,9 +25,25 @@ namespace LLP_App
 
             TableauxSetElement tse = new TableauxSetElement(notPorposition);
             this.startTableaux = new TableauxSet(new List<TableauxSetElement>() { tse });
-            this.startTableaux.CreateNextSets();
+            calculateFreeArguments(notPorposition);
+            this.startTableaux.CreateNextSets(usedArguments, availableArguments);
+            calculateFreeArguments(notPorposition);
             this.startTableaux.CalculateIsTautology();
         }
+        //CALCULATE USED/AVAILABLE ARGUMENTS
+        private void calculateFreeArguments(Connective startCon)
+        {
+            usedArguments = startCon.GetAllLocalArguments();
+            availableArguments = new List<char>();
+            foreach(char c in SmallArguments)
+            {
+                if (!usedArguments.Contains(c))
+                {
+                    availableArguments.Add(c);
+                }
+            }
+        }
+
 
         //DISPLAY TABLEAUX TREE STRUCTURE
         public void ShowTreeStructure()

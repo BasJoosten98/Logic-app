@@ -69,5 +69,15 @@ namespace LLP_App
             con1.ChangeLocalArgument(a, b);
             con2.ChangeLocalArgument(a, b);
         }
+        public override List<char> GetAllLocalArguments()
+        {
+            List<char> temp1 = con1.GetAllLocalArguments();
+            List<char> temp2 = con2.GetAllLocalArguments();
+            foreach(char c in temp2)
+            {
+                temp1.Add(c);
+            }
+            return temp1;
+        }
     }
 }

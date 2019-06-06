@@ -83,5 +83,9 @@ namespace LLP_App
         public override void ChangeLocalArgument(char a, char b)
         {
         }
+        public override List<char> GetAllLocalArguments()
+        {
+            return new List<char>();
+        }
     }
 }

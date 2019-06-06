@@ -118,5 +118,14 @@ namespace LLP_App
                 }
             }
         }
+        public override List<char> GetAllLocalArguments()
+        {
+            List<char> temp = new List<char>();
+            foreach(char c in localArguments)
+            {
+                temp.Add(c);
+            }
+            return temp;
+        }
     }
 }

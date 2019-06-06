@@ -8,6 +8,7 @@ namespace LLP_App
 {
     class TableauxSet
     {
+
         private List<TableauxSetElement> elements; //elements in this set
         private List<TableauxSet> sets; //next sets created from this one
         private bool isTautology;
@@ -114,7 +115,7 @@ namespace LLP_App
         }
 
         //CREATING NEXT SETS IF POSSIBLE
-        public void CreateNextSets()
+        public void CreateNextSets(List<char> usedArguments, List<char> availableArguments)
         {
             if (sets.Count == 0)
             {
@@ -130,10 +131,22 @@ namespace LLP_App
 
                 if (succes)
                 {
+                    List<char> newUsed;
+                    List<char> newAvailable;
                     if (sets.Count == 0) { throw new Exception("Adding new sets failed"); }
                     foreach (TableauxSet ts in sets)
                     {
-                        ts.CreateNextSets();
+                        newUsed = new List<char>();
+                        newAvailable = new List<char>();
+                        foreach(char c in usedArguments)
+                        {
+                            newUsed.Add(c);
+                        }
+                        foreach(char c in availableArguments)
+                        {
+                            newAvailable.Add(c);
+                        }
+                        ts.CreateNextSets(newUsed, newAvailable);
                     }
                 }
             }
