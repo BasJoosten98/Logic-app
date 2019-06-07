@@ -17,6 +17,7 @@ namespace LLP_App
         private bool isTautology;
         private int id;
         private static int idCounter = 0;
+        private static Random rand = new Random();
 
         public int ID { get { return this.id; } }
         public bool IsTautology { get { return this.isTautology; } }
@@ -128,12 +129,21 @@ namespace LLP_App
         }
 
         //CREATING NEXT SETS IF POSSIBLE
-        public void CreateNextSets(List<char> UsedArguments, List<char> AvailableArguments)
+        public void CreateNextSets(List<char> UsedArguments, List<char> AvailableArguments, bool checkInBetween)
         {
             if (sets.Count == 0)
             {
                 this.usedArguments = UsedArguments;
                 this.availableArguments = AvailableArguments;
+
+                if (checkInBetween)
+                {
+                    if (calculateIsTautologyWithOwnElements())
+                    {
+                        isTautology = true;
+                        return;
+                    }
+                }
 
                 //MAKE COPY OF ARGUMENTS
                 List<char> copyUsed = new List<char>();
@@ -183,7 +193,7 @@ namespace LLP_App
                     if (sets.Count == 0) { throw new Exception("Adding new sets failed"); }
                     foreach (TableauxSet ts in sets)
                     {
-                        ts.CreateNextSets(copyUsed, copyAvailable);
+                        ts.CreateNextSets(copyUsed, copyAvailable, checkInBetween);
                     }
                 }
             }
@@ -207,8 +217,15 @@ namespace LLP_App
         {
             //MessageBox.Show("Delta");
             List<Connective> results;
-            foreach (TableauxSetElement tse in elements)
+            List<TableauxSetElement> temp = new List<TableauxSetElement>();
+            foreach(TableauxSetElement tse in elements)
             {
+                temp.Add(tse);
+            }
+            while(temp.Count > 0)
+            {
+                TableauxSetElement tse = temp[rand.Next(0, temp.Count)];
+
                 //MAKE COPY OF ARGUMENTS
                 List<char> copyUsed = new List<char>();
                 List<char> copyAvailable = new List<char>();
@@ -240,6 +257,7 @@ namespace LLP_App
                         return true;
                     }                 
                 }
+                temp.Remove(tse);
             }
             return false;
         }
@@ -264,8 +282,15 @@ namespace LLP_App
         {
             //MessageBox.Show("Gamma");
             List<Connective> results;
+            List<TableauxSetElement> temp = new List<TableauxSetElement>();
             foreach (TableauxSetElement tse in elements)
             {
+                temp.Add(tse);
+            }
+            while (temp.Count > 0)
+            {
+                TableauxSetElement tse = temp[rand.Next(0, temp.Count)];
+
                 results = tse.ApplyGammaTableauxRules(used);
                 if (results.Count > 0) //applying was a succes
                 {
@@ -274,6 +299,7 @@ namespace LLP_App
                         return true;
                     }                   
                 }
+                temp.Remove(tse);
             }
             return false;
         }

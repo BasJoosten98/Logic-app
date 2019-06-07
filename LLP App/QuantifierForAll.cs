@@ -21,9 +21,9 @@ namespace LLP_App
             return "ALL." + argument + "[" + con1.GetInfix() + "]";
         }
 
-        public override char GetLocalString()
+        public override string GetLocalString()
         {
-            return '@';
+            return "@" + argument + ".";
         }
 
         public override string GetParseString()

@@ -20,7 +20,7 @@ namespace LLP_App
         }
 
         public abstract List<Connective> GetAllConnectives();
-        public abstract char GetLocalString();
+        public abstract string GetLocalString();
         public abstract List<char> GetAllArguments();
         public abstract bool GetAnswer(TruthtableRow row);
         public abstract string GetInfix();

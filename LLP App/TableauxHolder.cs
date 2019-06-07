@@ -28,7 +28,7 @@ namespace LLP_App
             this.startTableaux = new TableauxSet(new List<TableauxSetElement>() { tse });
             isNormalProposition = notPorposition.IsNormalProposition();
             calculateFreeArguments(notPorposition);
-            this.startTableaux.CreateNextSets(new List<char>(), availableArguments);
+            this.startTableaux.CreateNextSets(new List<char>(), availableArguments, !isNormalProposition);
             this.startTableaux.CalculateIsTautology();
         }
         //CALCULATE USED/AVAILABLE ARGUMENTS

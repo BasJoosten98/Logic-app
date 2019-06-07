@@ -20,9 +20,9 @@ namespace LLP_App
         {
             return argument.ToString();
         }
-        public override char GetLocalString()
+        public override string GetLocalString()
         {
-            return Argument;
+            return Argument.ToString();
         }
         public override List<char> GetAllArguments()
         {

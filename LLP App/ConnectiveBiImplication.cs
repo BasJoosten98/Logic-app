@@ -12,9 +12,9 @@ namespace LLP_App
         {
 
         }
-        public override char GetLocalString()
+        public override string GetLocalString()
         {
-            return '=';
+            return "=";
         }
         public override string GetInfix()
         {

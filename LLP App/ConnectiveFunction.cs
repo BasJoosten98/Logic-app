@@ -66,9 +66,9 @@ namespace LLP_App
             return holder;
         }
 
-        public override char GetLocalString()
+        public override string GetLocalString()
         {
-            return functionChar;
+            return functionChar + "(...)";
         }
 
         public override Connective GetNandProposition()

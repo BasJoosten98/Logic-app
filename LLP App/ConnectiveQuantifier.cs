@@ -31,7 +31,7 @@ namespace LLP_App
         //    throw new NotImplementedException();
         //}
 
-        //public override char GetLocalString()
+        //public override string GetLocalString()
         //{
         //    throw new NotImplementedException();
         //}

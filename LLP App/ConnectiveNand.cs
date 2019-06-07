@@ -29,9 +29,9 @@ namespace LLP_App
             return "~(" + con1.GetInfix() + " & " + con2.GetInfix() + ")";
         }
 
-        public override char GetLocalString()
+        public override string GetLocalString()
         {
-            return '%';
+            return "%";
         }
 
         public override Connective GetNandProposition()

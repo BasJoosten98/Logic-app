@@ -226,8 +226,11 @@ namespace LLP_App
                                             {
                                                 con = readPropositionStringRec();
                                             }
+                                            else
+                                            {
+                                                PropositionList.RemoveAt(0);
+                                            }
                                             ((ConnectiveTwo)Head).setRightConnective(con);
-                                            PropositionList.RemoveAt(0);
                                         }
                                         else
                                         {
