@@ -18,7 +18,7 @@ namespace LLP_App
 
         public override string GetInfix()
         {
-            return "ForAll " + argument + " in [" + con1.GetInfix() + "]";
+            return "ALL." + argument + "[" + con1.GetInfix() + "]";
         }
 
         public override char GetLocalString()

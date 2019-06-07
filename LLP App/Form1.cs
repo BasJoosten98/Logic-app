@@ -32,11 +32,7 @@ namespace LLP_App
         {
             string proposition = tbProposition.Text;
             Connective con = PropositionReader.ReadPropositionString(proposition);
-            ConnectiveHolder ch = new ConnectiveHolder(con);
-            con.ChangeLocalArgument('p', 'g');
-            MessageBox.Show("done, isNormal: " + con.IsNormalProposition() + " Change p into g: " + con.GetParseString());
-            return;
-            if (createAllConHoldersAndTruthtables(proposition))
+            if (createAllConHoldersAndTruthtables(proposition) && con.IsNormalProposition())
             {
                 printVisualTruthtables(table);
                 printTablesInformation();
@@ -46,18 +42,27 @@ namespace LLP_App
         {
             try
             {
-                conHolder = new ConnectiveHolder(proposition);
-                table = new Truthtable(conHolder);
-                printDisjunctive();
-                conHolderDisjunctive = new ConnectiveHolder(tbDisjunctiveParse.Text);
-                tableDisjunctive = new Truthtable(conHolderDisjunctive);
-                conHolderDisjunctiveSimple = new ConnectiveHolder(tbDisjunctiveSimpleParse.Text);
-                tableDisjunctiveSimple = new Truthtable(conHolderDisjunctiveSimple);
-                conHolderNand = conHolder.GetNandHolder();
-                tableNand = new Truthtable(conHolderNand);
-                tbInfix.Text = conHolder.GetInfixString();
-                tbNand.Text = conHolderNand.GetParseString();
-                showTableauxTree = false;
+                Connective con = PropositionReader.ReadPropositionString(proposition);
+                conHolder = new ConnectiveHolder(con);
+                if (con.IsNormalProposition())
+                {
+                    table = new Truthtable(conHolder);
+                    printDisjunctive();
+                    conHolderDisjunctive = new ConnectiveHolder(tbDisjunctiveParse.Text);
+                    tableDisjunctive = new Truthtable(conHolderDisjunctive);
+                    conHolderDisjunctiveSimple = new ConnectiveHolder(tbDisjunctiveSimpleParse.Text);
+                    tableDisjunctiveSimple = new Truthtable(conHolderDisjunctiveSimple);
+                    conHolderNand = conHolder.GetNandHolder();
+                    tableNand = new Truthtable(conHolderNand);
+                    tbInfix.Text = conHolder.GetInfixString();
+                    tbNand.Text = conHolderNand.GetParseString();
+                    showTableauxTree = false;
+                }
+                else
+                {
+                    tbInfix.Text = conHolder.GetInfixString();
+                    showTableauxTree = false;
+                }
             }
             catch (NullReferenceException)
             {

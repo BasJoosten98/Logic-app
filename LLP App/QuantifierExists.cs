@@ -18,7 +18,7 @@ namespace LLP_App
 
         public override string GetInfix()
         {
-            return "ThereExists " + argument +" in [" + con1.GetInfix() + "]";
+            return "EX." + argument +"[" + con1.GetInfix() + "]";
         }
 
         public override char GetLocalString()

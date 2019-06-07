@@ -13,6 +13,7 @@ namespace LLP_App
         private List<char> usedArguments;
         private List<char> availableArguments;
         private TableauxSet startTableaux;
+        private bool isNormalProposition;
 
         public bool IsTautology { get { return startTableaux.IsTautology; } }
 
@@ -25,9 +26,9 @@ namespace LLP_App
 
             TableauxSetElement tse = new TableauxSetElement(notPorposition);
             this.startTableaux = new TableauxSet(new List<TableauxSetElement>() { tse });
+            isNormalProposition = notPorposition.IsNormalProposition();
             calculateFreeArguments(notPorposition);
-            this.startTableaux.CreateNextSets(usedArguments, availableArguments);
-            calculateFreeArguments(notPorposition);
+            this.startTableaux.CreateNextSets(new List<char>(), availableArguments);
             this.startTableaux.CalculateIsTautology();
         }
         //CALCULATE USED/AVAILABLE ARGUMENTS

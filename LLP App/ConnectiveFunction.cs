@@ -98,7 +98,16 @@ namespace LLP_App
                 {
                     if(c.LocalArguments.Count == this.localArguments.Count)
                     {
-                        return true;
+                        bool differenceFound = false;
+                        for(int i = 0; i < this.localArguments.Count; i++)
+                        {
+                            if(c.LocalArguments[i] != this.localArguments[i])
+                            {
+                                differenceFound = true;
+                                break;
+                            }
+                        }
+                        return !differenceFound;
                     }
                 }
             }
@@ -108,15 +117,18 @@ namespace LLP_App
         {
             return false;
         }
-        public override void ChangeLocalArgument(char a, char b)
+        public override bool ChangeLocalArgument(char a, char b)
         {
+            bool succes = false;
             for(int i = 0; i < this.localArguments.Count; i++)
             {
                 if(localArguments[i] == a)
                 {
                     localArguments[i] = b;
+                    succes = true;
                 }
             }
+            return succes;
         }
         public override List<char> GetAllLocalArguments()
         {

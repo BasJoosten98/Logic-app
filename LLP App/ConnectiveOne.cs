@@ -48,9 +48,9 @@ namespace LLP_App
         {
             return (con1.IsNormalProposition());
         }
-        public override void ChangeLocalArgument(char a, char b)
+        public override bool ChangeLocalArgument(char a, char b)
         {
-            con1.ChangeLocalArgument(a, b);
+            return con1.ChangeLocalArgument(a, b);
         }
         public override List<char> GetAllLocalArguments()
         {
