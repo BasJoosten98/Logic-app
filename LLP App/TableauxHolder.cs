@@ -27,6 +27,7 @@ namespace LLP_App
             TableauxSetElement tse = new TableauxSetElement(notPorposition);
             this.startTableaux = new TableauxSet(new List<TableauxSetElement>() { tse });
             isNormalProposition = notPorposition.IsNormalProposition();
+            if(!notPorposition.AreLocalArgumentsMatching(new List<char>(), new List<char>())) { throw new Exception("Local Arguments are mismatching or there are quantifiers with the same Local Argument"); }
             calculateFreeArguments(notPorposition);
             this.startTableaux.CreateNextSets(new List<char>(), availableArguments, !isNormalProposition);
             this.startTableaux.CalculateIsTautology();

@@ -31,21 +31,18 @@ namespace LLP_App
         private void btnParseProposition_Click(object sender, EventArgs e)
         {
             string proposition = tbProposition.Text;
-            Connective con = PropositionReader.ReadPropositionString(proposition);
-            if (createAllConHoldersAndTruthtables(proposition) && con.IsNormalProposition())
-            {
-                printVisualTruthtables(table);
-                printTablesInformation();
-            }
+            createAllConHoldersAndTruthtables(proposition);
         }
         private bool createAllConHoldersAndTruthtables(string proposition)
         {
             try
             {
+                //CREATING PROPOSITION
                 Connective con = PropositionReader.ReadPropositionString(proposition);
-                conHolder = new ConnectiveHolder(con);
+
                 if (con.IsNormalProposition())
                 {
+                    conHolder = new ConnectiveHolder(con);
                     table = new Truthtable(conHolder);
                     printDisjunctive();
                     conHolderDisjunctive = new ConnectiveHolder(tbDisjunctiveParse.Text);
@@ -57,9 +54,15 @@ namespace LLP_App
                     tbInfix.Text = conHolder.GetInfixString();
                     tbNand.Text = conHolderNand.GetParseString();
                     showTableauxTree = false;
+
+                    //DRAWING AND PRINTING TABLE INFORMATION
+                    printVisualTruthtables(table);
+                    printTablesInformation();
                 }
                 else
                 {
+                    if (!con.AreLocalArgumentsMatching(new List<char>(), new List<char>())) { throw new Exception("Local Arguments are mismatching or there are quantifiers with the same Local Argument"); }
+                    conHolder = new ConnectiveHolder(con);
                     tbInfix.Text = conHolder.GetInfixString();
                     showTableauxTree = false;
                 }
@@ -193,49 +196,62 @@ namespace LLP_App
 
         private void btnBinary_Click(object sender, EventArgs e)
         {
-            string binary = tbBinary.Text;
-            int number = BinaryReader.BinaryToNumber(binary);
-            string hexadecimal = BinaryReader.BinaryToHexadecimal(binary);
-            tbNumber.Text = number.ToString();
-            tbHexadecimal.Text = hexadecimal;
+            try
+            {
+                string binary = tbBinary.Text;
+                if (binary != "")
+                {
+                    int number = BinaryReader.BinaryToNumber(binary);
+                    string hexadecimal = BinaryReader.BinaryToHexadecimal(binary);
+                    tbNumber.Text = number.ToString();
+                    tbHexadecimal.Text = hexadecimal;
+                }
+            }
+            catch (Exception ex) { MessageBox.Show("Binary Reader failed: " + ex.Message); }
         }
 
         private void btnNumber_Click(object sender, EventArgs e)
         {
-            int number = int.Parse(tbNumber.Text);
-            string binary = BinaryReader.NumberToBinary(number, true);
-            string hexadecimal = BinaryReader.BinaryToHexadecimal(binary);
-            tbBinary.Text = binary;
-            tbHexadecimal.Text = hexadecimal;
+            int number;
+            if (tbNumber.Text != "")
+            {
+                if (int.TryParse(tbNumber.Text, out number))
+                {
+                    string binary = BinaryReader.NumberToBinary(number, true);
+                    string hexadecimal = BinaryReader.BinaryToHexadecimal(binary);
+                    tbBinary.Text = binary;
+                    tbHexadecimal.Text = hexadecimal;
+                }
+                else { MessageBox.Show("Binary Reader failed: Number in wrong format"); }
+            }
         }
 
         private void btnHexadecimal_Click(object sender, EventArgs e)
         {
-            string hexadecimal = tbHexadecimal.Text;
-            string binary = BinaryReader.HexadecimalToBinary(hexadecimal);
-            int number = BinaryReader.BinaryToNumber(binary);
-            tbNumber.Text = number.ToString();
-            tbBinary.Text = binary;
+            try
+            {
+                string hexadecimal = tbHexadecimal.Text;
+                if (hexadecimal != "")
+                {
+                    string binary = BinaryReader.HexadecimalToBinary(hexadecimal);
+                    int number = BinaryReader.BinaryToNumber(binary);
+                    tbNumber.Text = number.ToString();
+                    tbBinary.Text = binary;
+                }
+            }
+            catch(Exception ex) { MessageBox.Show("Binary Reader failed: " + ex.Message); }
         }
 
         private void btnParseDisjunctive_Click(object sender, EventArgs e)
         {
             string proposition = tbDisjunctiveParse.Text;
-            if (createAllConHoldersAndTruthtables(proposition))
-            {
-                printVisualTruthtables(table);
-                printTablesInformation();
-            }
+            createAllConHoldersAndTruthtables(proposition);
         }
 
         private void btnDisjunctiveSimpleParse_Click(object sender, EventArgs e)
         {
             string proposition = tbDisjunctiveSimpleParse.Text;
-            if (createAllConHoldersAndTruthtables(proposition))
-            {
-                printVisualTruthtables(table);
-                printTablesInformation();
-            }
+            createAllConHoldersAndTruthtables(proposition);
         }
 
         private void btnStartTimer_Click(object sender, EventArgs e)
@@ -300,11 +316,7 @@ namespace LLP_App
         private void btnNandParse_Click(object sender, EventArgs e)
         {
             string proposition = tbNand.Text;
-            if (createAllConHoldersAndTruthtables(proposition))
-            {
-                printVisualTruthtables(table);
-                printTablesInformation();
-            }
+            createAllConHoldersAndTruthtables(proposition);
         }
 
         private bool showTableauxTree = false;
@@ -314,12 +326,20 @@ namespace LLP_App
         }
         private void CreateTableaux()
         {
-            string proposition = tbProposition.Text;
-            tabHolder = new TableauxHolder(proposition);
-            if (tabHolder.IsTautology) { btnTableaux.BackColor = Color.Green; }
-            else { btnTableaux.BackColor = Color.Red; }
+            try
+            {
+                string proposition = tbProposition.Text;
+                tabHolder = new TableauxHolder(proposition);
+                if (tabHolder.IsTautology) { btnTableaux.BackColor = Color.Green; }
+                else { btnTableaux.BackColor = Color.Red; }
 
-            showTableauxTree = true;
+                showTableauxTree = true;
+            }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Parsing failed: please make sure that you wrote a proposition");
+            }
+            catch (Exception ex) { MessageBox.Show("Parsing failed: " + ex.Message); }
         }
     }
 }

@@ -72,5 +72,17 @@ namespace LLP_App
             bool temp1 = con1.ChangeLocalArgument(a, b);
             return (temp1 || succes);
         }
+        public override bool AreLocalArgumentsMatching(List<char> LocalArguments, List<char> LocalArgumentsAll)
+        {
+            if (LocalArgumentsAll.Contains(argument)) { return false; }
+            List<char> temp = new List<char>();
+            foreach(char c in LocalArguments)
+            {
+                temp.Add(c);
+            }
+            temp.Add(argument);
+            LocalArgumentsAll.Add(argument);
+            return con1.AreLocalArgumentsMatching(temp, LocalArgumentsAll);
+        }
     }
 }

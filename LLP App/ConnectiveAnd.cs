@@ -85,6 +85,5 @@ namespace LLP_App
             }
             else { throw new NullReferenceException(); }
         }
-
     }
 }

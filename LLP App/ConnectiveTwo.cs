@@ -80,5 +80,9 @@ namespace LLP_App
             }
             return temp1;
         }
+        public override bool AreLocalArgumentsMatching(List<char> LocalArguments, List<char> LocalArgumentsAll)
+        {
+            return con1.AreLocalArgumentsMatching(LocalArguments, LocalArgumentsAll) && con2.AreLocalArgumentsMatching(LocalArguments, LocalArgumentsAll);
+        }
     }
 }

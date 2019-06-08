@@ -36,6 +36,8 @@ namespace LLP_App
                 {
                     sum += binaryTable[b];
                 }
+                else if(bChar[i] == '0') { }
+                else { throw new Exception("Binary in wrong format"); }
                 b++;
             }
             return sum;
@@ -91,7 +93,7 @@ namespace LLP_App
                 {
                     if(c == hexadecimalTable[i]) { index = i; }
                 }
-                if (index == -1) { throw new Exception("Wrong hexadecimal format"); }
+                if (index == -1) { throw new Exception("Hexadecimal in wrong format"); }
                 holder += NumberToBinary(index, true);
             }
             return holder;

@@ -88,5 +88,9 @@ namespace LLP_App
         {
             return new List<char>();
         }
+        public override bool AreLocalArgumentsMatching(List<char> LocalArguments, List<char> LocalArgumentsAll)
+        {
+            return true;
+        }
     }
 }

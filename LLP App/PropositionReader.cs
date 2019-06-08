@@ -36,11 +36,15 @@ namespace LLP_App
                 {
                     case ',':
                         //ERROR CHECKING
+                        if(index == 0)
+                        {
+                            throw new Exception("',' has not been placed between '(' and ')'");
+                        }
                         if (Head != null)
                         {
                             if(Head is ConnectiveNot || Head is ConnectiveArgument)
                             {
-                                throw new Exception("'" + Head.GetLocalString() + "' does not need >2 inputs, please remove ','");
+                                throw new Exception("'" + Head.GetLocalString() + "' does not need more than 2 parameters");
                             }
                             if (Head is ConnectiveOne)
                             {
@@ -64,7 +68,7 @@ namespace LLP_App
                         }
                         if (Head is ConnectiveArgument)
                         {
-                            throw new Exception("'" + Head.GetLocalString() + "' has no inputs, please remove '('");
+                            throw new Exception("'" + Head.GetLocalString() + "' cannot have any parameters");
                         }
 
                         //SET INDEX
@@ -77,7 +81,7 @@ namespace LLP_App
                         {
                             if (Head is ConnectiveArgument)
                             {
-                                throw new Exception("'" + Head.GetLocalString() + "' has no inputs, please remove ')'");
+                                throw new Exception("'" + Head.GetLocalString() + "' cannot have any parameters");
                             }
                             if (Head is ConnectiveOne)
                             {
@@ -98,7 +102,7 @@ namespace LLP_App
                         {
                             if (Head is ConnectiveNot || Head is ConnectiveArgument)
                             {
-                                throw new Exception("'" + Head.GetLocalString() + "' does not need 2 inputs, please remove ')'");
+                                throw new Exception("'" + Head.GetLocalString() + "' cannot have 2 paramters, only 1");
                             }
                             if (Head is ConnectiveTwo)
                             {
@@ -122,20 +126,24 @@ namespace LLP_App
                                     {
                                         con = getConnectiveByType(PropositionList[0]);
                                         Head = con;
-                                        PropositionList.RemoveAt(0);
                                         if(Head is ConnectiveQuantifier)
                                         {
-                                            ConnectiveQuantifier cq = (ConnectiveQuantifier)Head;
-                                            if (SmallArguments.Contains(PropositionList[0]))
+                                            if (PropositionList.Count >= 3)
                                             {
-                                                cq.SetArgument(PropositionList[0]);
-                                                PropositionList.RemoveAt(0);
-                                                PropositionList.RemoveAt(0);
+                                                ConnectiveQuantifier cq = (ConnectiveQuantifier)Head;
+                                                if (SmallArguments.Contains(PropositionList[1]))
+                                                {
+                                                    cq.SetArgument(PropositionList[1]);
+                                                    PropositionList.RemoveAt(0); //removes @/!
+                                                    PropositionList.RemoveAt(0); //removes local argument
+                                                }
+                                                else { throw new Exception("Invalid local variable '" + PropositionList[1] + "' for quantifier: " + PropositionList[0]); }
                                             }
-                                            else { throw new Exception("Invalid local variable for quantifier: " + PropositionList[0]); }
+                                            else { throw new Exception("Unfinished quantifier: " + PropositionList[0]); }
                                         }
+                                        PropositionList.RemoveAt(0); //removes type or .
                                     }
-                                    else { throw new Exception("'" + PropositionList[0] + "' cannot be placed after another connective or argument"); }
+                                    else { throw new Exception("'" + PropositionList[0] + "' cannot be placed after another connective"); }
                                     break;
                                 case 1:
                                     if(Head != null)
@@ -147,7 +155,7 @@ namespace LLP_App
                                         }
                                         else
                                         {
-                                            throw new Exception("Argument/Function does not need any connectives as input");
+                                            throw new Exception("'" + Head.GetLocalString() +"' does not need any connectives as parameters");
                                         }
                                     }
                                     else { throw new Exception("Internal index problem occured (index = 1, Head = null)"); }
@@ -162,13 +170,13 @@ namespace LLP_App
                                         }
                                         else
                                         {
-                                            throw new Exception("Argument/Function and/or negation/quantifiers does not need second connectives input");
+                                            throw new Exception("'" +Head.GetLocalString()+"' cannot have a second parameter");
                                         }
                                     }
                                     else { throw new Exception("Internal index problem occured (index = 2, Head = null)"); }
                                     break;
                                 default:
-                                    throw new Exception("Internal index problem occured (index > 2)");
+                                    throw new Exception("Internal index problem occured (index > 2 & head != function)");
                             }
                         }
                         else if (Arguments.Contains(PropositionList[0])) //argument found
@@ -192,7 +200,7 @@ namespace LLP_App
                                         PropositionList.RemoveAt(0);
                                         Head = con;
                                     }
-                                    else { throw new Exception("'" + PropositionList[0] + "' cannot be placed after another connective or argument"); }
+                                    else { throw new Exception("'" + PropositionList[0] + "' cannot be placed after another connective"); }
                                     break;
                                 case 1:
                                     if (Head != null)
@@ -212,7 +220,7 @@ namespace LLP_App
                                         }
                                         else
                                         {
-                                            throw new Exception("Argument does not need any input");
+                                            throw new Exception("'" + Head.GetLocalString() + "' cannot have Argument as parameter");
                                         }                                        
                                     }
                                     else { throw new Exception("Internal index problem occured (index = 1, Head = null)"); }
@@ -234,13 +242,13 @@ namespace LLP_App
                                         }
                                         else
                                         {
-                                            throw new Exception("Argument does not need any input");
+                                            throw new Exception("'" + Head.GetLocalString() + "' cannot have Argument as parameter");
                                         }
                                     }
                                     else { throw new Exception("Internal index problem occured (index = 2, Head = null)"); }
                                     break;
                                 default:
-                                    throw new Exception("Internal index problem occured (index > 2)");
+                                    throw new Exception("Internal index problem occured (index > 2 & Head != Function)");
                             }
                         }
                         else if (SmallArguments.Contains(PropositionList[0]))
@@ -255,12 +263,12 @@ namespace LLP_App
                                 }
                                 else
                                 {
-                                    throw new Exception("Small Argument found outside function/quatifier: " + PropositionList[0]);
+                                    throw new Exception("Local Argument found outside Function/Quantifier: " + PropositionList[0]);
                                 }
                             }
                             else
                             {
-                                throw new Exception("Small Argument found outside function/quatifier: " + PropositionList[0]);
+                                throw new Exception("Local Argument found outside Function/Quantifier: " + PropositionList[0]);
                             }
                         }
                         else if(PropositionList[0] != ' ') //UNKNOWN (no space)

@@ -19,6 +19,7 @@ namespace LLP_App
             idCounter++;
         }
 
+        public abstract bool AreLocalArgumentsMatching(List<char> LocalArguments, List<char> LocalArgumentAll);
         public abstract List<Connective> GetAllConnectives();
         public abstract string GetLocalString();
         public abstract List<char> GetAllArguments();

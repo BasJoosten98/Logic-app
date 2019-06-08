@@ -139,5 +139,16 @@ namespace LLP_App
             }
             return temp;
         }
+        public override bool AreLocalArgumentsMatching(List<char> LocalArguments, List<char> LocalArgumentsAll)
+        {
+            foreach(char c in localArguments)
+            {
+                if (!LocalArguments.Contains(c))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }
