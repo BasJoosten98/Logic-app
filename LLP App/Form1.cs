@@ -244,14 +244,17 @@ namespace LLP_App
             {
                 timer1.Enabled = false;
                 btnStartTimer.Text = "Start";
+                MessageBox.Show(testCounter + " proposition(s) have been tested");
             }
             else
             {
+                testCounter = 0;
                 timer1.Enabled = true;
                 btnStartTimer.Text = "Stop";
             }
         }
 
+        private int testCounter = 0;
         private void timer1_Tick(object sender, EventArgs e)
         {
             string hashCode;
@@ -291,7 +294,7 @@ namespace LLP_App
                 }
             }
             if(simpleTableResult != tabHolder.IsTautology) { timer1.Enabled = false; MessageBox.Show("tableaux test failed, please have a look at tableaux, timer disabled"); btnStartTimer.Text = "Start"; return; }
-
+            testCounter++;
         }
 
         private void btnNandParse_Click(object sender, EventArgs e)

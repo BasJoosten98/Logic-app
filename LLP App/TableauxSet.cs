@@ -14,10 +14,10 @@ namespace LLP_App
         private List<TableauxSet> sets; //next sets created from this one
         private List<char> usedArguments;
         private List<char> availableArguments;
+        private string usedRule;
         private bool isTautology;
         private int id;
         private static int idCounter = 0;
-        private static Random rand = new Random();
 
         public int ID { get { return this.id; } }
         public bool IsTautology { get { return this.isTautology; } }
@@ -30,6 +30,7 @@ namespace LLP_App
             this.id = idCounter;
             this.usedArguments = new List<char>();
             this.availableArguments = new List<char>();
+            usedRule = "none";
             idCounter++;
         }
         
@@ -50,17 +51,18 @@ namespace LLP_App
         public string GetElementsAsString()
         {
             string holder = "";
+            holder += "Rule: " + usedRule;
             if (usedArguments.Count > 0) {
-                holder += "<";
+                holder += "\n<";
                 for (int i = 0; i < usedArguments.Count - 1; i++)
                 {
                     holder += usedArguments[i] + ", ";
                 }
-                holder += usedArguments[usedArguments.Count - 1] + "> \n";
+                holder += usedArguments[usedArguments.Count - 1] + ">";
             }
             foreach (TableauxSetElement tse in elements)
             {
-                holder += tse.Element.GetParseString() + "\n";
+                holder += "\n" + tse.Element.GetParseString();
             }
             return holder;
         }
@@ -158,34 +160,34 @@ namespace LLP_App
                 }
 
                 //TRY APPLYING RULES
-                char usedRule = 'x';
                 bool succes = false;
                 if (tryApplyingAlfaRules())
                 {
                     succes = true;
-                    usedRule = 'a';
+                    usedRule = "Alfa";
                 }
                 else if (tryApplyingDeltaRules(copyUsed, copyAvailable))
                 {
                     succes = true;
-                    usedRule = 'd';
+                    usedRule = "Delta";
                 }
                 else if (tryApplyingBetaRules())
                 {
                     succes = true;
-                    usedRule = 'b';
+                    usedRule = "Beta";
                 }
                 else if (tryApplyingGammaRules(copyUsed))
                 {
                     succes = true;
-                    usedRule = 'g';
-                    
+                    usedRule = "Gamma";
+
                 }
-                string holder = "Used rule: " + usedRule + " < ";
-                foreach (char c in usedArguments) { holder += c + " "; }
-                holder += ">";
-                Console.WriteLine(holder);
-                Console.WriteLine(GetElementsAsString());
+
+                //PRINT PROGRESS IN CONSOLE
+                if (true)
+                {
+                    Console.WriteLine(GetElementsAsString());
+                }
 
                 //CREATING NEXT SETS
                 if (succes)
@@ -200,7 +202,6 @@ namespace LLP_App
         }
         private bool tryApplyingAlfaRules()
         {
-            //MessageBox.Show("Alfa");
             List<Connective> results;
             foreach(TableauxSetElement tse in elements)
             {
@@ -215,17 +216,9 @@ namespace LLP_App
         }
         private bool tryApplyingDeltaRules(List<char> used, List<char> available)
         {
-            //MessageBox.Show("Delta");
             List<Connective> results;
-            List<TableauxSetElement> temp = new List<TableauxSetElement>();
-            foreach(TableauxSetElement tse in elements)
+            foreach (TableauxSetElement tse in elements) 
             {
-                temp.Add(tse);
-            }
-            while(temp.Count > 0)
-            {
-                TableauxSetElement tse = temp[rand.Next(0, temp.Count)];
-
                 //MAKE COPY OF ARGUMENTS
                 List<char> copyUsed = new List<char>();
                 List<char> copyAvailable = new List<char>();
@@ -239,11 +232,12 @@ namespace LLP_App
                 }
 
                 results = tse.ApplyDeltaTableauxRules(copyUsed, copyAvailable);
-                if (results.Count > 0) //applying was a succes
+                if (results.Count > 0) //applying rule was a succes
                 {
                     if(results.Count != 1) { throw new Exception("Not possible"); }
-                    if (addNewSet(new List<Connective>() { results[0] }, tse))
+                    if (addNewSet(new List<Connective>() { results[0] }, tse)) //creating new set was a succes
                     {
+                        //APPLYING ARGUMENT CHANGES
                         used.Clear();
                         foreach(char c in copyUsed)
                         {
@@ -257,13 +251,11 @@ namespace LLP_App
                         return true;
                     }                 
                 }
-                temp.Remove(tse);
             }
             return false;
         }
         private bool tryApplyingBetaRules()
         {
-            //MessageBox.Show("Beta");
             List<Connective> results;
             foreach (TableauxSetElement tse in elements)
             {
@@ -280,26 +272,25 @@ namespace LLP_App
         }
         private bool tryApplyingGammaRules(List<char> used)
         {
-            //MessageBox.Show("Gamma");
             List<Connective> results;
-            List<TableauxSetElement> temp = new List<TableauxSetElement>();
-            foreach (TableauxSetElement tse in elements)
+            List<Connective> endResults = new List<Connective>();
+            foreach(TableauxSetElement tse in elements)
             {
-                temp.Add(tse);
-            }
-            while (temp.Count > 0)
-            {
-                TableauxSetElement tse = temp[rand.Next(0, temp.Count)];
-
                 results = tse.ApplyGammaTableauxRules(used);
-                if (results.Count > 0) //applying was a succes
+                if (results.Count > 0) //applying rule was a succes
                 {
-                    if(addNewSet(results, null))
+                    foreach(Connective con in results)
                     {
-                        return true;
-                    }                   
+                        endResults.Add(con);
+                    }
                 }
-                temp.Remove(tse);
+            }
+            if(endResults.Count > 0)//applying rule to at least one element
+            {
+                if (addNewSet(endResults, null))
+                {
+                    return true;
+                }
             }
             return false;
         }
