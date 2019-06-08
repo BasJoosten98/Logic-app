@@ -9,6 +9,7 @@ namespace LLP_App
 {
     class TableauxSet
     {
+        public static bool provideFeedback = true;
 
         private List<TableauxSetElement> elements; //elements in this set
         private List<TableauxSet> sets; //next sets created from this one
@@ -184,8 +185,9 @@ namespace LLP_App
                 }
 
                 //PRINT PROGRESS IN CONSOLE
-                if (true)
+                if (provideFeedback)
                 {
+                    Console.WriteLine("---------- ID: " + id + " ----------");
                     Console.WriteLine(GetElementsAsString());
                 }
 

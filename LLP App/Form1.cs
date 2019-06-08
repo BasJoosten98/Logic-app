@@ -15,10 +15,12 @@ namespace LLP_App
     {
         ConnectiveHolder conHolder;
         ConnectiveHolder conHolderNand;
+        ConnectiveHolder conHolderNandSimple;
         ConnectiveHolder conHolderDisjunctive;
         ConnectiveHolder conHolderDisjunctiveSimple;
         Truthtable table;
         Truthtable tableNand;
+        Truthtable tableNandSimple;
         Truthtable tableDisjunctive;
         Truthtable tableDisjunctiveSimple;
         TableauxHolder tabHolder;
@@ -45,14 +47,22 @@ namespace LLP_App
                     conHolder = new ConnectiveHolder(con);
                     table = new Truthtable(conHolder);
                     printDisjunctive();
+
                     conHolderDisjunctive = new ConnectiveHolder(tbDisjunctiveParse.Text);
                     tableDisjunctive = new Truthtable(conHolderDisjunctive);
+
                     conHolderDisjunctiveSimple = new ConnectiveHolder(tbDisjunctiveSimpleParse.Text);
                     tableDisjunctiveSimple = new Truthtable(conHolderDisjunctiveSimple);
+
                     conHolderNand = conHolder.GetNandHolder();
                     tableNand = new Truthtable(conHolderNand);
+
+                    conHolderNandSimple = conHolderDisjunctiveSimple.GetNandHolder();
+                    tableNandSimple = new Truthtable(conHolderNandSimple);
+
                     tbInfix.Text = conHolder.GetInfixString();
                     tbNand.Text = conHolderNand.GetParseString();
+                    tbNandSimple.Text = conHolderNandSimple.GetParseString();
                     showTableauxTree = false;
 
                     //DRAWING AND PRINTING TABLE INFORMATION
@@ -66,15 +76,18 @@ namespace LLP_App
                     tbInfix.Text = conHolder.GetInfixString();
                     showTableauxTree = false;
                 }
+                Console.WriteLine("Succesfully parsed proposition: " + proposition);
             }
             catch (NullReferenceException)
             {
                 MessageBox.Show("Parsing failed: please make sure that you wrote a proposition");
+                Console.WriteLine("Failed to parse proposition: " + proposition);
                 return false;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Parsing failed: " + ex.Message);
+                Console.WriteLine("Failed to parse proposition: " + proposition);
                 return false;
             }
             return true;
@@ -104,11 +117,7 @@ namespace LLP_App
         {
             string proposition = PropositionReader.CreateRandomPropositionString();
             tbProposition.Text = proposition;
-            if (createAllConHoldersAndTruthtables(proposition))
-            {
-                printVisualTruthtables(table);
-                printTablesInformation();
-            }
+            createAllConHoldersAndTruthtables(proposition);
         }
         
         private void printVisualTruthtables(Truthtable chosenTable)
@@ -182,6 +191,7 @@ namespace LLP_App
             lbTruthTableInfo.Items.Add("Disjunctive: " + tableDisjunctive.GetHashCodeHexadecimal());
             lbTruthTableInfo.Items.Add("DisjunctiveSimple: " + tableDisjunctiveSimple.GetHashCodeHexadecimal());
             lbTruthTableInfo.Items.Add("Nand: " + tableNand.GetHashCodeHexadecimal());
+            lbTruthTableInfo.Items.Add("NandSimple: " + tableNandSimple.GetHashCodeHexadecimal());
         }
         private void printDisjunctive()
         {
@@ -261,12 +271,14 @@ namespace LLP_App
                 timer1.Enabled = false;
                 btnStartTimer.Text = "Start";
                 MessageBox.Show(testCounter + " proposition(s) have been tested");
+                panelInput.Enabled = true;
             }
             else
             {
                 testCounter = 0;
                 timer1.Enabled = true;
                 btnStartTimer.Text = "Stop";
+                panelInput.Enabled = false;
             }
         }
 
@@ -291,6 +303,7 @@ namespace LLP_App
             if (hashCode != tableDisjunctive.GetHashCodeHexadecimal()) { timer1.Enabled = false; MessageBox.Show("hashCode test failed, please have a look at Disjunctive, timer disabled"); btnStartTimer.Text = "Start"; return; }
             if (hashCode != tableDisjunctiveSimple.GetHashCodeHexadecimal()) { timer1.Enabled = false; MessageBox.Show("hashCode test failed, please have a look at DisjunctiveSimple, timer disabled"); btnStartTimer.Text = "Start"; return; }
             if (hashCode != tableNand.GetHashCodeHexadecimal()) { timer1.Enabled = false; MessageBox.Show("hashCode test failed, please have a look at Nand, timer disabled"); btnStartTimer.Text = "Start"; return; }
+            if (hashCode != tableNandSimple.GetHashCodeHexadecimal()) { timer1.Enabled = false; MessageBox.Show("hashCode test failed, please have a look at NandSimple, timer disabled"); btnStartTimer.Text = "Start"; return; }
 
             //COMPARE TABLEAUX WITH SIMPLE TRUTHTABLE
             bool simpleTableResult;
@@ -330,6 +343,7 @@ namespace LLP_App
             {
                 string proposition = tbProposition.Text;
                 tabHolder = new TableauxHolder(proposition);
+                tbInfix.Text = tabHolder.GetInfixString();
                 if (tabHolder.IsTautology) { btnTableaux.BackColor = Color.Green; }
                 else { btnTableaux.BackColor = Color.Red; }
 
@@ -340,6 +354,12 @@ namespace LLP_App
                 MessageBox.Show("Parsing failed: please make sure that you wrote a proposition");
             }
             catch (Exception ex) { MessageBox.Show("Parsing failed: " + ex.Message); }
+        }
+
+        private void btnNandSimpleParse_Click(object sender, EventArgs e)
+        {
+            string proposition = tbNandSimple.Text;
+            createAllConHoldersAndTruthtables(proposition);
         }
     }
 }

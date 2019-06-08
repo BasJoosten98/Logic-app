@@ -14,12 +14,14 @@ namespace LLP_App
         private List<char> availableArguments;
         private TableauxSet startTableaux;
         private bool isNormalProposition;
+        private string infixString;
 
         public bool IsTautology { get { return startTableaux.IsTautology; } }
 
         public  TableauxHolder(string Proposition)
         {
             Connective proposition = PropositionReader.ReadPropositionString(Proposition);
+            infixString = proposition.GetInfix();
 
             ConnectiveNot notPorposition = new ConnectiveNot();
             notPorposition.setLeftConnective(proposition);
@@ -29,8 +31,11 @@ namespace LLP_App
             isNormalProposition = notPorposition.IsNormalProposition();
             if(!notPorposition.AreLocalArgumentsMatching(new List<char>(), new List<char>())) { throw new Exception("Local Arguments are mismatching or there are quantifiers with the same Local Argument"); }
             calculateFreeArguments(notPorposition);
+            Console.WriteLine("Succesfully parsed proposition: " + Proposition);
+            Console.WriteLine("Creating tableaux nodes...   (In-Progress Feedback: " + TableauxSet.provideFeedback + ")");
             this.startTableaux.CreateNextSets(new List<char>(), availableArguments, !isNormalProposition);
             this.startTableaux.CalculateIsTautology();
+            Console.WriteLine("Succesfully created all teableaux nodes");
         }
         //CALCULATE USED/AVAILABLE ARGUMENTS
         private void calculateFreeArguments(Connective startCon)
@@ -46,6 +51,10 @@ namespace LLP_App
             }
         }
 
+        public string GetInfixString()
+        {
+            return infixString;
+        }
 
         //DISPLAY TABLEAUX TREE STRUCTURE
         public void ShowTreeStructure()

@@ -53,6 +53,13 @@ namespace LLP_App
                                     throw new Exception("'" + Head.GetLocalString() + "' is missing a left connective");
                                 }
                             }
+                            if(Head is ConnectiveFunction)
+                            {
+                                if (((ConnectiveFunction)Head).LocalArguments.Count != index)
+                                {
+                                    throw new Exception("'" + Head.GetLocalString() + "' is missing a parameter");
+                                }
+                            }
                         }
                         else { throw new Exception("',' does not belong to any connective"); }
 
@@ -428,8 +435,9 @@ namespace LLP_App
         //CREATE RANDOM PROPOSITION STRING
         public static string CreateRandomPropositionString()
         {
-            int totalDives = rand.Next(0, 11);
+            int totalDives = rand.Next(0, 14);
             int maxDifferentArguments = (totalDives-1) / 2;
+            if(maxDifferentArguments > 5) { maxDifferentArguments = 5; } //max different arguments
             return createRandomPorpositionStringRec(totalDives, maxDifferentArguments);
         }
         private static string createRandomPorpositionStringRec(int totalDives, int maxDifferentArguments) 
@@ -437,7 +445,7 @@ namespace LLP_App
             //get random connective
             if (totalDives == 0)
             {
-                char randomArgument = Arguments[rand.Next(0, maxDifferentArguments + 1)];
+                char randomArgument = Arguments[rand.Next(0, maxDifferentArguments)];
                 if (rand.Next(1, 11) <= 2) //chance of getting 1 or 0
                 {
                     if (rand.Next(0, 2) == 0) { randomArgument = '0'; }
