@@ -270,11 +270,14 @@ namespace LLP_App
             {
                 timer1.Enabled = false;
                 btnStartTimer.Text = "Start";
-                MessageBox.Show(testCounter + " proposition(s) have been tested");
+                Console.WriteLine("Stopping testing...");
+                Console.WriteLine("Test results: " + testCounter + " proposition(s) came succesfully through the test");
+                MessageBox.Show("Test results: " + testCounter + " proposition(s) came succesfully through the test");
                 panelInput.Enabled = true;
             }
             else
             {
+                Console.WriteLine("Starting testing...");
                 testCounter = 0;
                 timer1.Enabled = true;
                 btnStartTimer.Text = "Stop";
@@ -286,10 +289,12 @@ namespace LLP_App
         private void timer1_Tick(object sender, EventArgs e)
         {
             string hashCode;
+            string proposition;
 
             //GENEARTE ALL TABLES AND CONHOLDERS AND TABLEAUX
-            tbProposition.Text = PropositionReader.CreateRandomPropositionString();
-            if (createAllConHoldersAndTruthtables(tbProposition.Text))
+            proposition = PropositionReader.CreateRandomPropositionString();
+            tbProposition.Text = proposition;
+            if (createAllConHoldersAndTruthtables(proposition))
             {
                 printVisualTruthtables(table);
                 printTablesInformation();
@@ -300,10 +305,10 @@ namespace LLP_App
             hashCode = table.GetHashCodeHexadecimal();
 
             //COMPARE HASH CODE WITH OTHER TABLES
-            if (hashCode != tableDisjunctive.GetHashCodeHexadecimal()) { timer1.Enabled = false; MessageBox.Show("hashCode test failed, please have a look at Disjunctive, timer disabled"); btnStartTimer.Text = "Start"; return; }
-            if (hashCode != tableDisjunctiveSimple.GetHashCodeHexadecimal()) { timer1.Enabled = false; MessageBox.Show("hashCode test failed, please have a look at DisjunctiveSimple, timer disabled"); btnStartTimer.Text = "Start"; return; }
-            if (hashCode != tableNand.GetHashCodeHexadecimal()) { timer1.Enabled = false; MessageBox.Show("hashCode test failed, please have a look at Nand, timer disabled"); btnStartTimer.Text = "Start"; return; }
-            if (hashCode != tableNandSimple.GetHashCodeHexadecimal()) { timer1.Enabled = false; MessageBox.Show("hashCode test failed, please have a look at NandSimple, timer disabled"); btnStartTimer.Text = "Start"; return; }
+            if (hashCode != tableDisjunctive.GetHashCodeHexadecimal()) { testFailed("Disjunctive hashcode does not match", proposition); return; }
+            if (hashCode != tableDisjunctiveSimple.GetHashCodeHexadecimal()) { testFailed("DisjunctiveSimple hashcode does not match", proposition); return; }
+            if (hashCode != tableNand.GetHashCodeHexadecimal()) { testFailed("Nand hashcode does not match", proposition); return; }
+            if (hashCode != tableNandSimple.GetHashCodeHexadecimal()) { testFailed("NandSimple hashcode does not match", proposition); return; }
 
             //COMPARE TABLEAUX WITH SIMPLE TRUTHTABLE
             bool simpleTableResult;
@@ -322,10 +327,20 @@ namespace LLP_App
                      throw new Exception("Not possible scenario"); 
                 }
             }
-            if(simpleTableResult != tabHolder.IsTautology) { timer1.Enabled = false; MessageBox.Show("tableaux test failed, please have a look at tableaux, timer disabled"); btnStartTimer.Text = "Start"; return; }
+            if(simpleTableResult != tabHolder.IsTautology) { testFailed("Tautology result from SimpleTable does not match tautology result from Tableaux", proposition); return; }
             testCounter++;
         }
-
+        private void testFailed(string message, string proposition)
+        {
+            timer1.Enabled = false;
+            Console.WriteLine("Stopping testing...");
+            Console.WriteLine("Test results: " + testCounter + " proposition(s) came succesfully through the test");
+            Console.WriteLine("Test results: " + proposition + " failed the test, reason: " + message);
+            MessageBox.Show("Test results: " + testCounter + " proposition(s) came succesfully through the test. \n\n" + "Testing failed for " + proposition + "\nReason: " + message);
+            btnStartTimer.Text = "Start";
+            panelInput.Enabled = true;
+            return;
+        }
         private void btnNandParse_Click(object sender, EventArgs e)
         {
             string proposition = tbNand.Text;

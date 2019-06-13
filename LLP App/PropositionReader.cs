@@ -435,7 +435,7 @@ namespace LLP_App
         //CREATE RANDOM PROPOSITION STRING
         public static string CreateRandomPropositionString()
         {
-            int totalDives = rand.Next(0, 14);
+            int totalDives = rand.Next(0, 15);
             int maxDifferentArguments = (totalDives-1) / 2;
             if(maxDifferentArguments > 5) { maxDifferentArguments = 5; } //max different arguments
             return createRandomPorpositionStringRec(totalDives, maxDifferentArguments);

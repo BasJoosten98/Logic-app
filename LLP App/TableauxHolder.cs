@@ -16,7 +16,7 @@ namespace LLP_App
         private bool isNormalProposition;
         private string infixString;
 
-        public bool IsTautology { get { return startTableaux.IsTautology; } }
+        public bool IsTautology { get {  return startTableaux.IsTautology;  } }
 
         public  TableauxHolder(string Proposition)
         {
