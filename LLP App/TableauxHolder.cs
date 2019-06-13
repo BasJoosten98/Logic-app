@@ -33,7 +33,7 @@ namespace LLP_App
             calculateFreeArguments(notPorposition);
             Console.WriteLine("Succesfully parsed proposition: " + Proposition);
             Console.WriteLine("Creating tableaux nodes...   (In-Progress Feedback: " + TableauxSet.provideFeedback + ")");
-            this.startTableaux.CreateNextSets(new List<char>(), availableArguments, !isNormalProposition);
+            this.startTableaux.CreateNextSets(new List<char>(), availableArguments, true); //Can be (!isNormalProposition) OR (true)
             this.startTableaux.CalculateIsTautology();
             Console.WriteLine("Succesfully created all teableaux nodes");
         }
